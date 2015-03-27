@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-05c23de825f1fcf26b61033b57a620ed82824668.jar" />
+    </item>
+    <item
+        jar="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\libs\zxing.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="e88c14e6e7daa0fa65172a62b54ee6a16ff4162d">
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\zxing-d13dd4207e06489b9c200d24c61520c414041464.jar" />
+    </item>
+    <item
+        jar="E:\android-sdk-windows\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-eb28b17a2d1e0095a5185886e0fc974fefd33d8f.jar" />
+    </item>
+    <item
+        jar="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\libs\json-simple-1.1.1.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="5d6f9b6a9ddca2a28c0216cc44efb2e20d9c23b5">
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\json-simple-1.1.1-0c06cca9973e6622e78912cde4e06111a5a65f7b.jar" />
+    </item>
+    <item
+        jar="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\classes-2bdbba49d777f8603153bf84131954821cea5114.jar" />
+    </item>
+
+</items>
