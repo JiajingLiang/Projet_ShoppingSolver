@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.polymtl.shoppingsolver.model.NavDrawerItem;
+
 public class DrawerItemAdapter extends ArrayAdapter<NavDrawerItem> {
 	Context mContext;
 	int layoutResourceId;
