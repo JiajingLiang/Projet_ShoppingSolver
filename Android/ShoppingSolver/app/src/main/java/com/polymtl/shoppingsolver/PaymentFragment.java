@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,54 +29,78 @@ public class PaymentFragment extends Fragment {
 	private Context mcontext;
 	private String urlServlet;
 	private View rootView;
-	
-	public PaymentFragment(Context context){
+    private String userId;
+
+	/**public PaymentFragment(Context context){
 		this.mcontext = context;
-	}
+	}*/
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
- 
+
+        init();
         rootView = inflater.inflate(R.layout.fragment_payment, container, false);
-        Bundle bundle=getArguments();
-        final String userId = bundle.getString("userId");
-        urlServlet = bundle.getString("urlServlet");
-        
-        Button buttonPay = (Button) rootView.findViewById(R.id.buttonPay);
-        buttonPay.setOnClickListener(new OnClickListener(){
 
-			@Override
-			public void onClick(View v) {
-				TextView tvTotal = (TextView)rootView.findViewById(R.id.tvTotalVal);
-				Double total = Double.parseDouble(tvTotal.getText().toString());
-				TextView tvProducts = (TextView)rootView.findViewById(R.id.tvProductsVal);
-				String products = tvProducts.getText().toString();
-				JSONObject json = new JSONObject();
-				json.put("userID", Integer.parseInt(userId));
-				json.put("total", total);
-				json.put("products", products);
-				MakePaymentTask makePaymentTask = new MakePaymentTask();
-				makePaymentTask.execute(json);
-			}
-        });
-        buttonPay.setEnabled(false);
-        
-        Button buttonScan = (Button)rootView.findViewById(R.id.buttonScan);
-        buttonScan.setOnClickListener(new OnClickListener(){
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent openCameraIntent = new Intent(getActivity(),CaptureActivity.class);
-				getActivity().startActivityForResult(openCameraIntent, 0);
-			}
-        	
-        });
-        
+        setUpButtons();
  
         return rootView;
     }
-	
+
+    private void init() {
+        this.mcontext = getActivity().getApplicationContext();
+        //this.mcontext = getActivity();
+
+        if (this.mcontext == null) {
+            Log.i("err:", "the fragment is not attached to an activity");
+            return;
+        }
+
+        Bundle bundle = getArguments();
+        userId = bundle.getString("userId");
+        urlServlet = bundle.getString("urlServlet");
+    }
+
+    private void setUpButtons(){
+
+        Button buttonPay = (Button) rootView.findViewById(R.id.buttonPay);
+        buttonPay.setOnClickListener(new OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                TextView tvTotal = (TextView)rootView.findViewById(R.id.tvTotalVal);
+                Double total = Double.parseDouble(tvTotal.getText().toString());
+                TextView tvProducts = (TextView)rootView.findViewById(R.id.tvProductsVal);
+                String products = tvProducts.getText().toString();
+                JSONObject json = new JSONObject();
+                json.put("userID", Integer.parseInt(userId));
+                json.put("total", total);
+                json.put("products", products);
+                MakePaymentTask makePaymentTask = new MakePaymentTask();
+                makePaymentTask.execute(json);
+            }
+        });
+
+        buttonPay.setEnabled(false);
+
+        Button buttonScan = (Button)rootView.findViewById(R.id.buttonScan);
+        buttonScan.setOnClickListener(new OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Intent openCameraIntent = new Intent(getActivity(),CaptureActivity.class);
+                getActivity().startActivityForResult(openCameraIntent, 0);
+            }
+
+        });
+    }
+
+    //TODO:
+    private void updateShoppingList() {
+
+    }
+
 	private class MakePaymentTask extends AsyncTask<JSONObject, Integer, Void> {
 
 		@Override

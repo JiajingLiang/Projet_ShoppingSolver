@@ -26,6 +26,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.polymtl.shoppingsolver.model.NavDrawerItem;
+
 public class MainActivity extends Activity {
 	private String[] mNavigationDrawerItemTitles;
 	private DrawerLayout mDrawerLayout;
@@ -45,51 +47,64 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		Intent intent = getIntent();
-		userId = intent.getStringExtra("login");
-		urlServlet = intent.getStringExtra("urlServlet");
-		
-		mTitle = mDrawerTitle = getTitle();
-		mNavigationDrawerItemTitles = getResources().getStringArray(R.array.nav_drawer_items);
-		mDrawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
-		mDrawerList = (ListView)findViewById(R.id.left_drawer);
-		NavDrawerItem[] drawerItem = new NavDrawerItem[2];
-		drawerItem[0] = new NavDrawerItem(R.drawable.ic_payment,"Make Payment");
-		drawerItem[1] = new NavDrawerItem(R.drawable.ic_count_detail,"Count Detail");
-		DrawerItemAdapter adapter = new DrawerItemAdapter(this,R.layout.listview_item_row,drawerItem);
-		mDrawerList.setAdapter(adapter);
-		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-		
-		mDrawerToggle = new ActionBarDrawerToggle(
-		        this,
-		        mDrawerLayout,
-		        R.drawable.ic_drawer, 
-		        R.string.drawer_open, 
-		        R.string.drawer_close 
-		        ) {
-		    
-		    /** Called when a drawer has settled in a completely closed state. */
-		    public void onDrawerClosed(View view) {
-		        super.onDrawerClosed(view);
-		        getActionBar().setTitle(mTitle);
-		    }
-		 
-		    /** Called when a drawer has settled in a completely open state. */
-		    public void onDrawerOpened(View drawerView) {
-		        super.onDrawerOpened(drawerView);
-		        getActionBar().setTitle(mDrawerTitle);
-		    }
-		};
-		 
-		mDrawerLayout.setDrawerListener(mDrawerToggle);
-		 
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setHomeButtonEnabled(true);
-		
+
+        init();
+
+        setUpDrawerLayout();
+
 		if(savedInstanceState == null){
 			selectItem(0);
 		}
+
 	}
+
+    private void init() {
+
+        Intent intent = getIntent();
+        userId = intent.getStringExtra("login");
+        urlServlet = intent.getStringExtra("urlServlet");
+    }
+
+    private void setUpDrawerLayout() {
+
+        mTitle = mDrawerTitle = getTitle();
+        mNavigationDrawerItemTitles = getResources().getStringArray(R.array.nav_drawer_items);
+        mDrawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView)findViewById(R.id.left_drawer);
+        NavDrawerItem[] drawerItem = new NavDrawerItem[2];
+        drawerItem[0] = new NavDrawerItem(R.drawable.ic_payment,"Make Payment");
+        drawerItem[1] = new NavDrawerItem(R.drawable.ic_count_detail,"Count Detail");
+        DrawerItemAdapter adapter = new DrawerItemAdapter(this,R.layout.listview_item_row,drawerItem);
+        mDrawerList.setAdapter(adapter);
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,
+                mDrawerLayout,
+                R.drawable.ic_drawer,
+                R.string.drawer_open,
+                R.string.drawer_close
+        ) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getActionBar().setTitle(mTitle);
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getActionBar().setTitle(mDrawerTitle);
+            }
+        };
+
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -143,13 +158,14 @@ public class MainActivity extends Activity {
 	    }
 	    
 	}
-	 
+
+    /** Swaps fragments in the main content view */
 	private void selectItem(int position) {
 	    Fragment fragment = null;
 	    Bundle bundle=new Bundle();
 	    switch (position) {
 	    case 0:
-	        fragment = new PaymentFragment(getApplicationContext());
+	        fragment = new PaymentFragment();
 	        break;
 	    case 1:
 	        fragment = new CountFragment();
