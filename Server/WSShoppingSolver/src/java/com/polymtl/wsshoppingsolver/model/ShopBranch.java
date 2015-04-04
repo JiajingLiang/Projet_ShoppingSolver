@@ -12,21 +12,32 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  *
  * @author Jiajing
  */
 @Entity
+@Table(name = "shopbranch")
 public class ShopBranch implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false)
     private Long id;
     @Column
     private String address;
     @ManyToOne
     private ShopBrand brand;
+
+    public ShopBranch() {
+    }
+
+    public ShopBranch(String address, ShopBrand brand) {
+        this.address = address;
+        this.brand = brand;
+    }
 
     public Long getId() {
         return id;
@@ -70,7 +81,7 @@ public class ShopBranch implements Serializable {
 
     @Override
     public String toString() {
-        return "com.polymtl.wsshoppingsolver.model.ShopBranch[ id=" + id + " ]";
+        return "com.polymtl.wsshoppingsolver.model.ShopBranch[ id=" + id + ", branchAddress=" + address + ", brandName=" + brand.getBrandName() + " ]";
     }
     
 }

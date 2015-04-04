@@ -6,13 +6,11 @@
 package com.polymtl.wsshoppingsolver.model;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -20,39 +18,33 @@ import javax.persistence.Table;
  * @author Jiajing
  */
 @Entity
-@Table(name = "shopbrand")
-public class ShopBrand implements Serializable {
+@Table(name = "productcategory")
+public class ProductCategory implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
     private Long id;
-    @Column
-    private String brandName;
-    @OneToMany
-    private List<ShopBranch> branchList;
-    
-    public ShopBrand(){
+    @Column(nullable = false)
+    private String categoryName;
+
+    public ProductCategory() {
     }
-    
-    public ShopBrand(String brandName){
-        this.brandName = brandName;
+
+    public ProductCategory(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getBrandName() {
-        return brandName;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public List<ShopBranch> getBranchList() {
-        return branchList;
-    }
-
-    public void setBrandName(String brandName) {
-        this.brandName = brandName;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     @Override
@@ -65,10 +57,10 @@ public class ShopBrand implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ShopBrand)) {
+        if (!(object instanceof ProductCategory)) {
             return false;
         }
-        ShopBrand other = (ShopBrand) object;
+        ProductCategory other = (ProductCategory) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -77,7 +69,7 @@ public class ShopBrand implements Serializable {
 
     @Override
     public String toString() {
-        return "com.polymtl.wsshoppingsolver.model.ShopBrand[ id=" + id + ", brandName=" + brandName + " ]";
+        return "com.polymtl.wsshoppingsolver.model.ProductCategory[ id=" + id + ", categoryName" + categoryName + " ]";
     }
     
 }

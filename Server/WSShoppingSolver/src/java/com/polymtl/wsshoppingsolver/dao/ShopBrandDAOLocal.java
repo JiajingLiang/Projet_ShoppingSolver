@@ -5,8 +5,7 @@
  */
 package com.polymtl.wsshoppingsolver.dao;
 
-import com.polymtl.wsshoppingsolver.model.Client;
-import java.util.List;
+import com.polymtl.wsshoppingsolver.model.ShopBrand;
 import javax.ejb.Local;
 
 /**
@@ -14,10 +13,9 @@ import javax.ejb.Local;
  * @author Jiajing
  */
 @Local
-public interface ClientDAOLocal {
-    void create(Client aClient);
-    Client findByKey(long id);
-    List<Client> findByEmail(String email);
-    void update(Client aClient);
+public interface ShopBrandDAOLocal {
+    void create(ShopBrand aBrand);
+    ShopBrand findByKey(long id);
+    void update(ShopBrand aBrand);
     void delete(long id);
 }

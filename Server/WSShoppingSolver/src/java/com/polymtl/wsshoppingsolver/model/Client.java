@@ -5,6 +5,7 @@
  */
 package com.polymtl.wsshoppingsolver.model;
 
+import com.polymtl.wsshoppingsolver.util.Constants;
 import com.thoughtworks.xstream.XStream;
 import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
@@ -34,10 +35,9 @@ import javax.xml.bind.annotation.XmlType;
 @Table(name = "client")
 @NamedQueries({@NamedQuery(name="Client.findByEmail",query="SELECT c FROM Client c WHERE c.email = :clientEmail")})
 public class Client implements Serializable {
-    private static final String idSeqName = "CLIENT_ID_SEQ";
     private static final long serialVersionUID = 1L;
     @Id
-    @SequenceGenerator(name="clientSeqGen",sequenceName=idSeqName,allocationSize=1,initialValue=1)
+    @SequenceGenerator(name="clientSeqGen",sequenceName=Constants.clientIdSeqName,allocationSize=1,initialValue=1)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="clientSeqGen")
     @Column(nullable = false)
     private Long id;

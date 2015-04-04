@@ -5,47 +5,39 @@
  */
 package com.polymtl.wsshoppingsolver.dao;
 
-import com.polymtl.wsshoppingsolver.model.Client;
+import com.polymtl.wsshoppingsolver.model.ShopBranch;
 import com.polymtl.wsshoppingsolver.util.Constants;
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  *
  * @author Jiajing
  */
 @Stateless
-public class ClientDAO implements ClientDAOLocal {
+public class ShopBranchDAO implements ShopBranchDAOLocal {
     @PersistenceContext(unitName = Constants.persistUnitName)
     private EntityManager em;
 
     @Override
-    public void create(Client aClient) {
-       em.persist(aClient);
+    public void create(ShopBranch aBranch) {
+        em.persist(aBranch);
     }
 
     @Override
-    public Client findByKey(long id) {
-        return em.find(Client.class, id);
-    }
-    
-    @Override
-    public List<Client> findByEmail(String email){
-        Query queryFindByEmail = em.createNamedQuery("Client.findByEmail");
-        queryFindByEmail.setParameter("clientEmail", email);
-        return queryFindByEmail.getResultList();
+    public ShopBranch findByKey(long id) {
+        return em.find(ShopBranch.class, id);
     }
 
     @Override
-    public void update(Client aClient) {
-        em.merge(aClient);
+    public void update(ShopBranch aBranch) {
+        em.merge(aBranch);
     }
 
     @Override
     public void delete(long id) {
         em.remove(findByKey(id));
     }
+
 }
