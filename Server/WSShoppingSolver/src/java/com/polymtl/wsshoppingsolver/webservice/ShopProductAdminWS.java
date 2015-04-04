@@ -6,8 +6,10 @@
 package com.polymtl.wsshoppingsolver.webservice;
 
 import com.polymtl.wsshoppingsolver.dao.ProductCategoryDAOLocal;
+import com.polymtl.wsshoppingsolver.dao.ProductDAOLocal;
 import com.polymtl.wsshoppingsolver.dao.ShopBranchDAOLocal;
 import com.polymtl.wsshoppingsolver.dao.ShopBrandDAOLocal;
+import com.polymtl.wsshoppingsolver.model.Product;
 import com.polymtl.wsshoppingsolver.model.ProductCategory;
 import com.polymtl.wsshoppingsolver.model.ShopBranch;
 import com.polymtl.wsshoppingsolver.model.ShopBrand;
@@ -30,6 +32,8 @@ public class ShopProductAdminWS {
     private ShopBranchDAOLocal shopBranchDao;
     @EJB
     private ProductCategoryDAOLocal productCategoryDao;
+    @EJB
+    private ProductDAOLocal productDao;
 
     @WebMethod(operationName = "createShopBrand")
     public Boolean createShopBrand(@WebParam(name = "BrandName") String brandName) {
@@ -58,15 +62,15 @@ public class ShopProductAdminWS {
         return true;
     }
     
-//    @WebMethod(operationName = "createProduct")
-//    public Boolean createProduct(@WebParam(name="idCategory")long idCategory, @WebParam(name="description")String description){
-//        ProductCategory category = productCategoryDao.findByKey(idCategory);
-//        if(category != null){
-//            Product aProduct = new Product(description,category);
-//            productDao.create(aProduct);
-//            return true;
-//        }else{
-//            return false;
-//        }
-//    }
+    @WebMethod(operationName = "createProduct")
+    public Boolean createProduct(@WebParam(name="idCategory")long idCategory, @WebParam(name="description")String description){
+        ProductCategory category = productCategoryDao.findByKey(idCategory);
+        if(category != null){
+            Product aProduct = new Product(description,category);
+            productDao.create(aProduct);
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
