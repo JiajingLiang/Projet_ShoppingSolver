@@ -7,12 +7,16 @@ package com.polymtl.wsshoppingsolver.webservice;
 
 import com.polymtl.wsshoppingsolver.dao.ProductCategoryDAOLocal;
 import com.polymtl.wsshoppingsolver.dao.ProductDAOLocal;
+import com.polymtl.wsshoppingsolver.dao.ProductPriceInShopDAOLocal;
 import com.polymtl.wsshoppingsolver.dao.ShopBranchDAOLocal;
 import com.polymtl.wsshoppingsolver.dao.ShopBrandDAOLocal;
 import com.polymtl.wsshoppingsolver.model.Product;
 import com.polymtl.wsshoppingsolver.model.ProductCategory;
+import com.polymtl.wsshoppingsolver.model.ProductPriceInShop;
 import com.polymtl.wsshoppingsolver.model.ShopBranch;
 import com.polymtl.wsshoppingsolver.model.ShopBrand;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -34,6 +38,8 @@ public class ShopProductAdminWS {
     private ProductCategoryDAOLocal productCategoryDao;
     @EJB
     private ProductDAOLocal productDao;
+    @EJB
+    private ProductPriceInShopDAOLocal productPriceInShopDao;
 
     @WebMethod(operationName = "createShopBrand")
     public Boolean createShopBrand(@WebParam(name = "BrandName") String brandName) {
@@ -63,14 +69,66 @@ public class ShopProductAdminWS {
     }
     
     @WebMethod(operationName = "createProduct")
-    public Boolean createProduct(@WebParam(name="idCategory")long idCategory, @WebParam(name="description")String description){
+    public Boolean createProduct(@WebParam(name="idCategory")long idCategory, @WebParam(name="barCode")String barCode, @WebParam(name="description")String description){
         ProductCategory category = productCategoryDao.findByKey(idCategory);
-        if(category != null){
-            Product aProduct = new Product(description,category);
-            productDao.create(aProduct);
-            return true;
+        if(category != null && barCode != null){
+            Product p = productDao.findByKey(barCode);
+            if(p==null){
+                Product aProduct = new Product(barCode,description,category);
+                productDao.create(aProduct);
+                return true;
+            }else{
+                return false;
+            }
         }else{
             return false;
         }
+    }
+    
+    @WebMethod(operationName = "addProductToShop")
+    public Boolean addProductToShop(@WebParam(name="idProduct")String productBarCode, @WebParam(name="idShop")long shopId, @WebParam(name="price")Double price){
+        Product product = productDao.findByKey(productBarCode);
+        ShopBranch shop = shopBranchDao.findByKey(shopId);
+        if(product != null && shop != null){
+            if(productPriceInShopDao.findByKey(productBarCode, shopId)==null){
+                ProductPriceInShop aProductPriceInShop = new ProductPriceInShop(product,shop,price);
+                productPriceInShopDao.create(aProductPriceInShop);
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+    
+    @WebMethod(operationName = "getProductPriceInShop")
+    public String getProductPriceInShop(@WebParam(name="productBarCode")String productBarCode, @WebParam(name="idShop")long shopId){
+        ProductPriceInShop productPriceInShop = productPriceInShopDao.findByKey(productBarCode, shopId);
+        if(productPriceInShop!=null){
+            return productPriceInShop.toXmlString();
+        }else{
+            return "null";
+        }        
+    }
+    
+    @WebMethod(operationName = "getAllProductsInShop")
+    public String getAllProductsInShop(@WebParam(name="idShop")long shopId){
+        ShopBranch shop = shopBranchDao.findByKey(shopId);
+        if(shop != null){
+            List<ProductPriceInShop> productsInShop = productPriceInShopDao.findByShop(shop);
+            if(productsInShop.size()>0){
+                String strXML = "<Products>";
+                for (ProductPriceInShop productInShop : productsInShop) {
+                    strXML += productInShop.getProduct().toXmlString();
+                }
+                strXML += "</Products>";
+                return strXML;
+            }else{
+                return "null";
+            }
+        }else{
+            return "null";
+        }       
     }
 }

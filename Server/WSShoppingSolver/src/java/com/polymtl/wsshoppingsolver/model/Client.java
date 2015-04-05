@@ -7,25 +7,16 @@ package com.polymtl.wsshoppingsolver.model;
 
 import com.polymtl.wsshoppingsolver.util.Constants;
 import com.thoughtworks.xstream.XStream;
-import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 
 /**
  *
@@ -37,8 +28,9 @@ import javax.xml.bind.annotation.XmlType;
 public class Client implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @SequenceGenerator(name="clientSeqGen",sequenceName=Constants.clientIdSeqName,allocationSize=1,initialValue=1)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="clientSeqGen")
+//    @SequenceGenerator(name="clientSeqGen",sequenceName=Constants.clientIdSeqName,allocationSize=1,initialValue=1)
+//    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="clientSeqGen")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
     private Long id;
     @Column

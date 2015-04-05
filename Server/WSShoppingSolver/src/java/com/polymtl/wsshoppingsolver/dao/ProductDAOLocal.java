@@ -15,7 +15,7 @@ import javax.ejb.Local;
 @Local
 public interface ProductDAOLocal {
     void create(Product aProduct);
-    Product findByKey(long id);
+    Product findByKey(String barCode);
     void update(Product aProduct);
-    void delete(long id);
+    void delete(String barCode);
 }

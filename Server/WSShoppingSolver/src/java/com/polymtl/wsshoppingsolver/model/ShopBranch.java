@@ -5,13 +5,17 @@
  */
 package com.polymtl.wsshoppingsolver.model;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -20,16 +24,25 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "shopbranch")
+
+@XStreamAlias("Shop")
 public class ShopBranch implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
+    @XStreamAlias("ShopId")
     private Long id;
     @Column
+    @XStreamAlias("Address")
     private String address;
     @ManyToOne
+    @XStreamAlias("Brand")
     private ShopBrand brand;
+    
+    @OneToMany(mappedBy="shopBranch")
+    @XStreamOmitField
+    private List<ProductPriceInShop> productPrices;
 
     public ShopBranch() {
     }

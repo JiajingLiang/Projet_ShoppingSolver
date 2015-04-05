@@ -5,6 +5,8 @@
  */
 package com.polymtl.wsshoppingsolver.model;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
@@ -21,15 +23,20 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "shopbrand")
+
+@XStreamAlias("Brand")
 public class ShopBrand implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
+    @XStreamAlias("BrandId")
     private Long id;
     @Column
+    @XStreamAlias("BrandName")
     private String brandName;
     @OneToMany
+    @XStreamOmitField
     private List<ShopBranch> branchList;
     
     public ShopBrand(){

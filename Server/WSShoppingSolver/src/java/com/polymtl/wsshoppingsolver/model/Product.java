@@ -5,13 +5,16 @@
  */
 package com.polymtl.wsshoppingsolver.model;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -20,27 +23,38 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "product")
+
+@XStreamAlias("Product")
 public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false,length=20)
+    @XStreamAlias("BarCode")
+//    private Long id;
+    private String barCode;
     @Column(nullable = false)
-    private Long id;
-    @Column(nullable = false)
+    @XStreamAlias("Description")
     private String description;
     @ManyToOne
+    @XStreamAlias("Category")
     private ProductCategory category;
+    
+    @OneToMany(mappedBy="product")
+    @XStreamOmitField
+    private List<ProductPriceInShop> productShopAsso;
 
     public Product() {
     }
 
-    public Product(String description, ProductCategory category) {
+    public Product(String barCode, String description, ProductCategory category) {
+        this.barCode = barCode;
         this.description = description;
         this.category = category;
     }
 
-    public Long getId() {
-        return id;
+    public String getBarCode() {
+        return barCode;
     }
 
     public String getDescription() {
@@ -62,7 +76,7 @@ public class Product implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (barCode != null ? barCode.hashCode() : 0);
         return hash;
     }
 
@@ -73,7 +87,7 @@ public class Product implements Serializable {
             return false;
         }
         Product other = (Product) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.barCode == null && other.barCode != null) || (this.barCode != null && !this.barCode.equals(other.barCode))) {
             return false;
         }
         return true;
@@ -81,7 +95,14 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "com.polymtl.wsshoppingsolver.model.Product[ id=" + id + ", description" + description + ", category" + category.getCategoryName() + " ]";
+        return "com.polymtl.wsshoppingsolver.model.Product[ barCode=" + barCode + ", description" + description + ", category" + category.getCategoryName() + " ]";
+    }
+    
+    public String toXmlString(){
+        XStream xstream = new XStream();
+        xstream.processAnnotations(Product.class);
+        xstream.processAnnotations(ProductCategory.class);
+        return xstream.toXML(this);
     }
     
 }

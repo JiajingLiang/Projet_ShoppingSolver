@@ -26,8 +26,8 @@ public class ProductDAO implements ProductDAOLocal {
     }
 
     @Override
-    public Product findByKey(long id) {
-        return em.find(Product.class, id);
+    public Product findByKey(String barCode) {
+        return em.find(Product.class, barCode);
     }
 
     @Override
@@ -36,8 +36,8 @@ public class ProductDAO implements ProductDAOLocal {
     }
 
     @Override
-    public void delete(long id) {
-        em.remove(findByKey(id));
+    public void delete(String barCode) {
+        em.remove(findByKey(barCode));
     }
 
 }
