@@ -124,7 +124,7 @@ public class CaptureActivity extends Activity implements Callback {
 			Bundle bundle = new Bundle();
 			bundle.putString("result", resultString);
 			resultIntent.putExtras(bundle);
-			this.setResult(RESULT_OK, resultIntent);
+			this.setResult(RESULT_OK, resultIntent); // To return data back to its parent
 		}
 		CaptureActivity.this.finish();
 	}

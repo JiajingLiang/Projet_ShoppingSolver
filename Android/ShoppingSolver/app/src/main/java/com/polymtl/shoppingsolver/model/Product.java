@@ -5,9 +5,18 @@ package com.polymtl.shoppingsolver.model;
  */
 public class Product {
 
+    private String primaryCode;
     private String name;
     private Category category;
     private float unit_price;
+
+
+    public void setPrimaryCode(String code) {
+        this.primaryCode = code;
+    }
+    private String getPrimaryCode() {
+        return this.primaryCode;
+    }
 
     public void setName(String name) {
         this.name = name;

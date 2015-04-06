@@ -9,6 +9,10 @@ import java.net.URL;
 
 import org.json.simple.JSONObject;
 
+import com.polymtl.shoppingsolver.model.Category;
+import com.polymtl.shoppingsolver.model.Product;
+import com.polymtl.shoppingsolver.model.ShoppingItem;
+import com.polymtl.shoppingsolver.ui.CustomerBaseAdapter;
 import com.zxing.activity.CaptureActivity;
 
 import android.app.Fragment;
@@ -21,19 +25,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class PaymentFragment extends Fragment {
-	private Context mcontext;
+
+    static final int PICK_SCAN_REQUEST = 0;
+
+	private Context mContext;
 	private String urlServlet;
 	private View rootView;
     private String userId;
+    private ListView shoppingListView;
+    private CustomerBaseAdapter mAdapter;
+    private TextView tvShopingList;
+    //private List<Map<String, Object>> shoppingListData;
 
 	/**public PaymentFragment(Context context){
 		this.mcontext = context;
 	}*/
+
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,15 +56,17 @@ public class PaymentFragment extends Fragment {
 
 
         setUpButtons();
- 
+
+        setUpShoppingList(inflater);
+
         return rootView;
     }
 
     private void init() {
-        this.mcontext = getActivity().getApplicationContext();
+        this.mContext = getActivity().getApplicationContext();
         //this.mcontext = getActivity();
 
-        if (this.mcontext == null) {
+        if (this.mContext == null) {
             Log.i("err:", "the fragment is not attached to an activity");
             return;
         }
@@ -59,16 +74,41 @@ public class PaymentFragment extends Fragment {
         Bundle bundle = getArguments();
         userId = bundle.getString("userId");
         urlServlet = bundle.getString("urlServlet");
+
+        if(bundle.containsKey("command")) {
+
+            getActivity().runOnUiThread(new RefreshListView());
+        }
+
     }
 
     private void setUpButtons(){
 
-        Button buttonPay = (Button) rootView.findViewById(R.id.buttonPay);
+        ImageButton buttonPay = (ImageButton) rootView.findViewById(R.id.buttonPay);
         buttonPay.setOnClickListener(new OnClickListener(){
 
             @Override
             public void onClick(View v) {
-                TextView tvTotal = (TextView)rootView.findViewById(R.id.tvTotalVal);
+                Log.i("Update:", "pay button clicked");
+                // Test change list
+
+                Product itemProduct = new Product();
+                itemProduct.setName("Milk");
+                itemProduct.setUnit_price(3.20f);
+                Category itemCategory = new Category();
+                itemCategory.setName("Food");
+                itemCategory.setRatioTVQ(0.00f);
+                itemCategory.setRatioTPS(0.00f);
+                itemProduct.setCategory(itemCategory);
+                ShoppingItem shoppingItem = new ShoppingItem(itemProduct);
+                shoppingItem.setQuantity(1.0f);
+                shoppingItem.getItemTotalPrice();
+
+                Log.i("Update:", "start RefreshListView");
+                MainActivity.addShoppingItem(shoppingItem);
+                getActivity().runOnUiThread(new RefreshListView());
+
+                /*TextView tvTotal = (TextView)rootView.findViewById(R.id.tvTotalVal);
                 Double total = Double.parseDouble(tvTotal.getText().toString());
                 TextView tvProducts = (TextView)rootView.findViewById(R.id.tvProductsVal);
                 String products = tvProducts.getText().toString();
@@ -77,28 +117,113 @@ public class PaymentFragment extends Fragment {
                 json.put("total", total);
                 json.put("products", products);
                 MakePaymentTask makePaymentTask = new MakePaymentTask();
-                makePaymentTask.execute(json);
+                makePaymentTask.execute(json);*/
             }
         });
 
-        buttonPay.setEnabled(false);
+        //
+        // buttonPay.setEnabled(false);
 
-        Button buttonScan = (Button)rootView.findViewById(R.id.buttonScan);
+        ImageButton buttonScan = (ImageButton)rootView.findViewById(R.id.buttonScan);
         buttonScan.setOnClickListener(new OnClickListener(){
 
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 Intent openCameraIntent = new Intent(getActivity(),CaptureActivity.class);
-                getActivity().startActivityForResult(openCameraIntent, 0);
+                // Start this activity and get a result back from this activity when it ends
+                getActivity().startActivityForResult(openCameraIntent, PICK_SCAN_REQUEST);
             }
 
         });
     }
 
-    //TODO:
-    private void updateShoppingList() {
 
+   /* private void setData() {
+
+       shoppingListData = new ArrayList<Map<String, Object>>();
+        Map<String, Object> map;
+
+        map = new HashMap<String, Object>();
+        Product milk = new Product();
+        Category food = new Category();
+        food.setName("Food");
+        food.setRatioTPS(0.0f);
+        food.setRatioTVQ(0.0f);
+        milk.setCategory(food);
+        milk.setName("Milk");
+        milk.setUnit_price(3.20f);
+        ItemByIndividual milkItem = new ItemByIndividual(milk);
+        map.put("name", milkItem.getProduct().getName());
+        map.put("unitPrice", milk.getUnit_price());
+        map.put("quantity", milkItem.getQuantity());
+
+        shoppingListData.add(map);
+    }*/
+
+    private void setUpShoppingList(LayoutInflater inflater) {
+
+        tvShopingList = (TextView) rootView.findViewById(R.id.tvShoppingList);
+
+        // TODO: when list cleared, should show this text
+        if(MainActivity.getShoppingItems().size() < 1) {
+            tvShopingList.setText("Nothing in the list, please scan your products...");
+        } else {
+            tvShopingList.setEnabled(false);
+        }
+
+        shoppingListView = (ListView) rootView.findViewById(R.id.shoppingList);
+        mAdapter = new CustomerBaseAdapter(mContext, MainActivity.getShoppingItems());
+
+        //code to add header and footer to listview
+        /*ViewGroup header = (ViewGroup) inflater.inflate(R.layout.header, shoppingListView,
+               false);
+
+        shoppingListView.addHeaderView(header, null, false);*/
+
+        shoppingListView.setAdapter(mAdapter);
+
+
+        shoppingListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.i("click", "click");
+                // open ItemDialogFragment
+                // TODO:
+                Log.i("Open item:", "click");
+                StartCommunication comm = (StartCommunication) getActivity();
+                comm.setComm(position);
+            }
+        });
+
+    }
+
+    // When shopping list item quantity changed then update this item quantity
+    /*private void updateItemQuantityView(int itemIndex, int gap) {
+
+        View v = shoppingListView.getChildAt(itemIndex - shoppingListView.getFirstVisiblePosition());
+        CustomerArrayAdapter.ViewHolder viewHolder = (CustomerArrayAdapter.ViewHolder) v.getTag();
+        if (viewHolder != null) {
+            int quantity = Integer.parseInt(viewHolder.quantity.getText().toString()) + gap;
+            if (quantity <= 0) {
+                deleteShoppingListItem(itemIndex);
+            } else {
+                viewHolder.quantity.setText(Integer.parseInt(viewHolder.quantity.getText().toString()) + gap);
+            }
+        }
+
+    }*/
+
+    // Delete one of shopping list item
+    private void deleteShoppingListItem(int itemIndex) {
+        // TODO:
+        //shoppingListData.remove(itemIndex);
+
+        mAdapter.notifyDataSetChanged();
+    }
+
+    private void addShoppingListItem() {
+        // TODO:
     }
 
 	private class MakePaymentTask extends AsyncTask<JSONObject, Integer, Void> {
@@ -139,14 +264,50 @@ public class PaymentFragment extends Fragment {
 		
 		@Override
 		protected void onPostExecute(Void result){
-			Toast.makeText(PaymentFragment.this.mcontext, "You've juste made a payment!", Toast.LENGTH_SHORT).show();
+			/*Toast.makeText(PaymentFragment.this.mContext, "You've just made a payment!", Toast.LENGTH_SHORT).show();
 			TextView tvTotal = (TextView)PaymentFragment.this.rootView.findViewById(R.id.tvTotalVal);
 			tvTotal.setText("");
 			TextView tvProducts = (TextView)PaymentFragment.this.rootView.findViewById(R.id.tvProductsVal);
 			tvProducts.setText("");
-			Button buttonPay = (Button) PaymentFragment.this.rootView.findViewById(R.id.buttonPay);
-			buttonPay.setEnabled(false);
+			ImageButton buttonPay = (ImageButton) PaymentFragment.this.rootView.findViewById(R.id.buttonPay);
+			buttonPay.setEnabled(false);*/
 		}
 	}
+
+
+    // used for communication between this fragment with another fragment
+    public interface StartCommunication{
+        public void setComm(int position);
+    }
+
+
+    //
+    public class RefreshListView implements Runnable {
+
+        @Override
+        public void run() {
+
+             mAdapter.notifyDataSetChanged();
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
