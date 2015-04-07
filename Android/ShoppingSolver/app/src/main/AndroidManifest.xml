@@ -41,6 +41,8 @@
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
+        <service android:name=".service.ShoppingSolverIntentService"
+            android:exported="false"/>
     </application>
 
 </manifest>

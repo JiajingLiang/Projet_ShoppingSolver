@@ -6,6 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/room"
     tools:context="com.polymtl.shoppingsolver.LoginActivity" >
 
     <TextView
@@ -14,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:text="@string/textview_login"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -24,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView_login"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:inputType="number" >
 
@@ -37,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/editText_login"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:text="@string/textview_password"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -47,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView_password"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:inputType="textPassword" />
 
@@ -57,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/editText_password"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
         android:text="@string/button_connexion" />
 
-</RelativeLayout><!-- From: file:/E:/EPM/2015Hiver/INF8405%20-%20Informatique%20Mobile/Projet_ShoppingSolver/Android/ShoppingSolver/app/src/main/res/layout/activity_login.xml -->
+</RelativeLayout><!-- From: file:/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/src/main/res/layout/activity_login.xml -->

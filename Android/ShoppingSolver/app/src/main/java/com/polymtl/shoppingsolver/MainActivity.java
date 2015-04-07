@@ -1,5 +1,7 @@
 package com.polymtl.shoppingsolver;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,9 +14,13 @@ import org.json.simple.parser.ParseException;
 
 import android.app.Activity;
 import android.app.Fragment;
+//import android.support.v4.app.FragmentManager;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.ResultReceiver;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -26,9 +32,17 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.polymtl.shoppingsolver.model.Category;
 import com.polymtl.shoppingsolver.model.NavDrawerItem;
+import com.polymtl.shoppingsolver.model.Product;
+import com.polymtl.shoppingsolver.model.ShoppingItem;
+import com.polymtl.shoppingsolver.service.ShoppingSolverIntentService;
+import com.polymtl.shoppingsolver.ui.HabitFragment;
+import com.polymtl.shoppingsolver.ui.ItemDialogFragment;
+import com.polymtl.shoppingsolver.ui.ReceptionFragment;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements PaymentFragment.StartCommunication{
+
 	private String[] mNavigationDrawerItemTitles;
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
@@ -43,12 +57,21 @@ public class MainActivity extends Activity {
 	
 	private final static int SCANNIN_GREQUEST_CODE = 1;
 
+    private static ArrayList<ShoppingItem> shoppingItems;
+    private static int currentPosition;
+
+    private Product itemProduct;
+    private Category itemCategory;
+    private ShoppingItem shoppingItem;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
         init();
+
+        testShoppingList(); // Test data
 
         setUpDrawerLayout();
 
@@ -63,6 +86,39 @@ public class MainActivity extends Activity {
         Intent intent = getIntent();
         userId = intent.getStringExtra("login");
         urlServlet = intent.getStringExtra("urlServlet");
+
+        shoppingItems = new ArrayList<>();
+    }
+
+    private void testShoppingList() {
+
+        itemProduct = new Product();
+        itemProduct.setName("Milk");
+        itemProduct.setUnit_price(3.20f);
+        itemCategory = new Category();
+        itemCategory.setName("Food");
+        itemCategory.setRatioTVQ(0.00f);
+        itemCategory.setRatioTPS(0.00f);
+        itemProduct.setCategory(itemCategory);
+        shoppingItem = new ShoppingItem(itemProduct);
+        shoppingItem.setQuantity(1.0f);
+        shoppingItem.getItemTotalPrice();
+        shoppingItems.add(shoppingItem);
+
+        itemProduct = new Product();
+        itemProduct.setName("Beer");
+        itemProduct.setUnit_price(2.50f);
+        itemCategory = new Category();
+        itemCategory.setName("Alcohol");
+        itemCategory.setRatioTPS(0.15f);
+        itemCategory.setRatioTVQ(0.26f);
+        itemProduct.setCategory(itemCategory);
+        shoppingItem = new ShoppingItem(itemProduct);
+        shoppingItem.setQuantity(12.0f);
+        shoppingItem.getItemTotalPrice();
+
+        shoppingItems.add(shoppingItem);
+
     }
 
     private void setUpDrawerLayout() {
@@ -71,9 +127,11 @@ public class MainActivity extends Activity {
         mNavigationDrawerItemTitles = getResources().getStringArray(R.array.nav_drawer_items);
         mDrawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
         mDrawerList = (ListView)findViewById(R.id.left_drawer);
-        NavDrawerItem[] drawerItem = new NavDrawerItem[2];
+        NavDrawerItem[] drawerItem = new NavDrawerItem[4];
         drawerItem[0] = new NavDrawerItem(R.drawable.ic_payment,"Make Payment");
         drawerItem[1] = new NavDrawerItem(R.drawable.ic_count_detail,"Count Detail");
+        drawerItem[2] = new NavDrawerItem(R.drawable.ic_habit, "Consumption habit");
+        drawerItem[3] = new NavDrawerItem(R.drawable.ic_reception, "Your receptions");
         DrawerItemAdapter adapter = new DrawerItemAdapter(this,R.layout.listview_item_row,drawerItem);
         mDrawerList.setAdapter(adapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
@@ -149,8 +207,24 @@ public class MainActivity extends Activity {
         // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
     }
-	
-	private class DrawerItemClickListener implements ListView.OnItemClickListener {
+
+    @Override
+    public void setComm(int position) {
+
+        FragmentManager fragmentManager = getFragmentManager();
+
+
+
+         Log.i("Open item:", "setComm");
+         ItemDialogFragment itemDialogFragment = ItemDialogFragment.newInstance(position);
+         Log.i("Open item:", "position" + position);
+         Log.i("Open item:", "open item fragment");
+         fragmentManager.beginTransaction().replace(R.id.content_frame, itemDialogFragment)
+                 .addToBackStack("payment").commit();
+
+    }
+
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
 	    
 	    @Override
 	    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -164,14 +238,20 @@ public class MainActivity extends Activity {
 	    Fragment fragment = null;
 	    Bundle bundle=new Bundle();
 	    switch (position) {
-	    case 0:
-	        fragment = new PaymentFragment();
-	        break;
-	    case 1:
-	        fragment = new CountFragment();
-	        break;
-	    default:
-	        break;
+	        case 0:
+	            fragment = new PaymentFragment();
+	            break;
+	        case 1:
+	            fragment = new CountFragment();
+	            break;
+            case 2:
+                fragment = new HabitFragment();
+                break;
+            case 3:
+                fragment = new ReceptionFragment();
+                break;
+	        default:
+	            break;
 	    }
 	    if (fragment != null) {
 	    	bundle.putString("userId", userId);
@@ -179,7 +259,8 @@ public class MainActivity extends Activity {
 	    	fragment.setArguments(bundle);
 	    	
 	        FragmentManager fragmentManager = getFragmentManager();
-	        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+	        fragmentManager.beginTransaction().
+                    replace(R.id.content_frame, fragment).commit();
 	        mDrawerList.setItemChecked(position, true);
 	        mDrawerList.setSelection(position);
 	        setTitle(mNavigationDrawerItemTitles[position]);
@@ -188,40 +269,147 @@ public class MainActivity extends Activity {
 	        Log.e("MainActivity", "Error in creating fragment");
 	    }	    
 	}
+
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
 		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == RESULT_OK) {
-			Bundle bundle = data.getExtras();
-			String scanResult = bundle.getString("result");
-			JSONParser jsonParser = new JSONParser();
-	        ContainerFactory containerFactory = new ContainerFactory(){
-	            @Override
-	            public List creatArrayContainer() {
-	              return new LinkedList();
-	            }
-	            @Override
-	            public Map createObjectContainer() {
-	              return new LinkedHashMap();
-	            }
-	        }; 
-			try {
-				Map json = (Map)jsonParser.parse(scanResult, containerFactory);
-	            JSONObject jsonObject = new JSONObject(json);
-	            Number total = (Number)jsonObject.get("total");
-	            TextView tvTotalVal = (TextView)findViewById(R.id.tvTotalVal);
-	            tvTotalVal.setText(total.toString());
-	            List products = (List)jsonObject.get("products");
-				TextView tvScanResult = (TextView)findViewById(R.id.tvProductsVal);
-				tvScanResult.setText(products.toString());
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			Button buttonPay = (Button)findViewById(R.id.buttonPay);
-			buttonPay.setEnabled(true);
-		}
+
+        // come back scan request, send the code to Server
+        if (requestCode == PaymentFragment.PICK_SCAN_REQUEST) {
+
+            if (resultCode == RESULT_OK) {
+                Bundle bundle = data.getExtras();
+                String scanResult = bundle.getString("result");
+
+                // TODO:
+                // create new Intent to invoke ShoppingSolverIntentService
+                Intent mServerIntent = new Intent(MainActivity.this, ShoppingSolverIntentService.class);
+                mServerIntent.putExtra("command", "productInfo");
+                mServerIntent.putExtra("receiver", new SSResultReceiver(new Handler()));
+                // start IntentService
+                MainActivity.this.startService(mServerIntent);
+
+                // TEST: mock product info
+                Product product = new Product();
+                product.setName("Orange Juice");
+                product.setUnit_price(1.20f);
+                Category category = new Category();
+                category.setName("Food");
+                category.setRatioTVQ(0.00f);
+                category.setRatioTPS(0.00f);
+                product.setCategory(category);
+
+                Bundle toSaveBundle = new Bundle();
+                toSaveBundle.putString("productName", product.getName());
+                toSaveBundle.putFloat("unitPrice", product.getUnit_price());
+                toSaveBundle.putString("categoryName", category.getName());
+                toSaveBundle.putFloat("ratioTVQ", category.getRatioTVQ());
+                toSaveBundle.putFloat("ratioTPS", category.getRatioTPS());
+
+
+                //mock end //////////////////////////////////////
+
+                // TODO: send data to PaymentFragment
+
+                /**
+                JSONParser jsonParser = new JSONParser();
+                ContainerFactory containerFactory = new ContainerFactory() {
+                    @Override
+                    public List creatArrayContainer() {
+                        return new LinkedList();
+                    }
+
+                    @Override
+                    public Map createObjectContainer() {
+                        return new LinkedHashMap();
+                    }
+                };
+                try {
+                    Map json = (Map) jsonParser.parse(scanResult, containerFactory);
+                    JSONObject jsonObject = new JSONObject(json);
+                    Number total = (Number) jsonObject.get("total");
+                    TextView tvTotalVal = (TextView) findViewById(R.id.tvTotalVal);
+                    tvTotalVal.setText(total.toString());
+                    List products = (List) jsonObject.get("products");
+                    TextView tvScanResult = (TextView) findViewById(R.id.tvProductsVal);
+                    tvScanResult.setText(products.toString());
+                } catch (ParseException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                Button buttonPay = (Button) findViewById(R.id.buttonPay);
+                buttonPay.setEnabled(true);*/
+            }
+        }
 	}
+
+    public static ArrayList<ShoppingItem> getShoppingItems() {
+        return MainActivity.shoppingItems;
+    }
+
+    public static void addShoppingItem(ShoppingItem item) {
+        MainActivity.shoppingItems.add(item);
+    }
+
+    public static void removeOneShoppingItem(int position) {
+        MainActivity.shoppingItems.remove(position);
+    }
+
+    public static void replaceOneShoppingItem(int position, ShoppingItem item) {
+        MainActivity.shoppingItems.remove(position);
+        MainActivity.shoppingItems.add(position, item);
+
+    }
+
+    public static void setCurrentPosition(int position) {
+        currentPosition = position;
+    }
+
+    public static int getCurrentPosition() {
+        return currentPosition;
+    }
+
+    private class SSResultReceiver extends ResultReceiver {
+
+        private final int ERROR = 0, LOGIN = 1, PRODUCTINFO = 2, PAYMENT = 3,
+                CLIENTINFO = 4, CONSUMPTIVEHABIT = 5, SALEINFO = 6;
+
+
+        /**
+         * Create a new ResultReceive to receive results.  Your
+         * {@link #onReceiveResult} method will be called from the thread running
+         * <var>handler</var> if given, or from an arbitrary thread if null.
+         *
+         * @param handler
+         */
+        public SSResultReceiver(Handler handler) {
+            super(handler);
+        }
+
+        @Override
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+            super.onReceiveResult(resultCode, resultData);
+
+            switch (resultCode) {
+                case LOGIN:
+                    break;
+                case PRODUCTINFO:
+                    break;
+                case PAYMENT:
+                    break;
+                case CLIENTINFO:
+                    break;
+                case CONSUMPTIVEHABIT:
+                    break;
+                case SALEINFO:
+                    break;
+                case ERROR:
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 	
 }

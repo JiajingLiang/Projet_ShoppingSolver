@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/tvItem_name"
+        android:background="@drawable/border_ui"
+        android:textSize="20sp"
+
+        android:layout_marginBottom="10dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/tvItem_name" >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_quantity"
+            android:layout_marginBottom="20dp"
+            android:gravity="top"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/increasebutton"
+                android:id="@+id/btn_increase"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edQuantity"
+                android:layout_weight="1"
+                android:digits="0123456789."
+                android:inputType="numberDecimal" />
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/decreasebutton"
+                android:id="@+id/btn_decrease"/>
+             <Spinner
+                android:id="@+id/spinnerUnit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/unitPrice"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/totalPrice"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvratioTPS"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvratioTVQ"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:id="@+id/btn_cancel"
+            android:background="@drawable/cancelbutton"
+            android:layout_weight="1"
+            android:layout_gravity="bottom"/>
+
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="80dp"
+            android:id="@+id/btn_delete"
+            android:background="@drawable/delete"
+            android:layout_gravity="center"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_weight="1"/>
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:id="@+id/btn_save"
+            android:background="@drawable/save"
+            android:layout_weight="1"
+            android:layout_gravity="bottom"/>
+
+        </LinearLayout>
+
+
+
+</RelativeLayout>

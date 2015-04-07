@@ -14,13 +14,21 @@
     <string name="textview_products">Products : </string>
     <string name="button_scan">Scan Code</string>
     <string name="button_pay">Make Payment</string>
+    <string name="textview_shoppinglist">Shopping List...</string>
+    <string name="tv_productName">Products</string>
+    <string name="tv_unitPrice">UnitPrice($)</string>
+    <string name="tv_quantity">Quantity</string>
+    <string name="tv_itemPrice">Price</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="tv_habit">Your consumption habit...</string>
     
     <!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">
         <item >Make Payment</item>
         <item >Count Detail</item>
     </string-array>
-    
+
+
     <string name="drawer_open">Open navigation drawer</string>
 	<string name="drawer_close">Close navigation drawer</string>
 	

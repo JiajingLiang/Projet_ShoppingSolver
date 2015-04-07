@@ -1,6 +1,7 @@
 package com.polymtl.shoppingsolver.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Zoe on 15-04-01.
@@ -23,37 +24,54 @@ public class Transaction {
         this.shoppingList = shoppingList;
     }
 
+    public void setShoppingList(ArrayList<ShoppingItem> list) {
+        this.shoppingList = list;
+    }
     public ArrayList<ShoppingItem> getShoppingList() {
         return this.shoppingList;
 
     }
 
+    public void setAmountProducts(short amount) {
+        this.amountProducts = amount;
+    }
     public short getAmountProducts() {
-        short result = 0;
+        return this.amountProducts;
+    }
+    public short calculateAmountProducts() {
+
         for (ShoppingItem item : this.shoppingList ) {
-            result += item.getQuantity();
+            this.amountProducts += item.getQuantity();
         }
-        return result;
+        return this.amountProducts ;
     }
 
+    public void setTaxTPS(float tax) {
+        this.taxTPS = tax;
+    }
     public float getTaxTPS() {
-        float result = 0.0f;
+        return this.taxTPS;
+    }
+    public float calculateTaxTPS() {
+
         for (ShoppingItem item : this.shoppingList ) {
-            result += item.getItemPrice() * item.getProduct().getCategory().getRatioTPS();
+            this.taxTPS += item.getItemTotalPrice() * item.getProduct().getCategory().getRatioTPS();
         }
-        return result;
+        return this.taxTPS;
     }
 
+    public void setTaxTVQ(float tax) {
+        this.taxTVQ = tax;
+    }
     public float getTaxTVQ() {
-        float result = 0.0f;
-        for (ShoppingItem item : this.shoppingList ) {
-            result += item.getItemPrice() * item.getProduct().getCategory().getRatioTVQ();
-        }
-        return result;
+        return this.taxTVQ;
     }
+    public float calculateTVQ() {
 
-    public float getTotalPriceWithTax() {
-        return this.totalPrice + getTaxTPS() + getTaxTVQ();
+        for (ShoppingItem item : this.shoppingList ) {
+            this.taxTVQ += item.getItemTotalPrice() * item.getProduct().getCategory().getRatioTVQ();
+        }
+        return this.taxTVQ;
     }
 
     public void setStore(String store) {
@@ -104,4 +122,15 @@ public class Transaction {
         return this.totalPrice;
     }
 
+    public void setTotalPriceWithTax(float priceWithTax) {
+        this.totalPriceWithTax  = priceWithTax;
+    }
+    public float getTotalPriceWithTax() {
+        return this.totalPriceWithTax;
+    }
+
+    public float calculateTotalPriceWithTax() {
+        this.totalPriceWithTax = this.totalPrice + getTaxTPS() + getTaxTVQ();
+        return this.totalPriceWithTax;
+    }
 }

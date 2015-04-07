@@ -1,79 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="11">
 
-	<Button
-	    android:id="@+id/buttonScan"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignParentTop="true"
-	    android:layout_alignParentLeft="true"
-	    android:layout_marginTop="20dp"
-	    android:layout_marginLeft="30dp"
-	    android:text="@string/button_scan" />
+    <TextView
+        android:id="@+id/tvShoppingList"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        android:layout_marginLeft="10dp"
+        android:text="@string/textview_shoppinglist" />
 
-	<Button
-	    android:id="@+id/buttonPay"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignBottom="@+id/buttonScan"
-	    android:layout_toRightOf="@+id/buttonScan"
-	    android:text="@string/button_pay" />
-	
-	<TextView
-	    android:id="@+id/tvTotal"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignParentLeft="true"
-	    android:layout_alignParentTop="true"
-	    android:layout_marginLeft="30dp"
-	    android:layout_marginTop="90dp"
-	    android:text="@string/textview_total"
-	    android:textAppearance="?android:attr/textAppearanceMedium" />
-	
-	<TextView
-	    android:id="@+id/tvTotalVal"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignBaseline="@+id/tvTotal"
-	    android:layout_alignBottom="@+id/tvTotal"
-	    android:layout_marginLeft="10dp"
-	    android:layout_toRightOf="@+id/tvTotal"
-	    android:text=""
-	    android:textAppearance="?android:attr/textAppearanceMedium" />
-	
-	<TextView
-	    android:id="@+id/tvProducts"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignParentLeft="true"
-	    android:layout_alignParentTop="true"
-	    android:layout_marginLeft="30dp"
-	    android:layout_marginTop="130dp"
-	    android:text="@string/textview_products"
-	    android:textAppearance="?android:attr/textAppearanceMedium" />
-	
-	<TextView
-	    android:id="@+id/tvProductsVal"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignBaseline="@+id/tvProducts"
-	    android:layout_alignBottom="@+id/tvProducts"
-	    android:layout_marginLeft="10dp"
-	    android:layout_toRightOf="@+id/tvProducts"
-	    android:text=""
-	    android:textAppearance="?android:attr/textAppearanceMedium" />
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/shoppingList"
+        android:layout_weight="1"
+        android:background="@drawable/border_ui">
+    </ListView>
 
-	<!--<TextView
-	    android:id="@+id/tvProductsVal"
-	    android:layout_width="fill_parent"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="5" >
+
+        <ImageButton
+            android:id="@+id/buttonPay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/buybutton"
+            android:gravity="left"
+            android:layout_alignParentLeft="true"/>
+        <ImageButton
+            android:id="@+id/buttonScan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/scan"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_alignParentRight="true"
+            />
+
+    </RelativeLayout>
+
+    <!--<TextView
+        android:id="@+id/tvTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="90dp"
+        android:text="@string/textview_total"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/tvTotalVal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvTotal"
+        android:layout_alignBottom="@+id/tvTotal"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/tvTotal"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+     <TextView
+         android:id="@+id/tvProducts"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_alignParentTop="true"
+         android:layout_marginLeft="30dp"
+         android:layout_marginTop="130dp"
+         android:text="@string/textview_products"
+         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+     <TextView
+         android:id="@+id/tvProductsVal"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignBaseline="@+id/tvProducts"
+         android:layout_alignBottom="@+id/tvProducts"
+         android:layout_marginLeft="10dp"
+         android:layout_toRightOf="@+id/tvProducts"
+         android:text=""
+         android:textAppearance="?android:attr/textAppearanceMedium" />-->
+
+    <!-- <TextView
+        android:id="@+id/tvProductsVal"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/buttonScan"
         android:lines="2"
         android:gravity="center_horizontal"
         android:textColor="@android:color/black"
-        android:textSize="16sp" 
+        android:textSize="16sp"
         android:text=""/>-->
 	
-</RelativeLayout>
+</LinearLayout>

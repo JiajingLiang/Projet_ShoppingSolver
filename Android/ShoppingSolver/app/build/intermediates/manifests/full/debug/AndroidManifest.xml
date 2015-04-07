@@ -23,15 +23,15 @@
         <activity
             android:name="com.polymtl.shoppingsolver.LoginActivity"
             android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.polymtl.shoppingsolver.MainActivity"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name="com.polymtl.shoppingsolver.MainActivity"
-            android:label="@string/app_name" >
         </activity>
         <activity
             android:name="com.zxing.activity.CaptureActivity"
@@ -40,6 +40,10 @@
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
+
+        <service
+            android:name="com.polymtl.shoppingsolver.service.ShoppingSolverIntentService"
+            android:exported="false" />
     </application>
 
 </manifest>

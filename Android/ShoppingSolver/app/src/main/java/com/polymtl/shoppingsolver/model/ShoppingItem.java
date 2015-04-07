@@ -3,9 +3,9 @@ package com.polymtl.shoppingsolver.model;
 /**
  * Created by Zoe on 15-04-01.
  */
-public abstract class ShoppingItem {
+public class ShoppingItem {
     private Product product;
-    private short quantity; //for product sold by individual
+    private float quantity; //for product sold by individual
 
 
     public ShoppingItem(Product product) {
@@ -17,14 +17,17 @@ public abstract class ShoppingItem {
         return this.product;
     }
 
-    public void setQuantity(short quantity) {
+    public void setQuantity(float quantity) {
         this.quantity = quantity;
     }
 
-    public short getQuantity() {
+    public float getQuantity() {
         return this.quantity;
     }
 
-    public abstract float getItemPrice();
+
+    public float getItemTotalPrice() {
+        return quantity * product.getUnit_price();
+    }
 
 }
