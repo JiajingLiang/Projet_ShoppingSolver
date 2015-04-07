@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.1-b419 (branches/2.3.1.x-7937; 2014-08-04T08:11:03+0000) JAXWS-RI/2.2.10-b140803.1500 JAXWS-API/2.2.11 JAXB-RI/2.2.10-b140802.1033 JAXB-API/2.2.12-b140109.1041 svn-revision#unknown. --><xs:schema xmlns:tns="http://shopping_webservice/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://shopping_webservice/">
+
+<xs:element name="addDeviceToClient" type="tns:addDeviceToClient"/>
+
+<xs:element name="addDeviceToClientResponse" type="tns:addDeviceToClientResponse"/>
+
+<xs:element name="createClient" type="tns:createClient"/>
+
+<xs:element name="createClientResponse" type="tns:createClientResponse"/>
+
+<xs:element name="createClientWithDevice" type="tns:createClientWithDevice"/>
+
+<xs:element name="createClientWithDeviceResponse" type="tns:createClientWithDeviceResponse"/>
+
+<xs:element name="deleteRegistedDevice" type="tns:deleteRegistedDevice"/>
+
+<xs:element name="deleteRegistedDeviceResponse" type="tns:deleteRegistedDeviceResponse"/>
+
+<xs:element name="findClientByEmail" type="tns:findClientByEmail"/>
+
+<xs:element name="findClientByEmailResponse" type="tns:findClientByEmailResponse"/>
+
+<xs:element name="findClientById" type="tns:findClientById"/>
+
+<xs:element name="findClientByIdResponse" type="tns:findClientByIdResponse"/>
+
+<xs:complexType name="findClientByEmail">
+<xs:sequence>
+<xs:element name="clientEmail" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="findClientByEmailResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deleteRegistedDevice">
+<xs:sequence>
+<xs:element name="deviceKey" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deleteRegistedDeviceResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="addDeviceToClient">
+<xs:sequence>
+<xs:element name="deviceKey" type="xs:string" minOccurs="0"/>
+<xs:element name="clientId" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="addDeviceToClientResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="createClient">
+<xs:sequence>
+<xs:element name="email" type="xs:string" minOccurs="0"/>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+<xs:element name="telephone" type="xs:string" minOccurs="0"/>
+<xs:element name="street" type="xs:string" minOccurs="0"/>
+<xs:element name="city" type="xs:string" minOccurs="0"/>
+<xs:element name="postcode" type="xs:string" minOccurs="0"/>
+<xs:element name="country" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="createClientResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="findClientById">
+<xs:sequence>
+<xs:element name="clientId" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="findClientByIdResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="createClientWithDevice">
+<xs:sequence>
+<xs:element name="email" type="xs:string" minOccurs="0"/>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+<xs:element name="telephone" type="xs:string" minOccurs="0"/>
+<xs:element name="street" type="xs:string" minOccurs="0"/>
+<xs:element name="city" type="xs:string" minOccurs="0"/>
+<xs:element name="postcode" type="xs:string" minOccurs="0"/>
+<xs:element name="country" type="xs:string" minOccurs="0"/>
+<xs:element name="deviceKey" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="createClientWithDeviceResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

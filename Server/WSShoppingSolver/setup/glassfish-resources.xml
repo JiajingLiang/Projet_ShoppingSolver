@@ -9,11 +9,15 @@
         <property name="Password" value="jjliang"/>
         <property name="URL" value="jdbc:oracle:thin:@localhost:1521:XE"/>
         <property name="driverClass" value="oracle.jdbc.OracleDriver"/>-->
+        
+        
+        <!--<property name="serverName" value="mysql160795-jjliang-1005.jelastic.servint.net"/>-->
         <property name="serverName" value="localhost"/>
         <property name="portNumber" value="3306"/>
         <property name="databaseName" value="shoppingsolverdb"/>
         <property name="User" value="SHOPPINGSOLVER"/>
         <property name="Password" value="jjliang"/>
+        <!--<property name="URL" value="jdbc:mysql://mysql160795-jjliang-1005.jelastic.servint.net/shoppingsolverdb"/>-->
         <property name="URL" value="jdbc:mysql://localhost:3306/shoppingsolverdb?zeroDateTimeBehavior=convertToNull"/>
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
     </jdbc-connection-pool>

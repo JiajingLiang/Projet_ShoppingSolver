@@ -16,12 +16,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  *
  * @author Jiajing
  */
 @Entity
+@Table(name = "product_price_in_shop")
 @IdClass(ProductShopAssoId.class)
 @NamedQueries({@NamedQuery(name="ProductPriceInShop.findByProduct",query="SELECT p FROM ProductPriceInShop p WHERE p.product = :product"),
                @NamedQuery(name="ProductPriceInShop.findByShop",query="SELECT p FROM ProductPriceInShop p WHERE p.shopBranch = :shopBranch")})

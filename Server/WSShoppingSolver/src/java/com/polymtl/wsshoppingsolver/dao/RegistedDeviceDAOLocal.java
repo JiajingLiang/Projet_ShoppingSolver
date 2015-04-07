@@ -5,8 +5,7 @@
  */
 package com.polymtl.wsshoppingsolver.dao;
 
-import com.polymtl.wsshoppingsolver.model.Client;
-import java.util.List;
+import com.polymtl.wsshoppingsolver.model.RegistedDevice;
 import javax.ejb.Local;
 
 /**
@@ -14,10 +13,9 @@ import javax.ejb.Local;
  * @author Jiajing
  */
 @Local
-public interface ClientDAOLocal {
-    Client create(Client aClient);
-    Client findByKey(long id);
-    List<Client> findByEmail(String email);
-    void update(Client aClient);
-    void delete(long id);
+public interface RegistedDeviceDAOLocal {
+    void create(RegistedDevice aDevice);
+    RegistedDevice findByKey(String deviceId);
+    void update(RegistedDevice aDevice);
+    void delete(String deviceId);
 }

@@ -13,6 +13,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -43,6 +44,14 @@ public class Product implements Serializable {
     @OneToMany(mappedBy="product")
     @XStreamOmitField
     private List<ProductPriceInShop> productShopAsso;
+    
+    @OneToMany(mappedBy="product")
+    @XStreamOmitField
+    private List<ProductTransactRecord> transactionsHasProduct;
+    
+    @ManyToMany(mappedBy="favoriteProducts")
+    @XStreamOmitField
+    private List<Client> potentialClients;
 
     public Product() {
     }
@@ -63,6 +72,18 @@ public class Product implements Serializable {
 
     public ProductCategory getCategory() {
         return category;
+    }
+
+    public List<ProductPriceInShop> getProductShopAsso() {
+        return productShopAsso;
+    }
+
+    public List<ProductTransactRecord> getTransactionsHasProduct() {
+        return transactionsHasProduct;
+    }
+
+    public List<Client> getPotentialClients() {
+        return potentialClients;
     }
 
     public void setDescription(String description) {

@@ -15,7 +15,6 @@ import com.polymtl.wsshoppingsolver.model.ProductCategory;
 import com.polymtl.wsshoppingsolver.model.ProductPriceInShop;
 import com.polymtl.wsshoppingsolver.model.ShopBranch;
 import com.polymtl.wsshoppingsolver.model.ShopBrand;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.jws.WebService;
@@ -42,18 +41,17 @@ public class ShopProductAdminWS {
     private ProductPriceInShopDAOLocal productPriceInShopDao;
 
     @WebMethod(operationName = "createShopBrand")
-    public Boolean createShopBrand(@WebParam(name = "BrandName") String brandName) {
+    public boolean createShopBrand(@WebParam(name = "BrandName") String brandName) {
         ShopBrand aBrand = new ShopBrand(brandName);
         shopBrandDao.create(aBrand);
         return true;
     }
     
     @WebMethod(operationName = "createShopBranch")
-    public Boolean createShopBranch(@WebParam(name="idBrand")long idBrand, @WebParam(name="street")String street, @WebParam(name="city")String city, @WebParam(name="postcode")String postcode, @WebParam(name="country")String country){
+    public boolean createShopBranch(@WebParam(name="idBrand")long idBrand, @WebParam(name="street")String street, @WebParam(name="city")String city, @WebParam(name="postcode")String postcode, @WebParam(name="country")String country){
         ShopBrand brand = shopBrandDao.findByKey(idBrand);
         if(brand != null){
-            String address = street+","+city+","+postcode+","+country;
-            ShopBranch aBranch = new ShopBranch(address,brand);
+            ShopBranch aBranch = new ShopBranch(street,city,postcode,country,brand);
             shopBranchDao.create(aBranch);
             return true;
         }else{
@@ -62,14 +60,14 @@ public class ShopProductAdminWS {
     }
     
     @WebMethod(operationName = "createProductCategory")
-    public Boolean createProductCategory(@WebParam(name="categoryName")String categoryName){
+    public boolean createProductCategory(@WebParam(name="categoryName")String categoryName){
         ProductCategory aCategory = new ProductCategory(categoryName);
         productCategoryDao.create(aCategory);
         return true;
     }
     
     @WebMethod(operationName = "createProduct")
-    public Boolean createProduct(@WebParam(name="idCategory")long idCategory, @WebParam(name="barCode")String barCode, @WebParam(name="description")String description){
+    public boolean createProduct(@WebParam(name="idCategory")long idCategory, @WebParam(name="barCode")String barCode, @WebParam(name="description")String description){
         ProductCategory category = productCategoryDao.findByKey(idCategory);
         if(category != null && barCode != null){
             Product p = productDao.findByKey(barCode);
@@ -86,7 +84,7 @@ public class ShopProductAdminWS {
     }
     
     @WebMethod(operationName = "addProductToShop")
-    public Boolean addProductToShop(@WebParam(name="idProduct")String productBarCode, @WebParam(name="idShop")long shopId, @WebParam(name="price")Double price){
+    public boolean addProductToShop(@WebParam(name="idProduct")String productBarCode, @WebParam(name="idShop")long shopId, @WebParam(name="price")Double price){
         Product product = productDao.findByKey(productBarCode);
         ShopBranch shop = shopBranchDao.findByKey(shopId);
         if(product != null && shop != null){

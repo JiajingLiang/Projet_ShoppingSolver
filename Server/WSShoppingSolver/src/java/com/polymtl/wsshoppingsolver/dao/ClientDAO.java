@@ -23,8 +23,10 @@ public class ClientDAO implements ClientDAOLocal {
     private EntityManager em;
 
     @Override
-    public void create(Client aClient) {
+    public Client create(Client aClient) {
        em.persist(aClient);
+       em.flush();
+       return aClient;
     }
 
     @Override

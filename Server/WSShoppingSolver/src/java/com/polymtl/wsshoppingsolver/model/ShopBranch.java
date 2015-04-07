@@ -34,8 +34,17 @@ public class ShopBranch implements Serializable {
     @XStreamAlias("ShopId")
     private Long id;
     @Column
-    @XStreamAlias("Address")
-    private String address;
+    @XStreamAlias("Street")
+    private String street;
+    @Column
+    @XStreamAlias("City")
+    private String city;
+    @Column
+    @XStreamAlias("PostCode")
+    private String postCode;
+    @Column
+    @XStreamAlias("Country")
+    private String country;
     @ManyToOne
     @XStreamAlias("Brand")
     private ShopBrand brand;
@@ -43,12 +52,19 @@ public class ShopBranch implements Serializable {
     @OneToMany(mappedBy="shopBranch")
     @XStreamOmitField
     private List<ProductPriceInShop> productPrices;
+    
+    @OneToMany(mappedBy="shop")
+    @XStreamOmitField
+    private List<Transact> transactionsInShop;
 
     public ShopBranch() {
     }
 
-    public ShopBranch(String address, ShopBrand brand) {
-        this.address = address;
+    public ShopBranch(String street, String city, String postCode, String country, ShopBrand brand) {
+        this.street = street;
+        this.city = city;
+        this.postCode = postCode;
+        this.country = country;
         this.brand = brand;
     }
 
@@ -56,16 +72,48 @@ public class ShopBranch implements Serializable {
         return id;
     }
 
-    public String getAddress() {
-        return address;
+    public String getStreet() {
+        return street;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getPostCode() {
+        return postCode;
+    }
+
+    public String getCountry() {
+        return country;
     }
 
     public ShopBrand getBrand() {
         return brand;
     }
+    
+    public List<ProductPriceInShop> getProductPrices() {
+        return productPrices;
+    }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public List<Transact> getTransactionsInShop() {
+        return transactionsInShop;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setPostCode(String postCode) {
+        this.postCode = postCode;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public void setBrand(ShopBrand brand) {
@@ -94,7 +142,7 @@ public class ShopBranch implements Serializable {
 
     @Override
     public String toString() {
-        return "com.polymtl.wsshoppingsolver.model.ShopBranch[ id=" + id + ", branchAddress=" + address + ", brandName=" + brand.getBrandName() + " ]";
+        return "com.polymtl.wsshoppingsolver.model.ShopBranch[ id=" + id + ", street=" + street + ", city=" + city + ", postCode=" + postCode + ", country=" + country + ", brandName=" + brand.getBrandName() + " ]";
     }
     
 }

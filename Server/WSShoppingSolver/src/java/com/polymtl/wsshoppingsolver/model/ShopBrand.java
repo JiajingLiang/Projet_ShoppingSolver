@@ -35,7 +35,7 @@ public class ShopBrand implements Serializable {
     @Column
     @XStreamAlias("BrandName")
     private String brandName;
-    @OneToMany
+    @OneToMany(mappedBy="brand")
     @XStreamOmitField
     private List<ShopBranch> branchList;
     
