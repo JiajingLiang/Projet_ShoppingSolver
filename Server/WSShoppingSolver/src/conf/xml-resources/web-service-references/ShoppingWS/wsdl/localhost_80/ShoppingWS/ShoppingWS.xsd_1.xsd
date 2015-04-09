@@ -12,6 +12,10 @@
 
 <xs:element name="createClientWithDeviceResponse" type="tns:createClientWithDeviceResponse"/>
 
+<xs:element name="createTransaction" type="tns:createTransaction"/>
+
+<xs:element name="createTransactionResponse" type="tns:createTransactionResponse"/>
+
 <xs:element name="deleteRegistedDevice" type="tns:deleteRegistedDevice"/>
 
 <xs:element name="deleteRegistedDeviceResponse" type="tns:deleteRegistedDeviceResponse"/>
@@ -24,13 +28,26 @@
 
 <xs:element name="findClientByIdResponse" type="tns:findClientByIdResponse"/>
 
-<xs:complexType name="findClientByEmail">
+<xs:element name="findTransactionByClient" type="tns:findTransactionByClient"/>
+
+<xs:element name="findTransactionByClientResponse" type="tns:findTransactionByClientResponse"/>
+
+<xs:element name="findTransactionDetail" type="tns:findTransactionDetail"/>
+
+<xs:element name="findTransactionDetailResponse" type="tns:findTransactionDetailResponse"/>
+
+<xs:element name="getProductPriceInShop" type="tns:getProductPriceInShop"/>
+
+<xs:element name="getProductPriceInShopResponse" type="tns:getProductPriceInShopResponse"/>
+
+<xs:complexType name="getProductPriceInShop">
 <xs:sequence>
-<xs:element name="clientEmail" type="xs:string" minOccurs="0"/>
+<xs:element name="productBarCode" type="xs:string" minOccurs="0"/>
+<xs:element name="idShop" type="xs:long"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="findClientByEmailResponse">
+<xs:complexType name="getProductPriceInShopResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
@@ -48,6 +65,33 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="findClientByEmail">
+<xs:sequence>
+<xs:element name="clientEmail" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="findClientByEmailResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="findTransactionByClient">
+<xs:sequence>
+<xs:element name="clientId" type="xs:long"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+<xs:element name="dateBegin" type="xs:string" minOccurs="0"/>
+<xs:element name="dateEnd" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="findTransactionByClientResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="addDeviceToClient">
 <xs:sequence>
 <xs:element name="deviceKey" type="xs:string" minOccurs="0"/>
@@ -58,6 +102,18 @@
 <xs:complexType name="addDeviceToClientResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="findClientById">
+<xs:sequence>
+<xs:element name="clientId" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="findClientByIdResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -80,18 +136,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="findClientById">
-<xs:sequence>
-<xs:element name="clientId" type="xs:long"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="findClientByIdResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="createClientWithDevice">
 <xs:sequence>
 <xs:element name="email" type="xs:string" minOccurs="0"/>
@@ -107,6 +151,35 @@
 </xs:complexType>
 
 <xs:complexType name="createClientWithDeviceResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="createTransaction">
+<xs:sequence>
+<xs:element name="clientId" type="xs:long"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+<xs:element name="shopId" type="xs:long"/>
+<xs:element name="listProducts" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="createTransactionResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="findTransactionDetail">
+<xs:sequence>
+<xs:element name="clientId" type="xs:long"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+<xs:element name="transactionId" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="findTransactionDetailResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>

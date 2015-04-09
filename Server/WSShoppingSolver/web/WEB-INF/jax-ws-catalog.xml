@@ -2,4 +2,8 @@
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <system systemId="http://localhost:80/ShoppingWS/ShoppingWS?wsdl" uri="wsdl/localhost_80/ShoppingWS/ShoppingWS.wsdl"/>
     <system systemId="http://localhost:80/ShoppingWS/ShoppingWS?xsd=1" uri="wsdl/localhost_80/ShoppingWS/ShoppingWS.xsd_1.xsd"/>
+    <system systemId="http://localhost:80/ShoppingWS/ShoppingWS?xsd=2" uri="wsdl/localhost_80/ShoppingWS/ShoppingWS.xsd_2.xsd"/>
+    <system systemId="http://localhost:80/ShopProductAdminWS/ShopProductAdminWS?wsdl" uri="wsdl/localhost_80/ShopProductAdminWS/ShopProductAdminWS.wsdl"/>
+    <system systemId="http://localhost:80/ShopProductAdminWS/ShopProductAdminWS?xsd=1" uri="wsdl/localhost_80/ShopProductAdminWS/ShopProductAdminWS.xsd_1.xsd"/>
+    <system systemId="http://localhost:80/ShopProductAdminWS/ShopProductAdminWS?xsd=2" uri="wsdl/localhost_80/ShopProductAdminWS/ShopProductAdminWS.xsd_2.xsd"/>
 </catalog>

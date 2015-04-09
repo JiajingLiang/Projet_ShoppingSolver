@@ -4,35 +4,11 @@
 <xsd:import namespace="http://shopping_webservice/" schemaLocation="http://localhost:80/ShoppingWS/ShoppingWS?xsd=1"/>
 </xsd:schema>
 </types>
-<message name="createClient">
-<part name="parameters" element="tns:createClient"/>
+<message name="getProductPriceInShop">
+<part name="parameters" element="tns:getProductPriceInShop"/>
 </message>
-<message name="createClientResponse">
-<part name="parameters" element="tns:createClientResponse"/>
-</message>
-<message name="findClientById">
-<part name="parameters" element="tns:findClientById"/>
-</message>
-<message name="findClientByIdResponse">
-<part name="parameters" element="tns:findClientByIdResponse"/>
-</message>
-<message name="findClientByEmail">
-<part name="parameters" element="tns:findClientByEmail"/>
-</message>
-<message name="findClientByEmailResponse">
-<part name="parameters" element="tns:findClientByEmailResponse"/>
-</message>
-<message name="createClientWithDevice">
-<part name="parameters" element="tns:createClientWithDevice"/>
-</message>
-<message name="createClientWithDeviceResponse">
-<part name="parameters" element="tns:createClientWithDeviceResponse"/>
-</message>
-<message name="addDeviceToClient">
-<part name="parameters" element="tns:addDeviceToClient"/>
-</message>
-<message name="addDeviceToClientResponse">
-<part name="parameters" element="tns:addDeviceToClientResponse"/>
+<message name="getProductPriceInShopResponse">
+<part name="parameters" element="tns:getProductPriceInShopResponse"/>
 </message>
 <message name="deleteRegistedDevice">
 <part name="parameters" element="tns:deleteRegistedDevice"/>
@@ -40,35 +16,99 @@
 <message name="deleteRegistedDeviceResponse">
 <part name="parameters" element="tns:deleteRegistedDeviceResponse"/>
 </message>
+<message name="createTransaction">
+<part name="parameters" element="tns:createTransaction"/>
+</message>
+<message name="createTransactionResponse">
+<part name="parameters" element="tns:createTransactionResponse"/>
+</message>
+<message name="createClientWithDevice">
+<part name="parameters" element="tns:createClientWithDevice"/>
+</message>
+<message name="createClientWithDeviceResponse">
+<part name="parameters" element="tns:createClientWithDeviceResponse"/>
+</message>
+<message name="findClientByEmail">
+<part name="parameters" element="tns:findClientByEmail"/>
+</message>
+<message name="findClientByEmailResponse">
+<part name="parameters" element="tns:findClientByEmailResponse"/>
+</message>
+<message name="addDeviceToClient">
+<part name="parameters" element="tns:addDeviceToClient"/>
+</message>
+<message name="addDeviceToClientResponse">
+<part name="parameters" element="tns:addDeviceToClientResponse"/>
+</message>
+<message name="findClientById">
+<part name="parameters" element="tns:findClientById"/>
+</message>
+<message name="findClientByIdResponse">
+<part name="parameters" element="tns:findClientByIdResponse"/>
+</message>
+<message name="createClient">
+<part name="parameters" element="tns:createClient"/>
+</message>
+<message name="createClientResponse">
+<part name="parameters" element="tns:createClientResponse"/>
+</message>
+<message name="findTransactionByClient">
+<part name="parameters" element="tns:findTransactionByClient"/>
+</message>
+<message name="findTransactionByClientResponse">
+<part name="parameters" element="tns:findTransactionByClientResponse"/>
+</message>
+<message name="findTransactionDetail">
+<part name="parameters" element="tns:findTransactionDetail"/>
+</message>
+<message name="findTransactionDetailResponse">
+<part name="parameters" element="tns:findTransactionDetailResponse"/>
+</message>
 <portType name="ShoppingWS">
-<operation name="createClient">
-<input wsam:Action="http://shopping_webservice/ShoppingWS/createClientRequest" message="tns:createClient"/>
-<output wsam:Action="http://shopping_webservice/ShoppingWS/createClientResponse" message="tns:createClientResponse"/>
-</operation>
-<operation name="findClientById">
-<input wsam:Action="http://shopping_webservice/ShoppingWS/findClientByIdRequest" message="tns:findClientById"/>
-<output wsam:Action="http://shopping_webservice/ShoppingWS/findClientByIdResponse" message="tns:findClientByIdResponse"/>
-</operation>
-<operation name="findClientByEmail">
-<input wsam:Action="http://shopping_webservice/ShoppingWS/findClientByEmailRequest" message="tns:findClientByEmail"/>
-<output wsam:Action="http://shopping_webservice/ShoppingWS/findClientByEmailResponse" message="tns:findClientByEmailResponse"/>
-</operation>
-<operation name="createClientWithDevice">
-<input wsam:Action="http://shopping_webservice/ShoppingWS/createClientWithDeviceRequest" message="tns:createClientWithDevice"/>
-<output wsam:Action="http://shopping_webservice/ShoppingWS/createClientWithDeviceResponse" message="tns:createClientWithDeviceResponse"/>
-</operation>
-<operation name="addDeviceToClient">
-<input wsam:Action="http://shopping_webservice/ShoppingWS/addDeviceToClientRequest" message="tns:addDeviceToClient"/>
-<output wsam:Action="http://shopping_webservice/ShoppingWS/addDeviceToClientResponse" message="tns:addDeviceToClientResponse"/>
+<operation name="getProductPriceInShop">
+<input wsam:Action="http://shopping_webservice/ShoppingWS/getProductPriceInShopRequest" message="tns:getProductPriceInShop"/>
+<output wsam:Action="http://shopping_webservice/ShoppingWS/getProductPriceInShopResponse" message="tns:getProductPriceInShopResponse"/>
 </operation>
 <operation name="deleteRegistedDevice">
 <input wsam:Action="http://shopping_webservice/ShoppingWS/deleteRegistedDeviceRequest" message="tns:deleteRegistedDevice"/>
 <output wsam:Action="http://shopping_webservice/ShoppingWS/deleteRegistedDeviceResponse" message="tns:deleteRegistedDeviceResponse"/>
 </operation>
+<operation name="createTransaction">
+<input wsam:Action="http://shopping_webservice/ShoppingWS/createTransactionRequest" message="tns:createTransaction"/>
+<output wsam:Action="http://shopping_webservice/ShoppingWS/createTransactionResponse" message="tns:createTransactionResponse"/>
+</operation>
+<operation name="createClientWithDevice">
+<input wsam:Action="http://shopping_webservice/ShoppingWS/createClientWithDeviceRequest" message="tns:createClientWithDevice"/>
+<output wsam:Action="http://shopping_webservice/ShoppingWS/createClientWithDeviceResponse" message="tns:createClientWithDeviceResponse"/>
+</operation>
+<operation name="findClientByEmail">
+<input wsam:Action="http://shopping_webservice/ShoppingWS/findClientByEmailRequest" message="tns:findClientByEmail"/>
+<output wsam:Action="http://shopping_webservice/ShoppingWS/findClientByEmailResponse" message="tns:findClientByEmailResponse"/>
+</operation>
+<operation name="addDeviceToClient">
+<input wsam:Action="http://shopping_webservice/ShoppingWS/addDeviceToClientRequest" message="tns:addDeviceToClient"/>
+<output wsam:Action="http://shopping_webservice/ShoppingWS/addDeviceToClientResponse" message="tns:addDeviceToClientResponse"/>
+</operation>
+<operation name="findClientById">
+<input wsam:Action="http://shopping_webservice/ShoppingWS/findClientByIdRequest" message="tns:findClientById"/>
+<output wsam:Action="http://shopping_webservice/ShoppingWS/findClientByIdResponse" message="tns:findClientByIdResponse"/>
+</operation>
+<operation name="createClient">
+<input wsam:Action="http://shopping_webservice/ShoppingWS/createClientRequest" message="tns:createClient"/>
+<output wsam:Action="http://shopping_webservice/ShoppingWS/createClientResponse" message="tns:createClientResponse"/>
+</operation>
+<operation name="findTransactionByClient">
+<input wsam:Action="http://shopping_webservice/ShoppingWS/findTransactionByClientRequest" message="tns:findTransactionByClient"/>
+<output wsam:Action="http://shopping_webservice/ShoppingWS/findTransactionByClientResponse" message="tns:findTransactionByClientResponse"/>
+</operation>
+<operation name="findTransactionDetail">
+<input wsam:Action="http://shopping_webservice/ShoppingWS/findTransactionDetailRequest" message="tns:findTransactionDetail"/>
+<output wsam:Action="http://shopping_webservice/ShoppingWS/findTransactionDetailResponse" message="tns:findTransactionDetailResponse"/>
+</operation>
 </portType>
 <binding name="ShoppingWSPortBinding" type="tns:ShoppingWS">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="createClient">
+<operation name="getProductPriceInShop">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -77,7 +117,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="findClientById">
+<operation name="deleteRegistedDevice">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -86,7 +126,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="findClientByEmail">
+<operation name="createTransaction">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -104,6 +144,15 @@
 <soap:body use="literal"/>
 </output>
 </operation>
+<operation name="findClientByEmail">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
 <operation name="addDeviceToClient">
 <soap:operation soapAction=""/>
 <input>
@@ -113,7 +162,34 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="deleteRegistedDevice">
+<operation name="findClientById">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="createClient">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="findTransactionByClient">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="findTransactionDetail">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

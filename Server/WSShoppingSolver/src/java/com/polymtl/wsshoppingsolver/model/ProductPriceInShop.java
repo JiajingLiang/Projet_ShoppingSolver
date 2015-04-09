@@ -44,14 +44,22 @@ public class ProductPriceInShop implements Serializable {
     @Column(nullable = false)
     @XStreamAlias("Price")
     private Double price;
+    @Column(nullable = false)
+    @XStreamAlias("RatioTaxFederal")
+    private Float ratioTaxFederal;
+    @Column(nullable = false)
+    @XStreamAlias("RatioTaxProvincial")
+    private Float ratioTaxProvincial;
 
     public ProductPriceInShop() {
     }
 
-    public ProductPriceInShop(Product product, ShopBranch shopBranch, Double price) {
+    public ProductPriceInShop(Product product, ShopBranch shopBranch, Double price, Float ratioTaxFederal, Float ratioTaxProvincial) {
         this.product = product;
         this.shopBranch = shopBranch;
         this.price = price;
+        this.ratioTaxFederal = ratioTaxFederal;
+        this.ratioTaxProvincial = ratioTaxProvincial;
     }
 
     public Product getProduct() {
@@ -66,8 +74,24 @@ public class ProductPriceInShop implements Serializable {
         return price;
     }
 
+    public Float getRatioTaxFederal() {
+        return ratioTaxFederal;
+    }
+
+    public Float getRatioTaxProvincial() {
+        return ratioTaxProvincial;
+    }
+
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public void setRatioTaxFederal(Float ratioTaxFederal) {
+        this.ratioTaxFederal = ratioTaxFederal;
+    }
+
+    public void setRatioTaxProvincial(Float ratioTaxProvincial) {
+        this.ratioTaxProvincial = ratioTaxProvincial;
     }
     
     @Override
@@ -96,7 +120,7 @@ public class ProductPriceInShop implements Serializable {
 
     @Override
     public String toString() {
-        return "com.polymtl.wsshoppingsolver.model.ProductPriceInShop[ productId=" + product.getBarCode() + ",shopBranchId=" + shopBranch.getId() + ",price" + price + " ]";
+        return "com.polymtl.wsshoppingsolver.model.ProductPriceInShop[ productId=" + product.getBarCode() + ",shopBranchId=" + shopBranch.getId() + ",price" + price + ",ratioTaxFederal" + ratioTaxFederal + ",ratioTaxProvincial" + ratioTaxProvincial + " ]";
     }
     
     public String toXmlString(){       

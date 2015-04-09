@@ -6,9 +6,20 @@
 package com.polymtl.wsshoppingsolver.webservice;
 
 import com.polymtl.wsshoppingsolver.dao.ClientDAOLocal;
+import com.polymtl.wsshoppingsolver.dao.ProductDAOLocal;
+import com.polymtl.wsshoppingsolver.dao.ProductPriceInShopDAOLocal;
+import com.polymtl.wsshoppingsolver.dao.ProductTransactRecordDAOLocal;
 import com.polymtl.wsshoppingsolver.dao.RegistedDeviceDAOLocal;
+import com.polymtl.wsshoppingsolver.dao.ShopBranchDAOLocal;
+import com.polymtl.wsshoppingsolver.dao.TransactDAOLocal;
 import com.polymtl.wsshoppingsolver.model.Client;
+import com.polymtl.wsshoppingsolver.model.ProductPriceInShop;
+import com.polymtl.wsshoppingsolver.model.ProductTransactRecord;
 import com.polymtl.wsshoppingsolver.model.RegistedDevice;
+import com.polymtl.wsshoppingsolver.model.Transact;
+import com.thoughtworks.xstream.XStream;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -27,6 +38,16 @@ public class ShoppingWS {
     private ClientDAOLocal clientDao;
     @EJB
     private RegistedDeviceDAOLocal registedDeviceDao;
+    @EJB
+    private TransactDAOLocal transactDao;
+    @EJB
+    private ProductTransactRecordDAOLocal productTransactRecordDao;
+    @EJB
+    private ProductPriceInShopDAOLocal productPriceInShopDao;
+    @EJB
+    private ShopBranchDAOLocal shopBranchDao;
+    @EJB
+    private ProductDAOLocal productDao;
 
     @WebMethod(operationName = "createClient")
     public String createClient(@WebParam(name = "email") String email, @WebParam(name = "name") String name, @WebParam(name = "password") String password, @WebParam(name = "telephone") String telephone, @WebParam(name="street")String street, @WebParam(name="city")String city, @WebParam(name="postcode")String postcode, @WebParam(name="country")String country){
@@ -103,5 +124,88 @@ public class ShoppingWS {
         }
     }
     
+    @WebMethod(operationName = "getProductPriceInShop")
+    public String getProductPriceInShop(@WebParam(name="productBarCode")String productBarCode, @WebParam(name="idShop")long shopId){
+        ProductPriceInShop productPriceInShop = productPriceInShopDao.findByKey(productBarCode, shopId);
+        if(productPriceInShop!=null){
+            return productPriceInShop.toXmlString();
+        }else{
+            return "null";
+        }        
+    }
     
+    //productsCode must be in format xml : <list>   <string>068100047219</string>   <string>068200010311</string> </list>
+    @WebMethod(operationName="createTransaction")
+    public boolean createTransaction(@WebParam(name="clientId")long clientId, @WebParam(name="password")String password, @WebParam(name="shopId")long shopId, @WebParam(name = "listProducts")String productsCode){
+        Client client = clientDao.findByKey(clientId);
+        if(client!=null && password.equals(client.getPassword())){
+            XStream xstream = new XStream();
+            List<String> listProducts = (List<String>)xstream.fromXML(productsCode);
+            List<ProductPriceInShop> prices = new ArrayList<>();
+            Double total = 0.0;
+            for(int i = 0;i<listProducts.size();i++){
+                ProductPriceInShop productPriceInShop = productPriceInShopDao.findByKey(listProducts.get(i), shopId);
+                if(productPriceInShop!=null){
+                    prices.add(productPriceInShop);
+                    total += productPriceInShop.getPrice()*(1+productPriceInShop.getRatioTaxFederal()+productPriceInShop.getRatioTaxProvincial());
+                }else{
+                    return false;
+                }
+            }
+            total = Double.parseDouble(String.format("%.2f",total));
+            Transact aTransact = new Transact(total,client,shopBranchDao.findByKey(shopId));
+            Transact transact = transactDao.create(aTransact);
+            for(int i = 0;i<prices.size();i++){
+                ProductTransactRecord aRecord = new ProductTransactRecord(transact,productDao.findByKey(listProducts.get(i)),prices.get(i).getPrice(),prices.get(i).getRatioTaxFederal(),prices.get(i).getRatioTaxProvincial());
+                productTransactRecordDao.create(aRecord);
+            }
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    @WebMethod(operationName="findTransactionByClient")
+    public String findTransactionByClient(@WebParam(name="clientId")long clientId, @WebParam(name="password")String password, @WebParam(name="dateBegin")String dateBegin, @WebParam(name="dateEnd")String dateEnd){
+        Client client = clientDao.findByKey(clientId);
+        if(client!=null && password.equals(client.getPassword())){
+            XStream xstream = new XStream();
+            Date dBegin = (Date)xstream.fromXML(dateBegin);
+            Date dEnd = (Date)xstream.fromXML(dateEnd);
+            List<Transact> listTransactions = transactDao.findByClientAndDate(client, dBegin, dEnd);
+            if(listTransactions.size()>0){
+                String strXML = "<Transactions>";
+                for (Transact aTransact : listTransactions) {
+                    strXML += aTransact.toXmlString();
+                }
+                strXML += "</Transactions>";
+                return strXML;
+            }else{
+                return "null";
+            }
+        }else{
+            return "null";
+        }
+    }
+    
+    @WebMethod(operationName="findTransactionDetail")
+    public String findTransactionDetail(@WebParam(name="clientId")long clientId, @WebParam(name="password")String password, @WebParam(name="transactionId")long transactionId){
+        Client client = clientDao.findByKey(clientId);
+        Transact transaction = transactDao.findByKey(transactionId);
+        if(client!=null && password.equals(client.getPassword()) && transaction.getClient().equals(client)){
+            List<ProductTransactRecord> transactRecords = productTransactRecordDao.findByTransact(transaction);
+            if(transactRecords.size()>0){
+                String strXML = "<TransactionDetail>";
+                for (ProductTransactRecord aRecord : transactRecords) {
+                    strXML += aRecord.toXmlString();
+                }
+                strXML += "</TransactionDetail>";
+                return strXML;
+            }else{
+                return "null";
+            }
+        }else{
+            return "null";
+        }
+    }
 }

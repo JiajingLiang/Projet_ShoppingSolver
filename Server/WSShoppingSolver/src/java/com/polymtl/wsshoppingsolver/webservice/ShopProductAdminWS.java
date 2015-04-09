@@ -84,12 +84,12 @@ public class ShopProductAdminWS {
     }
     
     @WebMethod(operationName = "addProductToShop")
-    public boolean addProductToShop(@WebParam(name="idProduct")String productBarCode, @WebParam(name="idShop")long shopId, @WebParam(name="price")Double price){
+    public boolean addProductToShop(@WebParam(name="idProduct")String productBarCode, @WebParam(name="idShop")long shopId, @WebParam(name="price")Double price, @WebParam(name="ratioTaxFederal")Float ratioTaxFederal, @WebParam(name="ratioTaxProvincial")Float ratioTaxProvincial){
         Product product = productDao.findByKey(productBarCode);
         ShopBranch shop = shopBranchDao.findByKey(shopId);
         if(product != null && shop != null){
             if(productPriceInShopDao.findByKey(productBarCode, shopId)==null){
-                ProductPriceInShop aProductPriceInShop = new ProductPriceInShop(product,shop,price);
+                ProductPriceInShop aProductPriceInShop = new ProductPriceInShop(product,shop,price,ratioTaxFederal,ratioTaxProvincial);
                 productPriceInShopDao.create(aProductPriceInShop);
                 return true;
             }else{
@@ -101,7 +101,7 @@ public class ShopProductAdminWS {
     }
     
     @WebMethod(operationName = "getProductPriceInShop")
-    public String getProductPriceInShop(@WebParam(name="productBarCode")String productBarCode, @WebParam(name="idShop")long shopId){
+    public String getProductPriceFromShop(@WebParam(name="productBarCode")String productBarCode, @WebParam(name="idShop")long shopId){
         ProductPriceInShop productPriceInShop = productPriceInShopDao.findByKey(productBarCode, shopId);
         if(productPriceInShop!=null){
             return productPriceInShop.toXmlString();

@@ -1,4 +1,6 @@
-<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.1-b419 (branches/2.3.1.x-7937; 2014-08-04T08:11:03+0000) JAXWS-RI/2.2.10-b140803.1500 JAXWS-API/2.2.11 JAXB-RI/2.2.10-b140802.1033 JAXB-API/2.2.12-b140109.1041 svn-revision#unknown. --><xs:schema xmlns:tns="http://shopping_webservice/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://shopping_webservice/">
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.1-b419 (branches/2.3.1.x-7937; 2014-08-04T08:11:03+0000) JAXWS-RI/2.2.10-b140803.1500 JAXWS-API/2.2.11 JAXB-RI/2.2.10-b140802.1033 JAXB-API/2.2.12-b140109.1041 svn-revision#unknown. --><xs:schema xmlns:tns="http://shopping_webservice/" xmlns:ns1="http://shopproduct_admin_webservice/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://shopping_webservice/">
+
+<xs:import namespace="http://shopproduct_admin_webservice/" schemaLocation="http://localhost:80/ShoppingWS/ShoppingWS?xsd=1"/>
 
 <xs:element name="addDeviceToClient" type="tns:addDeviceToClient"/>
 
@@ -36,22 +38,9 @@
 
 <xs:element name="findTransactionDetailResponse" type="tns:findTransactionDetailResponse"/>
 
-<xs:element name="getProductPriceInShop" type="tns:getProductPriceInShop"/>
+<xs:element name="getProductPriceInShop" nillable="true" type="ns1:getProductPriceInShop"/>
 
-<xs:element name="getProductPriceInShopResponse" type="tns:getProductPriceInShopResponse"/>
-
-<xs:complexType name="getProductPriceInShop">
-<xs:sequence>
-<xs:element name="productBarCode" type="xs:string" minOccurs="0"/>
-<xs:element name="idShop" type="xs:long"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="getProductPriceInShopResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
+<xs:element name="getProductPriceInShopResponse" nillable="true" type="ns1:getProductPriceInShopResponse"/>
 
 <xs:complexType name="deleteRegistedDevice">
 <xs:sequence>

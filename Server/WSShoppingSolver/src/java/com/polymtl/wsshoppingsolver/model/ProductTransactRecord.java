@@ -5,6 +5,9 @@
  */
 package com.polymtl.wsshoppingsolver.model;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -21,26 +26,40 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "product_transact_record")
 @IdClass(ProductTransactRecordId.class)
+@NamedQueries({@NamedQuery(name="ProductTransactRecord.findByTransact",query="SELECT p FROM ProductTransactRecord p WHERE p.transact = :transact"),
+               @NamedQuery(name="ProductTransactRecord.findByProduct",query="SELECT p FROM ProductTransactRecord p WHERE p.product = :product")})
+@XStreamAlias("ProductTransactRecord")
 public class ProductTransactRecord implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @ManyToOne
     @JoinColumn(name="transactionId")
+    @XStreamOmitField
     private Transact transact;
     @Id
     @ManyToOne
     @JoinColumn(name="productId")
+    @XStreamAlias("Product")
     private Product product;
     @Column(nullable = false)
+    @XStreamAlias("Price")
     private Double price;
+    @Column(nullable = false)
+    @XStreamAlias("RatioTaxFederal")
+    private Float ratioTaxFederal;
+    @Column(nullable = false)
+    @XStreamAlias("RatioTaxProvincial")
+    private Float ratioTaxProvincial;
 
     public ProductTransactRecord() {
     }
 
-    public ProductTransactRecord(Transact transact, Product product, Double price) {
+    public ProductTransactRecord(Transact transact, Product product, Double price, Float ratioTaxFederal, Float ratioTaxProvincial) {
         this.transact = transact;
         this.product = product;
         this.price = price;
+        this.ratioTaxFederal = ratioTaxFederal;
+        this.ratioTaxProvincial = ratioTaxProvincial;
     }
 
     public Transact getTransact() {
@@ -53,6 +72,14 @@ public class ProductTransactRecord implements Serializable {
 
     public Double getPrice() {
         return price;
+    }
+
+    public Float getRatioTaxFederal() {
+        return ratioTaxFederal;
+    }
+
+    public Float getRatioTaxProvincial() {
+        return ratioTaxProvincial;
     }
 
     public void setPrice(Double price) {
@@ -85,7 +112,13 @@ public class ProductTransactRecord implements Serializable {
 
     @Override
     public String toString() {
-        return "com.polymtl.wsshoppingsolver.model.TransactProductAsso[ productId=" + product.getBarCode() + ",transactionId=" + transact.getId() + ",price" + price + " ]";
+        return "com.polymtl.wsshoppingsolver.model.TransactProductAsso[ productId=" + product.getBarCode() + ",transactionId=" + transact.getId() + ",price" + price + ",ratioTaxFederal" + ratioTaxFederal + ",ratioTaxProvincial" + ratioTaxProvincial + " ]";
     }
     
+    public String toXmlString(){
+        XStream xstream = new XStream();
+        xstream.processAnnotations(ProductTransactRecord.class);
+        xstream.processAnnotations(Product.class);
+        return xstream.toXML(this);
+    }
 }

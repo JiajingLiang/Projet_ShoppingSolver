@@ -5,6 +5,9 @@
  */
 package com.polymtl.wsshoppingsolver.model;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +17,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -25,23 +30,34 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "transact")
+@NamedQueries({@NamedQuery(name="Transact.findByClient",query="SELECT t FROM Transact t WHERE t.client = :transactClient"),
+               @NamedQuery(name="Transact.findByShop",query="SELECT t FROM Transact t WHERE t.shop = :transactShop"),
+               @NamedQuery(name="Transact.findByClientAndDate",query="SELECT t FROM Transact t WHERE t.client = :transactClient AND t.transactionTime > :dateBegin AND t.transactionTime > :dateEnd")})
+
+@XStreamAlias("Transaction")
 public class Transact implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @XStreamOmitField
     private Long id;
     @Column(nullable = false)
+    @XStreamAlias("Total")
     private Double total;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP",nullable = false,insertable=false,updatable=false)
+    @XStreamAlias("TransactionTime")
     private java.util.Date transactionTime;
     
     @ManyToOne
+    @XStreamOmitField
     private Client client;
     @ManyToOne
+    @XStreamAlias("Shop")
     private ShopBranch shop;
     
     @OneToMany(mappedBy="transact")
+    @XStreamOmitField
     private List<ProductTransactRecord> productsBought;
 
     public Transact() {
@@ -100,6 +116,13 @@ public class Transact implements Serializable {
     @Override
     public String toString() {
         return "com.polymtl.wsshoppingsolver.model.Transaction[ id=" + id + ", transactionTime"+transactionTime.toString() + ", total" + total + " ]";
+    }
+    
+    public String toXmlString(){
+        XStream xstream = new XStream();
+        xstream.processAnnotations(Transact.class);
+        xstream.processAnnotations(ShopBranch.class);
+        return xstream.toXML(this);
     }
     
 }

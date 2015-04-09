@@ -3,10 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/EPM/2015Hiver/INF8405%20-%20Informatique%20Mobile/Projet_ShoppingSolver/Server/WSShoppingSolver/src/java/com/polymtl/wsshoppingsolver/webservice/ShopProductAdminWS.java</file>
-            <file>file:/E:/EPM/2015Hiver/INF8405%20-%20Informatique%20Mobile/Projet_ShoppingSolver/Server/WSShoppingSolver/src/java/com/polymtl/wsshoppingsolver/dao/ProductPriceInShopDAO.java</file>
-            <file>file:/E:/EPM/2015Hiver/INF8405%20-%20Informatique%20Mobile/Projet_ShoppingSolver/Server/WSShoppingSolver/src/java/com/polymtl/wsshoppingsolver/model/ProductPriceInShop.java</file>
-            <file>file:/E:/EPM/2015Hiver/INF8405%20-%20Informatique%20Mobile/Projet_ShoppingSolver/Server/WSShoppingSolver/src/java/com/polymtl/wsshoppingsolver/dao/ProductPriceInShopDAOLocal.java</file>
+            <file>file:/E:/EPM/2015Hiver/INF8405%20-%20Informatique%20Mobile/Projet_ShoppingSolver/Server/WSShoppingSolver/src/java/com/polymtl/wsshoppingsolver/webservice/ShoppingWS.java</file>
+            <file>file:/E:/EPM/2015Hiver/INF8405%20-%20Informatique%20Mobile/Projet_ShoppingSolver/Server/WSShoppingSolver/setup/glassfish-resources.xml</file>
         </group>
     </open-files>
 </project-private>
