@@ -7,9 +7,11 @@ package com.polymtl.wsshoppingsolver.dao;
 
 import com.polymtl.wsshoppingsolver.model.Product;
 import com.polymtl.wsshoppingsolver.util.Constants;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,6 +30,12 @@ public class ProductDAO implements ProductDAOLocal {
     @Override
     public Product findByKey(String barCode) {
         return em.find(Product.class, barCode);
+    }
+    
+    @Override
+    public List<Product> findAllProduct(){
+        Query queryFindAllCategory = em.createNamedQuery("Product.findAllProduct");
+        return queryFindAllCategory.getResultList();    
     }
 
     @Override

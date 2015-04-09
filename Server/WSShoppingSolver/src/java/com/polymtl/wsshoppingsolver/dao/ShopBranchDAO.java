@@ -7,9 +7,11 @@ package com.polymtl.wsshoppingsolver.dao;
 
 import com.polymtl.wsshoppingsolver.model.ShopBranch;
 import com.polymtl.wsshoppingsolver.util.Constants;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,6 +30,12 @@ public class ShopBranchDAO implements ShopBranchDAOLocal {
     @Override
     public ShopBranch findByKey(long id) {
         return em.find(ShopBranch.class, id);
+    }
+    
+    @Override
+    public List<ShopBranch> findAllShopBranch(){
+        Query queryFindAllBranch= em.createNamedQuery("ShopBranch.findAllShopBranch");
+        return queryFindAllBranch.getResultList();
     }
 
     @Override

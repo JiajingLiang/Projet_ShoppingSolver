@@ -6,6 +6,7 @@
 package com.polymtl.wsshoppingsolver.dao;
 
 import com.polymtl.wsshoppingsolver.model.ProductCategory;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -16,6 +17,7 @@ import javax.ejb.Local;
 public interface ProductCategoryDAOLocal {
     void create(ProductCategory aCategory);
     ProductCategory findByKey(long id);
+    List<ProductCategory> findAllCategory();
     void update(ProductCategory aCategory);
     void delete(long id);
 }

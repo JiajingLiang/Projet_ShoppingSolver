@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -20,6 +22,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "productcategory")
+@NamedQueries({@NamedQuery(name="ProductCategory.findAllCategory",query="SELECT c FROM ProductCategory c")})
 @XStreamAlias("Category")
 public class ProductCategory implements Serializable {
     private static final long serialVersionUID = 1L;

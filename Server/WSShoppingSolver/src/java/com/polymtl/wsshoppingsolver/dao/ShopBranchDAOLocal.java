@@ -6,6 +6,7 @@
 package com.polymtl.wsshoppingsolver.dao;
 
 import com.polymtl.wsshoppingsolver.model.ShopBranch;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -16,6 +17,7 @@ import javax.ejb.Local;
 public interface ShopBranchDAOLocal {
     void create(ShopBranch aBranch);
     ShopBranch findByKey(long id);
+    List<ShopBranch> findAllShopBranch();
     void update(ShopBranch aBranch);
     void delete(long id);
 }

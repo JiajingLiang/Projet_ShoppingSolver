@@ -51,26 +51,10 @@
             <isset property="conf.dir"/>
         </condition>
     </target>
-    <target name="wsimport-client-ShoppingWS" depends="wsimport-init">
-        <mkdir dir="${build.generated.dir}/jax-wsCache/ShoppingWS"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/ShoppingWS" destdir="${build.generated.dir}/jax-wsCache/ShoppingWS" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/ShoppingWS/wsdl/localhost_80/ShoppingWS/ShoppingWS.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:80/ShoppingWS/ShoppingWS?wsdl" xnocompile="true" xendorsed="true" package="com.polymtl.wsshoppingsolver.webservice_client">
-            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/ShoppingWS/wsdl/localhost_80/ShoppingWS/ShoppingWS.wsdl"/>
-            <produces dir="${build.generated.dir}/jax-wsCache/ShoppingWS"/>
-        </wsimport>
-        <copy todir="${build.generated.sources.dir}/jax-ws">
-            <fileset dir="${build.generated.dir}/jax-wsCache/ShoppingWS">
-                <include name="**/*.java"/>
-            </fileset>
-        </copy>
-    </target>
-    <target name="wsimport-client-clean-ShoppingWS" depends="-init-project">
-        <delete dir="${build.generated.sources.dir}/jax-ws/com/polymtl/wsshoppingsolver/webservice_client"/>
-        <delete dir="${build.generated.dir}/jax-wsCache/ShoppingWS"/>
-    </target>
     <target name="wsimport-client-ShopProductAdminWS" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/ShopProductAdminWS"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/ShopProductAdminWS" destdir="${build.generated.dir}/jax-wsCache/ShopProductAdminWS" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/ShopProductAdminWS/wsdl/localhost_80/ShopProductAdminWS/ShopProductAdminWS.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:80/ShopProductAdminWS/ShopProductAdminWS?wsdl" xnocompile="true" xendorsed="true" package="com.polymtl.wsshoppingsolver.webservice_client1">
-            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/ShopProductAdminWS/wsdl/localhost_80/ShopProductAdminWS/ShopProductAdminWS.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/ShopProductAdminWS" destdir="${build.generated.dir}/jax-wsCache/ShopProductAdminWS" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/ShopProductAdminWS/wsdl/jjliang-1005.jelastic.servint.net/ShopProductAdminWS/ShopProductAdminWS.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://jjliang-1005.jelastic.servint.net/ShopProductAdminWS/ShopProductAdminWS?wsdl" xnocompile="true" xendorsed="true">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/ShopProductAdminWS/wsdl/jjliang-1005.jelastic.servint.net/ShopProductAdminWS/ShopProductAdminWS.wsdl"/>
             <produces dir="${build.generated.dir}/jax-wsCache/ShopProductAdminWS"/>
         </wsimport>
         <copy todir="${build.generated.sources.dir}/jax-ws">
@@ -80,8 +64,8 @@
         </copy>
     </target>
     <target name="wsimport-client-clean-ShopProductAdminWS" depends="-init-project">
-        <delete dir="${build.generated.sources.dir}/jax-ws/com/polymtl/wsshoppingsolver/webservice_client1"/>
+        <delete dir="${build.generated.sources.dir}/jax-ws/shopproduct_admin_webservice"/>
         <delete dir="${build.generated.dir}/jax-wsCache/ShopProductAdminWS"/>
     </target>
-    <target name="wsimport-client-generate" depends="wsimport-client-ShoppingWS, wsimport-client-ShopProductAdminWS"/>
+    <target name="wsimport-client-generate" depends="wsimport-client-ShopProductAdminWS"/>
 </project>

@@ -4,6 +4,12 @@
 <xsd:import namespace="http://shopproduct_admin_webservice/" schemaLocation="http://localhost:80/ShopProductAdminWS/ShopProductAdminWS?xsd=1"/>
 </xsd:schema>
 </types>
+<message name="getProductPriceInShop">
+<part name="parameters" element="tns:getProductPriceInShop"/>
+</message>
+<message name="getProductPriceInShopResponse">
+<part name="parameters" element="tns:getProductPriceInShopResponse"/>
+</message>
 <message name="createProductCategory">
 <part name="parameters" element="tns:createProductCategory"/>
 </message>
@@ -16,11 +22,11 @@
 <message name="getAllProductsInShopResponse">
 <part name="parameters" element="tns:getAllProductsInShopResponse"/>
 </message>
-<message name="addProductToShop">
-<part name="parameters" element="tns:addProductToShop"/>
+<message name="createShopBranch">
+<part name="parameters" element="tns:createShopBranch"/>
 </message>
-<message name="addProductToShopResponse">
-<part name="parameters" element="tns:addProductToShopResponse"/>
+<message name="createShopBranchResponse">
+<part name="parameters" element="tns:createShopBranchResponse"/>
 </message>
 <message name="createShopBrand">
 <part name="parameters" element="tns:createShopBrand"/>
@@ -28,11 +34,11 @@
 <message name="createShopBrandResponse">
 <part name="parameters" element="tns:createShopBrandResponse"/>
 </message>
-<message name="createShopBranch">
-<part name="parameters" element="tns:createShopBranch"/>
+<message name="addProductToShop">
+<part name="parameters" element="tns:addProductToShop"/>
 </message>
-<message name="createShopBranchResponse">
-<part name="parameters" element="tns:createShopBranchResponse"/>
+<message name="addProductToShopResponse">
+<part name="parameters" element="tns:addProductToShopResponse"/>
 </message>
 <message name="createProduct">
 <part name="parameters" element="tns:createProduct"/>
@@ -40,13 +46,17 @@
 <message name="createProductResponse">
 <part name="parameters" element="tns:createProductResponse"/>
 </message>
-<message name="getProductPriceInShop">
-<part name="parameters" element="tns:getProductPriceInShop"/>
+<message name="findAllShopBrand">
+<part name="parameters" element="tns:findAllShopBrand"/>
 </message>
-<message name="getProductPriceInShopResponse">
-<part name="parameters" element="tns:getProductPriceInShopResponse"/>
+<message name="findAllShopBrandResponse">
+<part name="parameters" element="tns:findAllShopBrandResponse"/>
 </message>
 <portType name="ShopProductAdminWS">
+<operation name="getProductPriceInShop">
+<input wsam:Action="http://shopproduct_admin_webservice/ShopProductAdminWS/getProductPriceInShopRequest" message="tns:getProductPriceInShop"/>
+<output wsam:Action="http://shopproduct_admin_webservice/ShopProductAdminWS/getProductPriceInShopResponse" message="tns:getProductPriceInShopResponse"/>
+</operation>
 <operation name="createProductCategory">
 <input wsam:Action="http://shopproduct_admin_webservice/ShopProductAdminWS/createProductCategoryRequest" message="tns:createProductCategory"/>
 <output wsam:Action="http://shopproduct_admin_webservice/ShopProductAdminWS/createProductCategoryResponse" message="tns:createProductCategoryResponse"/>
@@ -55,29 +65,38 @@
 <input wsam:Action="http://shopproduct_admin_webservice/ShopProductAdminWS/getAllProductsInShopRequest" message="tns:getAllProductsInShop"/>
 <output wsam:Action="http://shopproduct_admin_webservice/ShopProductAdminWS/getAllProductsInShopResponse" message="tns:getAllProductsInShopResponse"/>
 </operation>
-<operation name="addProductToShop">
-<input wsam:Action="http://shopproduct_admin_webservice/ShopProductAdminWS/addProductToShopRequest" message="tns:addProductToShop"/>
-<output wsam:Action="http://shopproduct_admin_webservice/ShopProductAdminWS/addProductToShopResponse" message="tns:addProductToShopResponse"/>
+<operation name="createShopBranch">
+<input wsam:Action="http://shopproduct_admin_webservice/ShopProductAdminWS/createShopBranchRequest" message="tns:createShopBranch"/>
+<output wsam:Action="http://shopproduct_admin_webservice/ShopProductAdminWS/createShopBranchResponse" message="tns:createShopBranchResponse"/>
 </operation>
 <operation name="createShopBrand">
 <input wsam:Action="http://shopproduct_admin_webservice/ShopProductAdminWS/createShopBrandRequest" message="tns:createShopBrand"/>
 <output wsam:Action="http://shopproduct_admin_webservice/ShopProductAdminWS/createShopBrandResponse" message="tns:createShopBrandResponse"/>
 </operation>
-<operation name="createShopBranch">
-<input wsam:Action="http://shopproduct_admin_webservice/ShopProductAdminWS/createShopBranchRequest" message="tns:createShopBranch"/>
-<output wsam:Action="http://shopproduct_admin_webservice/ShopProductAdminWS/createShopBranchResponse" message="tns:createShopBranchResponse"/>
+<operation name="addProductToShop">
+<input wsam:Action="http://shopproduct_admin_webservice/ShopProductAdminWS/addProductToShopRequest" message="tns:addProductToShop"/>
+<output wsam:Action="http://shopproduct_admin_webservice/ShopProductAdminWS/addProductToShopResponse" message="tns:addProductToShopResponse"/>
 </operation>
 <operation name="createProduct">
 <input wsam:Action="http://shopproduct_admin_webservice/ShopProductAdminWS/createProductRequest" message="tns:createProduct"/>
 <output wsam:Action="http://shopproduct_admin_webservice/ShopProductAdminWS/createProductResponse" message="tns:createProductResponse"/>
 </operation>
-<operation name="getProductPriceInShop">
-<input wsam:Action="http://shopproduct_admin_webservice/ShopProductAdminWS/getProductPriceInShopRequest" message="tns:getProductPriceInShop"/>
-<output wsam:Action="http://shopproduct_admin_webservice/ShopProductAdminWS/getProductPriceInShopResponse" message="tns:getProductPriceInShopResponse"/>
+<operation name="findAllShopBrand">
+<input wsam:Action="http://shopproduct_admin_webservice/ShopProductAdminWS/findAllShopBrandRequest" message="tns:findAllShopBrand"/>
+<output wsam:Action="http://shopproduct_admin_webservice/ShopProductAdminWS/findAllShopBrandResponse" message="tns:findAllShopBrandResponse"/>
 </operation>
 </portType>
 <binding name="ShopProductAdminWSPortBinding" type="tns:ShopProductAdminWS">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+<operation name="getProductPriceInShop">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
 <operation name="createProductCategory">
 <soap:operation soapAction=""/>
 <input>
@@ -96,7 +115,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="addProductToShop">
+<operation name="createShopBranch">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -114,7 +133,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="createShopBranch">
+<operation name="addProductToShop">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -132,7 +151,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="getProductPriceInShop">
+<operation name="findAllShopBrand">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

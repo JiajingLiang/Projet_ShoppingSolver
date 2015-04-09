@@ -15,7 +15,9 @@ import com.polymtl.wsshoppingsolver.model.ProductCategory;
 import com.polymtl.wsshoppingsolver.model.ProductPriceInShop;
 import com.polymtl.wsshoppingsolver.model.ShopBranch;
 import com.polymtl.wsshoppingsolver.model.ShopBrand;
+import com.thoughtworks.xstream.XStream;
 import java.util.List;
+import java.util.Vector;
 import javax.ejb.EJB;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -47,6 +49,14 @@ public class ShopProductAdminWS {
         return true;
     }
     
+    @WebMethod(operationName = "findAllShopBrand")
+    public String findAllShopBrand() {
+        List<ShopBrand> allBrands = shopBrandDao.findAllShopBrand();
+        XStream xstream = new XStream();
+        xstream.processAnnotations(ShopBrand.class);
+        return xstream.toXML(allBrands);
+    }
+    
     @WebMethod(operationName = "createShopBranch")
     public boolean createShopBranch(@WebParam(name="idBrand")long idBrand, @WebParam(name="street")String street, @WebParam(name="city")String city, @WebParam(name="postcode")String postcode, @WebParam(name="country")String country){
         ShopBrand brand = shopBrandDao.findByKey(idBrand);
@@ -59,11 +69,27 @@ public class ShopProductAdminWS {
         }
     }
     
+    @WebMethod(operationName = "findAllShopBranch")
+    public String findAllShopBranch() {
+        List<ShopBranch> allBranches = shopBranchDao.findAllShopBranch();
+        XStream xstream = new XStream();
+        xstream.processAnnotations(ShopBranch.class);
+        return xstream.toXML(allBranches);
+    }
+    
     @WebMethod(operationName = "createProductCategory")
     public boolean createProductCategory(@WebParam(name="categoryName")String categoryName){
         ProductCategory aCategory = new ProductCategory(categoryName);
         productCategoryDao.create(aCategory);
         return true;
+    }
+    
+    @WebMethod(operationName = "findAllProductCategory")
+    public String findAllProductCategory() {
+        List<ProductCategory> allCategories= productCategoryDao.findAllCategory();
+        XStream xstream = new XStream();
+        xstream.processAnnotations(ProductCategory.class);
+        return xstream.toXML(allCategories);
     }
     
     @WebMethod(operationName = "createProduct")
@@ -81,6 +107,15 @@ public class ShopProductAdminWS {
         }else{
             return false;
         }
+    }
+    
+    @WebMethod(operationName = "findAllProduct")
+    public String findAllProduct() {
+        List<Product> allProducts= productDao.findAllProduct();
+        XStream xstream = new XStream();
+        xstream.processAnnotations(Product.class);
+        xstream.processAnnotations(ProductCategory.class);
+        return xstream.toXML(allProducts);
     }
     
     @WebMethod(operationName = "addProductToShop")
@@ -103,30 +138,32 @@ public class ShopProductAdminWS {
     @WebMethod(operationName = "getProductPriceInShop")
     public String getProductPriceFromShop(@WebParam(name="productBarCode")String productBarCode, @WebParam(name="idShop")long shopId){
         ProductPriceInShop productPriceInShop = productPriceInShopDao.findByKey(productBarCode, shopId);
-        if(productPriceInShop!=null){
-            return productPriceInShop.toXmlString();
-        }else{
-            return "null";
-        }        
+        XStream xstream = new XStream();
+        xstream.processAnnotations(ProductPriceInShop.class);
+        xstream.processAnnotations(Product.class);
+        xstream.processAnnotations(ProductCategory.class);
+        xstream.processAnnotations(ShopBranch.class);
+        xstream.processAnnotations(ShopBrand.class);
+        return xstream.toXML(productPriceInShop);
     }
     
     @WebMethod(operationName = "getAllProductsInShop")
     public String getAllProductsInShop(@WebParam(name="idShop")long shopId){
         ShopBranch shop = shopBranchDao.findByKey(shopId);
+        XStream xstream = new XStream();
         if(shop != null){
             List<ProductPriceInShop> productsInShop = productPriceInShopDao.findByShop(shop);
+            List<Product> products = new Vector<>();
             if(productsInShop.size()>0){
-                String strXML = "<Products>";
                 for (ProductPriceInShop productInShop : productsInShop) {
-                    strXML += productInShop.getProduct().toXmlString();
+                    products.add(productInShop.getProduct());
                 }
-                strXML += "</Products>";
-                return strXML;
-            }else{
-                return "null";
             }
+            xstream.processAnnotations(Product.class);
+            xstream.processAnnotations(ProductCategory.class);
+            return xstream.toXML(products);
         }else{
-            return "null";
+            return xstream.toXML(null);
         }       
     }
 }
