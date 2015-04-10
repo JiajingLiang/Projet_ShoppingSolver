@@ -2,6 +2,13 @@
 <items version="2" >
 
     <item
+        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="dd9247ea0fabe8ee479638c4b4a23e93752be256">
+        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/classes-84cc9b964e2c60b316175dd158b2b89c11d0cf80.jar" />
+    </item>
+    <item
         jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/libs/zxing.jar"
         jumboMode="false"
         revision="21.1.2"
@@ -14,13 +21,6 @@
         revision="21.1.2"
         sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
         <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-bcac4eb7b30e52fa025356e5ceed340bcf85dbb7.jar" />
-    </item>
-    <item
-        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/libs/ksoap2-android-assembly-3.4.0-jar-with-dependencies.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="45fbaab416fb5cff992e662d1f7a83786f084fc3">
-        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/ksoap2-android-assembly-3.4.0-jar-with-dependencies-f8a772b104a09b7ed059517c720264606dda0bc7.jar" />
     </item>
     <item
         jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/libs/json-simple-1.1.1.jar"
@@ -42,6 +42,27 @@
         revision="21.1.2"
         sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
         <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-b67ff8eaa22269748872eee81a23dd4e154bd138.jar" />
+    </item>
+    <item
+        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/libs/ksoap2-android-assembly-3.4.0-jar-with-dependencies.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="45fbaab416fb5cff992e662d1f7a83786f084fc3">
+        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/ksoap2-android-assembly-3.4.0-jar-with-dependencies-f8a772b104a09b7ed059517c720264606dda0bc7.jar" />
+    </item>
+    <item
+        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/libs/xstream-1.4.7.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="bce3282142b63068260f021fcbe48b72e8d71a1a">
+        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/xstream-1.4.7-cfe9effd03fa159294d25950871d3b956ca94059.jar" />
+    </item>
+    <item
+        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/classes-7b6849cfe180a884413af5cdd969f25241b1e008.jar" />
     </item>
 
 </items>

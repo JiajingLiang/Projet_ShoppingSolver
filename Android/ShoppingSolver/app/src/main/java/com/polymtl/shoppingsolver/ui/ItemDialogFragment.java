@@ -43,7 +43,7 @@ public class ItemDialogFragment extends DialogFragment {
     private ShoppingItem shoppingItem;
 
     private float tempQuantity;
-    private float tempTotalPrice;
+    private double tempTotalPrice;
 
 
     private ArrayAdapter<String> adapter;
@@ -88,7 +88,7 @@ public class ItemDialogFragment extends DialogFragment {
         tempTotalPrice = shoppingItem.getItemTotalPrice();
 
         tvItemName = (TextView) rootView.findViewById(R.id.tvItem_name);
-        tvItemName.setText(shoppingItem.getProduct().getName());
+        tvItemName.setText(shoppingItem.getProduct().getProductName());
 
         tvUnitPrice = (TextView) rootView.findViewById(R.id.unitPrice);
         tvUnitPrice.setText("Unit Price: " + shoppingItem.getProduct().getUnit_price() + "$");
@@ -97,10 +97,10 @@ public class ItemDialogFragment extends DialogFragment {
         tvTotalPrice.setText("Total: " +shoppingItem.getItemTotalPrice() + "$");
 
         tvRatioTPS = (TextView) rootView.findViewById(R.id.tvratioTPS);
-        tvRatioTPS.setText("RatioTPS: " + shoppingItem.getProduct().getCategory().getRatioTPS());
+        tvRatioTPS.setText("RatioTaxFederal: " + shoppingItem.getProduct().getFederalTaxRatio());
 
         tvRatioTVQ = (TextView) rootView.findViewById(R.id.tvratioTVQ);
-        tvRatioTVQ.setText("RatioTVQ: " + shoppingItem.getProduct().getCategory().getRatioTVQ());
+        tvRatioTVQ.setText("RatioTaxProvincial: " + shoppingItem.getProduct().getProvincialTaxRatio());
 
         edQuantity = (EditText) rootView.findViewById(R.id.edQuantity);
         edQuantity.setText(String.valueOf(shoppingItem.getQuantity()));

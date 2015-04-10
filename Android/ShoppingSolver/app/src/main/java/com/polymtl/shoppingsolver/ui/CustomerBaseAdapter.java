@@ -91,7 +91,7 @@ public class CustomerBaseAdapter extends BaseAdapter {
                 }
             });
 
-            holder.productName.setText(data.get(position).getProduct().getName());
+            holder.productName.setText(data.get(position).getProduct().getProductName());
             holder.priceQuantity.setText("Unit price: " + data.get(position).getProduct().getUnit_price()
                     + "$  quantity: " + data.get(position).getQuantity());
             /***** Set holder with LayoutInflater *****/

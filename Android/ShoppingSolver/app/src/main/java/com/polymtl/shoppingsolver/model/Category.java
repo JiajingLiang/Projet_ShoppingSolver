@@ -6,8 +6,7 @@ package com.polymtl.shoppingsolver.model;
 public class Category {
 
     private String name;
-    private float ratioTPS; // Taxe sur les produits et services
-    private float ratioTVQ; // Taxe de vente du Quebec
+
 
     public void setName(String name) {
         this.name = name;
@@ -18,7 +17,7 @@ public class Category {
         return this.name;
     }
 
-    public void setRatioTPS(float ratio) {
+    /*public void setRatioTPS(float ratio) {
         this.ratioTPS = ratio;
     }
 
@@ -32,5 +31,5 @@ public class Category {
 
     public float getRatioTVQ() {
         return this.ratioTVQ;
-    }
+    }*/
 }
