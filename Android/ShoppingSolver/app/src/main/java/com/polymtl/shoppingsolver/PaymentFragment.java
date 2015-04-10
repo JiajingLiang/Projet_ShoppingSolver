@@ -15,8 +15,10 @@ import com.polymtl.shoppingsolver.model.ShoppingItem;
 import com.polymtl.shoppingsolver.ui.CustomerBaseAdapter;
 import com.zxing.activity.CaptureActivity;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -32,14 +34,15 @@ import android.widget.TextView;
 
 public class PaymentFragment extends Fragment {
 
-    static final int PICK_SCAN_REQUEST = 0;
+    static final int PICK_PRODUCTID_REQUEST = 0;
+    static final int PICK_SHOPID_REQUEST = 1;
 
 	private Context mContext;
 	private String urlServlet;
 	private View rootView;
     private String userId;
     private ListView shoppingListView;
-    private CustomerBaseAdapter mAdapter;
+    private static CustomerBaseAdapter mAdapter;
     private TextView tvShopingList;
     //private List<Map<String, Object>> shoppingListData;
 
@@ -47,6 +50,9 @@ public class PaymentFragment extends Fragment {
 		this.mcontext = context;
 	}*/
 
+    public static CustomerBaseAdapter getmAdapter() {
+        return mAdapter;
+    }
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -89,10 +95,9 @@ public class PaymentFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                Log.i("Update:", "pay button clicked");
-                // Test change list
 
-                Product itemProduct = new Product();
+                // Test change list
+                /*Product itemProduct = new Product();
                 itemProduct.setName("Milk");
                 itemProduct.setUnit_price(3.20f);
                 Category itemCategory = new Category();
@@ -106,7 +111,7 @@ public class PaymentFragment extends Fragment {
 
                 Log.i("Update:", "start RefreshListView");
                 MainActivity.addShoppingItem(shoppingItem);
-                getActivity().runOnUiThread(new RefreshListView());
+                getActivity().runOnUiThread(new RefreshListView());*/
 
                 /*TextView tvTotal = (TextView)rootView.findViewById(R.id.tvTotalVal);
                 Double total = Double.parseDouble(tvTotal.getText().toString());
@@ -129,37 +134,36 @@ public class PaymentFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Intent openCameraIntent = new Intent(getActivity(),CaptureActivity.class);
-                // Start this activity and get a result back from this activity when it ends
-                getActivity().startActivityForResult(openCameraIntent, PICK_SCAN_REQUEST);
+
+                if (MainActivity.getShopId() == 0) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    // Add the buttons
+                    builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent intent = new Intent(getActivity(), CaptureActivity.class);
+                            getActivity().startActivityForResult(intent, PICK_SHOPID_REQUEST);
+                        }
+                    });
+                    builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            return;
+                        }
+                    });
+                    // Set other dialog properties
+                    builder.setTitle("Please get Shop ID");
+                    builder.setMessage("Do you want to get Shop ID by Scan?");
+                    // Create the AlertDialog
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                } else {
+                    Intent openCameraIntent = new Intent(getActivity(), CaptureActivity.class);
+                    // Start this activity and get a result back from this activity when it ends
+                    getActivity().startActivityForResult(openCameraIntent, PICK_PRODUCTID_REQUEST);
+                }
             }
 
         });
     }
-
-
-   /* private void setData() {
-
-       shoppingListData = new ArrayList<Map<String, Object>>();
-        Map<String, Object> map;
-
-        map = new HashMap<String, Object>();
-        Product milk = new Product();
-        Category food = new Category();
-        food.setName("Food");
-        food.setRatioTPS(0.0f);
-        food.setRatioTVQ(0.0f);
-        milk.setCategory(food);
-        milk.setName("Milk");
-        milk.setUnit_price(3.20f);
-        ItemByIndividual milkItem = new ItemByIndividual(milk);
-        map.put("name", milkItem.getProduct().getName());
-        map.put("unitPrice", milk.getUnit_price());
-        map.put("quantity", milkItem.getQuantity());
-
-        shoppingListData.add(map);
-    }*/
 
     private void setUpShoppingList(LayoutInflater inflater) {
 
@@ -174,12 +178,6 @@ public class PaymentFragment extends Fragment {
 
         shoppingListView = (ListView) rootView.findViewById(R.id.shoppingList);
         mAdapter = new CustomerBaseAdapter(mContext, MainActivity.getShoppingItems());
-
-        //code to add header and footer to listview
-        /*ViewGroup header = (ViewGroup) inflater.inflate(R.layout.header, shoppingListView,
-               false);
-
-        shoppingListView.addHeaderView(header, null, false);*/
 
         shoppingListView.setAdapter(mAdapter);
 
@@ -197,83 +195,6 @@ public class PaymentFragment extends Fragment {
         });
 
     }
-
-    // When shopping list item quantity changed then update this item quantity
-    /*private void updateItemQuantityView(int itemIndex, int gap) {
-
-        View v = shoppingListView.getChildAt(itemIndex - shoppingListView.getFirstVisiblePosition());
-        CustomerArrayAdapter.ViewHolder viewHolder = (CustomerArrayAdapter.ViewHolder) v.getTag();
-        if (viewHolder != null) {
-            int quantity = Integer.parseInt(viewHolder.quantity.getText().toString()) + gap;
-            if (quantity <= 0) {
-                deleteShoppingListItem(itemIndex);
-            } else {
-                viewHolder.quantity.setText(Integer.parseInt(viewHolder.quantity.getText().toString()) + gap);
-            }
-        }
-
-    }*/
-
-    // Delete one of shopping list item
-    private void deleteShoppingListItem(int itemIndex) {
-        // TODO:
-        //shoppingListData.remove(itemIndex);
-
-        mAdapter.notifyDataSetChanged();
-    }
-
-    private void addShoppingListItem() {
-        // TODO:
-    }
-
-	private class MakePaymentTask extends AsyncTask<JSONObject, Integer, Void> {
-
-		@Override
-		protected Void doInBackground(JSONObject... params) {
-			try {
-				URL url = new URL(urlServlet);
-				String data = params[0].toString();
-				
-				HttpURLConnection urlConn= (HttpURLConnection)url.openConnection();
-				
-				urlConn.setRequestMethod("POST");
-				urlConn.setDoOutput(true);
-				urlConn.setDoInput(true);
-				
-				urlConn.setFixedLengthStreamingMode(data.getBytes().length);
-				
-				urlConn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-				urlConn.setRequestProperty("Accept", "application/json");
-				urlConn.setRequestProperty("X-Requested-With", "XMLHttpRequest");
-				
-				urlConn.connect();
-				OutputStream os = new BufferedOutputStream(urlConn.getOutputStream());
-				os.write(data.getBytes()); 
-				os.flush();
-				os.close();
-				urlConn.disconnect();
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
-		}
-		
-		@Override
-		protected void onPostExecute(Void result){
-			/*Toast.makeText(PaymentFragment.this.mContext, "You've just made a payment!", Toast.LENGTH_SHORT).show();
-			TextView tvTotal = (TextView)PaymentFragment.this.rootView.findViewById(R.id.tvTotalVal);
-			tvTotal.setText("");
-			TextView tvProducts = (TextView)PaymentFragment.this.rootView.findViewById(R.id.tvProductsVal);
-			tvProducts.setText("");
-			ImageButton buttonPay = (ImageButton) PaymentFragment.this.rootView.findViewById(R.id.buttonPay);
-			buttonPay.setEnabled(false);*/
-		}
-	}
-
 
     // used for communication between this fragment with another fragment
     public interface StartCommunication{

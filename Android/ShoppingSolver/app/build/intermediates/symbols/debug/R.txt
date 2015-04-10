@@ -40,10 +40,11 @@ int drawable ic_drawer 0x7f020008
 int drawable ic_habit 0x7f020009
 int drawable ic_launcher 0x7f02000a
 int drawable ic_payment 0x7f02000b
-int drawable increasebutton 0x7f02000c
-int drawable room 0x7f02000d
-int drawable save 0x7f02000e
-int drawable scan 0x7f02000f
+int drawable ic_reception 0x7f02000c
+int drawable increasebutton 0x7f02000d
+int drawable room 0x7f02000e
+int drawable save 0x7f02000f
+int drawable scan 0x7f020010
 int id action_settings 0x7f070038
 int id auto_focus 0x7f070000
 int id btn_cancel 0x7f070020

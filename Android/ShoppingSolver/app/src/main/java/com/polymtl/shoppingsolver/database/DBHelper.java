@@ -32,26 +32,60 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_TABLE_CONSUMPTION_HABIT = "CREATE TABLE " + TABLE_CONSUMPTION_HABIT
             + " (" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_PRIMARY_CODE
-            + " STRING PRIMARY KEY," + KEY_PRODUCT_NAME + " STRING,"
+            + " STRING," + KEY_PRODUCT_NAME + " STRING,"
             + KEY_QUANTITY + " FLOAT" + ")";
 
 
     // transactions table
     public static final String TABLE_TRANSACTION = "transactions";
+    public static final String KEY_TRANSACTION_CODE = "transactionCode";
+    public static final String KEY_SHOPE_ID = "idShop";
     public static final String KEY_STORE_NAME = "storeName";
     public static final String KEY_STORE_ADDRESS = "storeAddress";
     public static final String KEY_CASHDEST_ID = "cashDestID";
     public static final String KEY_TIME = "time";
-    public static final String KEY_TRANSACTION_CODE = "transactionCode";
     public static final String KEY_TOTALPRICE = "totalPrice";
-    public static final String KEY_TAX_TPS = "taxTPS";
-    public static final String KEY_TAX_TVQ = "taxTVQ";
+    public static final String KEY_TAX_FEDERAL = "taxFederal";
+    public static final String KEY_TAX_PROVINCIAL = "taxProvincial";
     public static final String KEY_TOTALPRICE_WITHTAX = "totalPriceWithTax";
     public static final String KEY_AMOUNT_PRODUCTS = "amountProducts";
+
+    private static final String CREATE_TABLE_TRANSACTION = "CREATE TABLE " + TABLE_TRANSACTION
+            + " (" + KEY_TRANSACTION_CODE + " LONG PRIMARY KEY," + KEY_STORE_NAME + " STRING,"
+            + KEY_STORE_ADDRESS + " STRING," + KEY_CASHDEST_ID + " INTEGER,"
+            + KEY_TIME + " STRING," + KEY_SHOPE_ID + " INTEGER," + KEY_TOTALPRICE + " DOUBLE"
+            + KEY_TAX_FEDERAL + " DOUBLE," + KEY_TAX_PROVINCIAL + " DOUBLE"
+            + KEY_TOTALPRICE_WITHTAX + " DOUBLE," + KEY_AMOUNT_PRODUCTS + "SHORT";
+
+    //TODO shopping list table
+    public static final String TABEL_SHOPPINGLIST = "shoppinglist";
+    public static final String KEY_TRANSACTION_ID = "transactionCode";
 
 
     // shopping list table
     public static final String TABLE_SHOPPINGLIST = "shoppingList";
+
+
+    // Client information table
+    public static final String TABLE_CLIENTINFO = "clientIfo";
+    public static final String KEY_CLIENT_ID = "clientId";
+    public static final String KEY_CLIENT_EMAIL = "email";
+    public static final String KEY_PASSWORD = "password";
+    public static final String KEY_TELEPHONE = "telephone";
+    public static final String KEY_STREET = "street";
+    public static final String KEY_CITY = "city";
+    public static final String KEY_POSTCODE = "postcode";
+    public static final String KEY_COUNTRY = "country";
+    public static final String KEY_BALANCE = "balance";
+    private static final String CREATE_TABLE_CLIENTINFO = "CREATE TABLE " + TABLE_CLIENTINFO
+            + " (" + KEY_CLIENT_ID + " LONG PRIMARY KEY,"  + KEY_CLIENT_EMAIL + " STRING,"
+            + KEY_PASSWORD + " STRING,"
+            + KEY_TELEPHONE + " STRING,"
+            + KEY_STREET + " STRING,"
+            + KEY_CITY + " STRING,"
+            + KEY_POSTCODE + " STRING,"
+            + KEY_COUNTRY + " STRING,"
+            + KEY_BALANCE + " DOUBLE" + ")";
 
 
     public DBHelper(Context context) {
@@ -62,6 +96,10 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL(CREATE_TABLE_CONSUMPTION_HABIT);
+
+        db.execSQL(CREATE_TABLE_TRANSACTION);
+
+        db.execSQL(CREATE_TABLE_CLIENTINFO);
     }
 
     @Override

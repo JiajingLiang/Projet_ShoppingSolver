@@ -26,7 +26,7 @@ public class ShoppingItem {
     }
 
 
-    public float getItemTotalPrice() {
+    public double getItemTotalPrice() {
         return quantity * product.getUnit_price();
     }
 

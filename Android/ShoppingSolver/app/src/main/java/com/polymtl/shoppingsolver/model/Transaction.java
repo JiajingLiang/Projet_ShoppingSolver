@@ -55,7 +55,7 @@ public class Transaction {
     public float calculateTaxTPS() {
 
         for (ShoppingItem item : this.shoppingList ) {
-            this.taxTPS += item.getItemTotalPrice() * item.getProduct().getCategory().getRatioTPS();
+            this.taxTPS += item.getItemTotalPrice() * item.getProduct().getFederalTaxRatio();
         }
         return this.taxTPS;
     }
@@ -69,7 +69,7 @@ public class Transaction {
     public float calculateTVQ() {
 
         for (ShoppingItem item : this.shoppingList ) {
-            this.taxTVQ += item.getItemTotalPrice() * item.getProduct().getCategory().getRatioTVQ();
+            this.taxTVQ += item.getItemTotalPrice() * item.getProduct().getProvincialTaxRatio();
         }
         return this.taxTVQ;
     }

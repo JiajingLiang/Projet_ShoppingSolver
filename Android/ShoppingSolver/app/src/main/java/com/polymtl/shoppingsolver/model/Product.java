@@ -1,43 +1,70 @@
 package com.polymtl.shoppingsolver.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Zoe on 15-04-01.
  */
-public class Product {
+public class Product implements Serializable {
 
-    private String primaryCode;
-    private String name;
-    private Category category;
-    private float unit_price;
+    private String productBarCode;
+    private String productName;
+    private String categoryName;
+    private String description;
+    private float federalTaxRatio; // Taxe sur les produits et services
+    private float provincialTaxRatio; // Taxe de vente du Quebec
+    private double unit_price;
 
 
-    public void setPrimaryCode(String code) {
-        this.primaryCode = code;
+    public void setProductBarCode(String code) {
+        this.productBarCode = code;
     }
-    private String getPrimaryCode() {
-        return this.primaryCode;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-
-    }
-    public String getName() {
-        return this.name;
+    public String getProductBarCode() {
+        return this.productBarCode;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setProductName(String name) {
+        this.productName = name;
     }
-    public Category getCategory() {
-        return this.category;
+    public String getProductName() {
+        return this.productName;
     }
 
-    public void setUnit_price(float price) {
+    public void setCategoryName(String name) {
+        this.categoryName = name;
+    }
+    public String getCategoryName() {
+        return this.categoryName;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setFederalTaxRatio(float taxRatio) {
+        this.federalTaxRatio = taxRatio;
+    }
+    public float getFederalTaxRatio() {
+
+        return this.federalTaxRatio;
+    }
+
+    public void setProvincialTaxRatio(float taxRatio) {
+        this.provincialTaxRatio = taxRatio;
+    }
+
+    public float getProvincialTaxRatio() {
+        return this.provincialTaxRatio;
+    }
+
+    public void setUnit_price(double price) {
         this.unit_price = price;
     }
 
-    public float getUnit_price() {
+    public double getUnit_price() {
         return this.unit_price;
     }
 

@@ -52,16 +52,16 @@ public class MainActivity extends Activity implements PaymentFragment.StartCommu
 	// used to store app title
 	private CharSequence mTitle;
 	
-	private String userId;
-	private String urlServlet;
+	//private String userId;
+	//private String urlServlet;
 	
 	private final static int SCANNIN_GREQUEST_CODE = 1;
 
     private static ArrayList<ShoppingItem> shoppingItems;
     private static int currentPosition;
+    private static long shopId;
 
     private Product itemProduct;
-    private Category itemCategory;
     private ShoppingItem shoppingItem;
 
 	@Override
@@ -84,8 +84,8 @@ public class MainActivity extends Activity implements PaymentFragment.StartCommu
     private void init() {
 
         Intent intent = getIntent();
-        userId = intent.getStringExtra("login");
-        urlServlet = intent.getStringExtra("urlServlet");
+        //userId = intent.getStringExtra("login");
+        //urlServlet = intent.getStringExtra("urlServlet");
 
         shoppingItems = new ArrayList<>();
     }
@@ -93,26 +93,23 @@ public class MainActivity extends Activity implements PaymentFragment.StartCommu
     private void testShoppingList() {
 
         itemProduct = new Product();
-        itemProduct.setName("Milk");
+        itemProduct.setProductName("Milk");
         itemProduct.setUnit_price(3.20f);
-        itemCategory = new Category();
-        itemCategory.setName("Food");
-        itemCategory.setRatioTVQ(0.00f);
-        itemCategory.setRatioTPS(0.00f);
-        itemProduct.setCategory(itemCategory);
+
+        itemProduct.setCategoryName("Food");
+        itemProduct.setFederalTaxRatio(0.00f);
+        itemProduct.setProvincialTaxRatio(0.00f);
         shoppingItem = new ShoppingItem(itemProduct);
         shoppingItem.setQuantity(1.0f);
         shoppingItem.getItemTotalPrice();
         shoppingItems.add(shoppingItem);
 
         itemProduct = new Product();
-        itemProduct.setName("Beer");
+        itemProduct.setProductName("Beer");
         itemProduct.setUnit_price(2.50f);
-        itemCategory = new Category();
-        itemCategory.setName("Alcohol");
-        itemCategory.setRatioTPS(0.15f);
-        itemCategory.setRatioTVQ(0.26f);
-        itemProduct.setCategory(itemCategory);
+        itemProduct.setCategoryName("Alcohol");
+        itemProduct.setFederalTaxRatio(0.15f);
+        itemProduct.setProvincialTaxRatio(0.26f);
         shoppingItem = new ShoppingItem(itemProduct);
         shoppingItem.setQuantity(12.0f);
         shoppingItem.getItemTotalPrice();
@@ -213,8 +210,6 @@ public class MainActivity extends Activity implements PaymentFragment.StartCommu
 
         FragmentManager fragmentManager = getFragmentManager();
 
-
-
          Log.i("Open item:", "setComm");
          ItemDialogFragment itemDialogFragment = ItemDialogFragment.newInstance(position);
          Log.i("Open item:", "position" + position);
@@ -254,8 +249,8 @@ public class MainActivity extends Activity implements PaymentFragment.StartCommu
 	            break;
 	    }
 	    if (fragment != null) {
-	    	bundle.putString("userId", userId);
-	    	bundle.putString("urlServlet", urlServlet);
+	    	//bundle.putString("userId", userId);
+	    	//bundle.putString("urlServlet", urlServlet);
 	    	fragment.setArguments(bundle);
 	    	
 	        FragmentManager fragmentManager = getFragmentManager();
@@ -276,7 +271,7 @@ public class MainActivity extends Activity implements PaymentFragment.StartCommu
 		super.onActivityResult(requestCode, resultCode, data);
 
         // come back scan request, send the code to Server
-        if (requestCode == PaymentFragment.PICK_SCAN_REQUEST) {
+        if (requestCode == PaymentFragment.PICK_PRODUCTID_REQUEST) {
 
             if (resultCode == RESULT_OK) {
                 Bundle bundle = data.getExtras();
@@ -286,60 +281,16 @@ public class MainActivity extends Activity implements PaymentFragment.StartCommu
                 // create new Intent to invoke ShoppingSolverIntentService
                 Intent mServerIntent = new Intent(MainActivity.this, ShoppingSolverIntentService.class);
                 mServerIntent.putExtra("command", "productInfo");
+                mServerIntent.putExtra("productBarCode", scanResult);
+                mServerIntent.putExtra("idShop", MainActivity.getShopId());
                 mServerIntent.putExtra("receiver", new SSResultReceiver(new Handler()));
                 // start IntentService
                 MainActivity.this.startService(mServerIntent);
-
-                // TEST: mock product info
-                Product product = new Product();
-                product.setName("Orange Juice");
-                product.setUnit_price(1.20f);
-                Category category = new Category();
-                category.setName("Food");
-                category.setRatioTVQ(0.00f);
-                category.setRatioTPS(0.00f);
-                product.setCategory(category);
-
-                Bundle toSaveBundle = new Bundle();
-                toSaveBundle.putString("productName", product.getName());
-                toSaveBundle.putFloat("unitPrice", product.getUnit_price());
-                toSaveBundle.putString("categoryName", category.getName());
-                toSaveBundle.putFloat("ratioTVQ", category.getRatioTVQ());
-                toSaveBundle.putFloat("ratioTPS", category.getRatioTPS());
-
-
-                //mock end //////////////////////////////////////
-
-                // TODO: send data to PaymentFragment
-
-                /**
-                JSONParser jsonParser = new JSONParser();
-                ContainerFactory containerFactory = new ContainerFactory() {
-                    @Override
-                    public List creatArrayContainer() {
-                        return new LinkedList();
-                    }
-
-                    @Override
-                    public Map createObjectContainer() {
-                        return new LinkedHashMap();
-                    }
-                };
-                try {
-                    Map json = (Map) jsonParser.parse(scanResult, containerFactory);
-                    JSONObject jsonObject = new JSONObject(json);
-                    Number total = (Number) jsonObject.get("total");
-                    TextView tvTotalVal = (TextView) findViewById(R.id.tvTotalVal);
-                    tvTotalVal.setText(total.toString());
-                    List products = (List) jsonObject.get("products");
-                    TextView tvScanResult = (TextView) findViewById(R.id.tvProductsVal);
-                    tvScanResult.setText(products.toString());
-                } catch (ParseException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-                Button buttonPay = (Button) findViewById(R.id.buttonPay);
-                buttonPay.setEnabled(true);*/
+            }
+        } else if (requestCode == PaymentFragment.PICK_SHOPID_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Bundle bundle = data.getExtras();
+                MainActivity.setShopId(Long.parseLong(bundle.getString("result")));
             }
         }
 	}
@@ -356,11 +307,6 @@ public class MainActivity extends Activity implements PaymentFragment.StartCommu
         MainActivity.shoppingItems.remove(position);
     }
 
-    public static void replaceOneShoppingItem(int position, ShoppingItem item) {
-        MainActivity.shoppingItems.remove(position);
-        MainActivity.shoppingItems.add(position, item);
-
-    }
 
     public static void setCurrentPosition(int position) {
         currentPosition = position;
@@ -370,10 +316,17 @@ public class MainActivity extends Activity implements PaymentFragment.StartCommu
         return currentPosition;
     }
 
+    public static void setShopId(long id) {
+        shopId = id;
+    }
+    public static long getShopId() {
+        return shopId;
+    }
+
     private class SSResultReceiver extends ResultReceiver {
 
-        private final int ERROR = 0, LOGIN = 1, PRODUCTINFO = 2, PAYMENT = 3,
-                CLIENTINFO = 4, CONSUMPTIVEHABIT = 5, SALEINFO = 6;
+        private final int ERROR = 0, PRODUCTINFO = 1, PAYMENT = 2,
+                CLIENTINFO = 3, CONSUMPTIVEHABIT = 4, SALEINFO = 5;
 
 
         /**
@@ -392,18 +345,25 @@ public class MainActivity extends Activity implements PaymentFragment.StartCommu
             super.onReceiveResult(resultCode, resultData);
 
             switch (resultCode) {
-                case LOGIN:
-                    break;
                 case PRODUCTINFO:
+                    Product newProduct = (Product)resultData.getSerializable("product");
+                    boolean isExist = false;
+                    for (ShoppingItem item: shoppingItems) {
+                        // if this product is in the list, then add quantity
+                        if (item.getProduct().getProductBarCode().equals(newProduct.getProductBarCode())) {
+                            isExist = true;
+                            item.setQuantity(item.getQuantity() + 1.0f);
+                            PaymentFragment.getmAdapter().notifyDataSetChanged();
+                        }
+                    }
+                    // if this product is not in the list, then add new item
+                    if (!isExist) {
+                        ShoppingItem newItem = new ShoppingItem(newProduct);
+                        newItem.setQuantity(1.0f);
+
+                    }
                     break;
-                case PAYMENT:
-                    break;
-                case CLIENTINFO:
-                    break;
-                case CONSUMPTIVEHABIT:
-                    break;
-                case SALEINFO:
-                    break;
+
                 case ERROR:
                     break;
                 default:
