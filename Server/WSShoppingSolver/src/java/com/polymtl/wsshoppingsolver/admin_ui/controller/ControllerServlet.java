@@ -8,8 +8,8 @@ package com.polymtl.wsshoppingsolver.admin_ui.controller;
 import com.polymtl.wsshoppingsolver.admin_ui.action.Action;
 import com.polymtl.wsshoppingsolver.admin_ui.action.AddBrand;
 import com.polymtl.wsshoppingsolver.admin_ui.action.ShopAdmin;
-//import com.polymtl.wsshoppingsolver.webservice_client.ShopProductAdminWS;
-import shopproduct_admin_webservice.ShopProductAdminWS;
+import com.polymtl.wsshoppingsolver.webservice_client.ShopProductAdminWS;
+//import shopproduct_admin_webservice.ShopProductAdminWS;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -82,7 +82,7 @@ public class ControllerServlet extends HttpServlet {
     private ShopProductAdminWS getPort() {
         try {
             // Call Web Service Operation
-            shopproduct_admin_webservice.ShopProductAdminWS_Service service = new shopproduct_admin_webservice.ShopProductAdminWS_Service();
+            com.polymtl.wsshoppingsolver.webservice_client.ShopProductAdminWS_Service service = new com.polymtl.wsshoppingsolver.webservice_client.ShopProductAdminWS_Service();
 //            com.polymtl.wsshoppingsolver.webservice_client1.ShopProductAdminWS p = service.getShopProductAdminWSPort();
 //            return p;
             servicePort = service.getShopProductAdminWSPort();

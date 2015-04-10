@@ -5,8 +5,8 @@
  */
 package com.polymtl.wsshoppingsolver.admin_ui.action;
 
-//import com.polymtl.wsshoppingsolver.webservice_client.ShopProductAdminWS;
-import shopproduct_admin_webservice.ShopProductAdminWS;
+import com.polymtl.wsshoppingsolver.webservice_client.ShopProductAdminWS;
+//import shopproduct_admin_webservice.ShopProductAdminWS;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

@@ -10,9 +10,9 @@
   </services>
   <clients>
     <client name="ShopProductAdminWS">
-      <wsdl-url>http://jjliang-1005.jelastic.servint.net/ShopProductAdminWS/ShopProductAdminWS?wsdl</wsdl-url>
-      <local-wsdl-file>jjliang-1005.jelastic.servint.net/ShopProductAdminWS/ShopProductAdminWS.wsdl</local-wsdl-file>
-      <package-name>shopproduct_admin_webservice</package-name>
+      <wsdl-url>http://localhost:80/ShopProductAdminWS/ShopProductAdminWS?wsdl</wsdl-url>
+      <local-wsdl-file>localhost_80/ShopProductAdminWS/ShopProductAdminWS.wsdl</local-wsdl-file>
+      <package-name forceReplace="true">com.polymtl.wsshoppingsolver.webservice_client</package-name>
       <catalog-file>catalog.xml</catalog-file>
       <wsimport-options>
         <wsimport-option>
@@ -29,7 +29,7 @@
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>wsdlLocation</wsimport-option-name>
-          <wsimport-option-value>http://jjliang-1005.jelastic.servint.net/ShopProductAdminWS/ShopProductAdminWS?wsdl</wsimport-option-value>
+          <wsimport-option-value>http://localhost:80/ShopProductAdminWS/ShopProductAdminWS?wsdl</wsimport-option-value>
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>xnocompile</wsimport-option-name>
@@ -38,6 +38,10 @@
         <wsimport-option>
           <wsimport-option-name>xendorsed</wsimport-option-name>
           <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>package</wsimport-option-name>
+          <wsimport-option-value>com.polymtl.wsshoppingsolver.webservice_client</wsimport-option-value>
         </wsimport-option>
       </wsimport-options>
     </client>

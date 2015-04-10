@@ -4,8 +4,8 @@
     <system systemId="http://localhost:80/ShopProductAdminWS/ShopProductAdminWS?xsd=2" uri="src/conf/xml-resources/web-service-references/ShopProductAdminWS/wsdl/localhost_80/ShopProductAdminWS/ShopProductAdminWS.xsd_2.xsd"/>
     <system systemId="http://localhost:80/ShoppingWS/ShoppingWS?wsdl" uri="src/conf/xml-resources/web-service-references/ShoppingWS/wsdl/localhost_80/ShoppingWS/ShoppingWS.wsdl"/>
     <system systemId="http://localhost:80/ShoppingWS/ShoppingWS?xsd=1" uri="src/conf/xml-resources/web-service-references/ShoppingWS/wsdl/localhost_80/ShoppingWS/ShoppingWS.xsd_1.xsd"/>
-    <system systemId="http://localhost:80/ShopProductAdminWS/ShopProductAdminWS?wsdl" uri="src/conf/xml-resources/web-service-references/ShopProductAdminWS/wsdl/localhost_80/ShopProductAdminWS/ShopProductAdminWS.wsdl"/>
-    <system systemId="http://localhost:80/ShopProductAdminWS/ShopProductAdminWS?xsd=1" uri="src/conf/xml-resources/web-service-references/ShopProductAdminWS/wsdl/localhost_80/ShopProductAdminWS/ShopProductAdminWS.xsd_1.xsd"/>
     <system systemId="http://jjliang-1005.jelastic.servint.net/ShopProductAdminWS/ShopProductAdminWS?wsdl" uri="src/conf/xml-resources/web-service-references/ShopProductAdminWS/wsdl/jjliang-1005.jelastic.servint.net/ShopProductAdminWS/ShopProductAdminWS.wsdl"/>
     <system systemId="http://jjliang-1005.jelastic.servint.net:80/ShopProductAdminWS/ShopProductAdminWS?xsd=1" uri="src/conf/xml-resources/web-service-references/ShopProductAdminWS/wsdl/jjliang-1005.jelastic.servint.net_80/ShopProductAdminWS/ShopProductAdminWS.xsd_1.xsd"/>
+    <system systemId="http://localhost:80/ShopProductAdminWS/ShopProductAdminWS?wsdl" uri="src/conf/xml-resources/web-service-references/ShopProductAdminWS/wsdl/localhost_80/ShopProductAdminWS/ShopProductAdminWS.wsdl"/>
+    <system systemId="http://localhost:80/ShopProductAdminWS/ShopProductAdminWS?xsd=1" uri="src/conf/xml-resources/web-service-references/ShopProductAdminWS/wsdl/localhost_80/ShopProductAdminWS/ShopProductAdminWS.xsd_1.xsd"/>
 </catalog>

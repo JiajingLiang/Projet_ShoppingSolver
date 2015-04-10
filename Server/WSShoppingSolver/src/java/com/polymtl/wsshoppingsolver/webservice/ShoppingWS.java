@@ -13,9 +13,11 @@ import com.polymtl.wsshoppingsolver.dao.RegistedDeviceDAOLocal;
 import com.polymtl.wsshoppingsolver.dao.ShopBranchDAOLocal;
 import com.polymtl.wsshoppingsolver.dao.TransactDAOLocal;
 import com.polymtl.wsshoppingsolver.model.Client;
+import com.polymtl.wsshoppingsolver.model.Product;
 import com.polymtl.wsshoppingsolver.model.ProductPriceInShop;
 import com.polymtl.wsshoppingsolver.model.ProductTransactRecord;
 import com.polymtl.wsshoppingsolver.model.RegistedDevice;
+import com.polymtl.wsshoppingsolver.model.ShopBranch;
 import com.polymtl.wsshoppingsolver.model.Transact;
 import com.thoughtworks.xstream.XStream;
 import java.util.ArrayList;
@@ -168,23 +170,27 @@ public class ShoppingWS {
     @WebMethod(operationName="findTransactionByClient")
     public String findTransactionByClient(@WebParam(name="clientId")long clientId, @WebParam(name="password")String password, @WebParam(name="dateBegin")String dateBegin, @WebParam(name="dateEnd")String dateEnd){
         Client client = clientDao.findByKey(clientId);
+        XStream xstream = new XStream();
         if(client!=null && password.equals(client.getPassword())){
-            XStream xstream = new XStream();
             Date dBegin = (Date)xstream.fromXML(dateBegin);
             Date dEnd = (Date)xstream.fromXML(dateEnd);
             List<Transact> listTransactions = transactDao.findByClientAndDate(client, dBegin, dEnd);
-            if(listTransactions.size()>0){
-                String strXML = "<Transactions>";
-                for (Transact aTransact : listTransactions) {
-                    strXML += aTransact.toXmlString();
-                }
-                strXML += "</Transactions>";
-                return strXML;
-            }else{
-                return "null";
-            }
+            xstream.processAnnotations(Transact.class);
+            xstream.processAnnotations(ShopBranch.class);
+            return xstream.toXML(listTransactions);
+            
+//            if(listTransactions.size()>0){
+//                String strXML = "<Transactions>";
+//                for (Transact aTransact : listTransactions) {
+//                    strXML += aTransact.toXmlString();
+//                }
+//                strXML += "</Transactions>";
+//                return strXML;
+//            }else{
+//                return "null";
+//            }
         }else{
-            return "null";
+            return xstream.toXML(null);
         }
     }
     
@@ -192,20 +198,24 @@ public class ShoppingWS {
     public String findTransactionDetail(@WebParam(name="clientId")long clientId, @WebParam(name="password")String password, @WebParam(name="transactionId")long transactionId){
         Client client = clientDao.findByKey(clientId);
         Transact transaction = transactDao.findByKey(transactionId);
+        XStream xstream = new XStream();
         if(client!=null && password.equals(client.getPassword()) && transaction.getClient().equals(client)){
             List<ProductTransactRecord> transactRecords = productTransactRecordDao.findByTransact(transaction);
-            if(transactRecords.size()>0){
-                String strXML = "<TransactionDetail>";
-                for (ProductTransactRecord aRecord : transactRecords) {
-                    strXML += aRecord.toXmlString();
-                }
-                strXML += "</TransactionDetail>";
-                return strXML;
-            }else{
-                return "null";
-            }
+            xstream.processAnnotations(ProductTransactRecord.class);
+            xstream.processAnnotations(Product.class);
+            return xstream.toXML(transactRecords);
+//            if(transactRecords.size()>0){
+//                String strXML = "<TransactionDetail>";
+//                for (ProductTransactRecord aRecord : transactRecords) {
+//                    strXML += aRecord.toXmlString();
+//                }
+//                strXML += "</TransactionDetail>";
+//                return strXML;
+//            }else{
+//                return "null";
+//            }
         }else{
-            return "null";
+            return xstream.toXML(null);
         }
     }
 }

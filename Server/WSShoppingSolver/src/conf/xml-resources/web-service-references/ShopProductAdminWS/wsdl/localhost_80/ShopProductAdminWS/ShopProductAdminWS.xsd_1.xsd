@@ -95,16 +95,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="findAllProduct">
-<xs:sequence/>
-</xs:complexType>
-
-<xs:complexType name="findAllProductResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="findAllShopBrand">
 <xs:sequence/>
 </xs:complexType>
@@ -126,6 +116,16 @@
 <xs:complexType name="createProductResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="findAllProduct">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="findAllProductResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
