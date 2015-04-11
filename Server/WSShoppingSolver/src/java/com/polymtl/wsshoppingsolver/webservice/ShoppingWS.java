@@ -137,19 +137,21 @@ public class ShoppingWS {
     }
     
     //productsCode must be in format xml : <list>   <string>068100047219</string>   <string>068200010311</string> </list>
+    //quantities must be in format xml : <list>   <float>1.0</float>   <float>1.0</float> </list>
     @WebMethod(operationName="createTransaction")
-    public boolean createTransaction(@WebParam(name="clientId")long clientId, @WebParam(name="password")String password, @WebParam(name="shopId")long shopId, @WebParam(name = "listProducts")String productsCode){
+    public boolean createTransaction(@WebParam(name="clientId")long clientId, @WebParam(name="password")String password, @WebParam(name="shopId")long shopId, @WebParam(name = "listProducts")String productsCode,@WebParam(name = "listQuantities")String quantities){
         Client client = clientDao.findByKey(clientId);
         if(client!=null && password.equals(client.getPassword())){
             XStream xstream = new XStream();
             List<String> listProducts = (List<String>)xstream.fromXML(productsCode);
+            List<Float> listQuantities = (List<Float>)xstream.fromXML(quantities);
             List<ProductPriceInShop> prices = new ArrayList<>();
             Double total = 0.0;
             for(int i = 0;i<listProducts.size();i++){
                 ProductPriceInShop productPriceInShop = productPriceInShopDao.findByKey(listProducts.get(i), shopId);
                 if(productPriceInShop!=null){
                     prices.add(productPriceInShop);
-                    total += productPriceInShop.getPrice()*(1+productPriceInShop.getRatioTaxFederal()+productPriceInShop.getRatioTaxProvincial());
+                    total += productPriceInShop.getPrice()*listQuantities.get(i)*(1+productPriceInShop.getRatioTaxFederal()+productPriceInShop.getRatioTaxProvincial());
                 }else{
                     return false;
                 }
@@ -158,7 +160,7 @@ public class ShoppingWS {
             Transact aTransact = new Transact(total,client,shopBranchDao.findByKey(shopId));
             Transact transact = transactDao.create(aTransact);
             for(int i = 0;i<prices.size();i++){
-                ProductTransactRecord aRecord = new ProductTransactRecord(transact,productDao.findByKey(listProducts.get(i)),prices.get(i).getPrice(),prices.get(i).getRatioTaxFederal(),prices.get(i).getRatioTaxProvincial());
+                ProductTransactRecord aRecord = new ProductTransactRecord(transact,productDao.findByKey(listProducts.get(i)),prices.get(i).getPrice(),listQuantities.get(i),prices.get(i).getRatioTaxFederal(),prices.get(i).getRatioTaxProvincial());
                 productTransactRecordDao.create(aRecord);
             }
             return true;

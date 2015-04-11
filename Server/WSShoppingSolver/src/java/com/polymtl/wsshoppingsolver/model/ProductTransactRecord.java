@@ -45,6 +45,9 @@ public class ProductTransactRecord implements Serializable {
     @XStreamAlias("Price")
     private Double price;
     @Column(nullable = false)
+    @XStreamAlias("Quantity")
+    private Float quantity;
+    @Column(nullable = false)
     @XStreamAlias("RatioTaxFederal")
     private Float ratioTaxFederal;
     @Column(nullable = false)
@@ -54,10 +57,11 @@ public class ProductTransactRecord implements Serializable {
     public ProductTransactRecord() {
     }
 
-    public ProductTransactRecord(Transact transact, Product product, Double price, Float ratioTaxFederal, Float ratioTaxProvincial) {
+    public ProductTransactRecord(Transact transact, Product product, Double price, Float quantity, Float ratioTaxFederal, Float ratioTaxProvincial) {
         this.transact = transact;
         this.product = product;
         this.price = price;
+        this.quantity = quantity;
         this.ratioTaxFederal = ratioTaxFederal;
         this.ratioTaxProvincial = ratioTaxProvincial;
     }
@@ -72,6 +76,10 @@ public class ProductTransactRecord implements Serializable {
 
     public Double getPrice() {
         return price;
+    }
+
+    public Float getQuantity() {
+        return quantity;
     }
 
     public Float getRatioTaxFederal() {
@@ -112,7 +120,7 @@ public class ProductTransactRecord implements Serializable {
 
     @Override
     public String toString() {
-        return "com.polymtl.wsshoppingsolver.model.TransactProductAsso[ productId=" + product.getBarCode() + ",transactionId=" + transact.getId() + ",price" + price + ",ratioTaxFederal" + ratioTaxFederal + ",ratioTaxProvincial" + ratioTaxProvincial + " ]";
+        return "com.polymtl.wsshoppingsolver.model.TransactProductAsso[ productId=" + product.getBarCode() + ",transactionId=" + transact.getId() + ",price" + price + ",quantity" + quantity + ",ratioTaxFederal" + ratioTaxFederal + ",ratioTaxProvincial" + ratioTaxProvincial + " ]";
     }
     
     public String toXmlString(){
