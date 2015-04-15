@@ -14,10 +14,12 @@ import com.polymtl.wsshoppingsolver.dao.ShopBranchDAOLocal;
 import com.polymtl.wsshoppingsolver.dao.TransactDAOLocal;
 import com.polymtl.wsshoppingsolver.model.Client;
 import com.polymtl.wsshoppingsolver.model.Product;
+import com.polymtl.wsshoppingsolver.model.ProductCategory;
 import com.polymtl.wsshoppingsolver.model.ProductPriceInShop;
 import com.polymtl.wsshoppingsolver.model.ProductTransactRecord;
 import com.polymtl.wsshoppingsolver.model.RegistedDevice;
 import com.polymtl.wsshoppingsolver.model.ShopBranch;
+import com.polymtl.wsshoppingsolver.model.ShopBrand;
 import com.polymtl.wsshoppingsolver.model.Transact;
 import com.thoughtworks.xstream.XStream;
 import java.util.ArrayList;
@@ -115,6 +117,44 @@ public class ShoppingWS {
         }
     }
     
+    //productsCode must be in format xml : <list>   <string>068100047219</string>   <string>068200010311</string> </list>
+    @WebMethod(operationName="setClientFavoriteProduct")
+    public boolean setClientFavoriteProduct(@WebParam(name="clientId")long clientId, @WebParam(name="password")String password, @WebParam(name="productsCode")String productsCode){
+        Client client = clientDao.findByKey(clientId);
+        if(client!=null && password.equals(client.getPassword())){
+            XStream xstream = new XStream();
+            List<String> listProducts = (List<String>)xstream.fromXML(productsCode);
+            List<Product> favoriteProducts = new ArrayList<>();
+            for(int i = 0;i<listProducts.size();i++){
+                Product aProduct = productDao.findByKey(listProducts.get(i));
+                if(aProduct != null){
+                    favoriteProducts.add(aProduct);
+                }else{
+                    return false;
+                }
+            }
+            client.setFavoriteProducts(favoriteProducts);
+            clientDao.update(client);
+            for(int i=0;i<client.getFavoriteProducts().size();i++){
+                if(!favoriteProducts.contains(client.getFavoriteProducts().get(i))){
+                    Product oldProductsToRemove = client.getFavoriteProducts().get(i);
+                    oldProductsToRemove.getPotentialClients().remove(client);
+                    productDao.update(oldProductsToRemove);
+                }
+            }
+            for(int i=0;i<favoriteProducts.size();i++){
+                if(!client.getFavoriteProducts().contains(favoriteProducts.get(i))){
+                    Product newProductsToAdd = favoriteProducts.get(i);
+                    newProductsToAdd.getPotentialClients().add(client);
+                    productDao.update(newProductsToAdd);
+                }
+            }
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
     @WebMethod(operationName="deleteRegistedDevice")
     public boolean deleteRegistedDevice(@WebParam(name = "deviceKey")String deviceKey){
         RegistedDevice device = registedDeviceDao.findByKey(deviceKey);
@@ -126,14 +166,25 @@ public class ShoppingWS {
         }
     }
     
+    @WebMethod(operationName="findShopById")
+    public String findShopById(@WebParam(name="shopBranchId")long shopId){
+        ShopBranch shop = shopBranchDao.findByKey(shopId);
+        XStream xstream = new XStream();
+        xstream.processAnnotations(ShopBranch.class);
+        xstream.processAnnotations(ShopBrand.class);
+        return xstream.toXML(shop);
+    }
+    
     @WebMethod(operationName = "getProductPriceInShop")
     public String getProductPriceInShop(@WebParam(name="productBarCode")String productBarCode, @WebParam(name="idShop")long shopId){
         ProductPriceInShop productPriceInShop = productPriceInShopDao.findByKey(productBarCode, shopId);
-        if(productPriceInShop!=null){
-            return productPriceInShop.toXmlString();
-        }else{
-            return "null";
-        }        
+        XStream xstream = new XStream();
+        xstream.processAnnotations(ProductPriceInShop.class);
+        xstream.processAnnotations(Product.class);
+        xstream.processAnnotations(ProductCategory.class);
+        xstream.processAnnotations(ShopBranch.class);
+        xstream.processAnnotations(ShopBrand.class);
+        return xstream.toXML(productPriceInShop); 
     }
     
     //productsCode must be in format xml : <list>   <string>068100047219</string>   <string>068200010311</string> </list>
@@ -180,17 +231,6 @@ public class ShoppingWS {
             xstream.processAnnotations(Transact.class);
             xstream.processAnnotations(ShopBranch.class);
             return xstream.toXML(listTransactions);
-            
-//            if(listTransactions.size()>0){
-//                String strXML = "<Transactions>";
-//                for (Transact aTransact : listTransactions) {
-//                    strXML += aTransact.toXmlString();
-//                }
-//                strXML += "</Transactions>";
-//                return strXML;
-//            }else{
-//                return "null";
-//            }
         }else{
             return xstream.toXML(null);
         }
@@ -206,16 +246,6 @@ public class ShoppingWS {
             xstream.processAnnotations(ProductTransactRecord.class);
             xstream.processAnnotations(Product.class);
             return xstream.toXML(transactRecords);
-//            if(transactRecords.size()>0){
-//                String strXML = "<TransactionDetail>";
-//                for (ProductTransactRecord aRecord : transactRecords) {
-//                    strXML += aRecord.toXmlString();
-//                }
-//                strXML += "</TransactionDetail>";
-//                return strXML;
-//            }else{
-//                return "null";
-//            }
         }else{
             return xstream.toXML(null);
         }
