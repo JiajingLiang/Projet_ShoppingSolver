@@ -8,8 +8,12 @@ package com.polymtl.wsshoppingsolver.model;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -18,10 +22,14 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "registeddevice")
+@NamedQueries({@NamedQuery(name="RegistedDevice.findByDeviceId",query="SELECT d FROM RegistedDevice d WHERE d.deviceId = :deviceId")})
 public class RegistedDevice implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @Column(nullable = false,length=50)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false)
+    private Long id;
+    @Column(nullable = false,length=200)
     private String deviceId;
     @ManyToOne
     private Client client;
@@ -34,7 +42,11 @@ public class RegistedDevice implements Serializable {
         this.client = client;
     }
 
-    public String getId() {
+    public Long getId() {
+        return id;
+    }
+
+    public String getDeviceId() {
         return deviceId;
     }
 
@@ -42,7 +54,7 @@ public class RegistedDevice implements Serializable {
         return client;
     }
 
-    public void setId(String deviceId) {
+    public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
     }
 

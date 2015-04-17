@@ -69,8 +69,19 @@ public class ShoppingWS {
         if(clientDao.findByEmail(email).isEmpty()){
             Client aClient = new Client(email,name,password,telephone,street,city,postcode,country);
             Client theClient = clientDao.create(aClient);
-            RegistedDevice aDevice = new RegistedDevice(deviceKey,theClient);
-            registedDeviceDao.create(aDevice);
+            
+            List<RegistedDevice> devices = registedDeviceDao.findByDeviceId(deviceKey);
+            if(devices.isEmpty()){
+                RegistedDevice device = new RegistedDevice(deviceKey,theClient);
+                registedDeviceDao.create(device);
+            }else{
+                RegistedDevice device = devices.get(0);
+                if(!device.getClient().equals(theClient)){
+                    device.setClient(theClient);
+                    registedDeviceDao.update(device);
+                }
+            }
+            
             return "<ClientId>"+theClient.getId()+"</ClientId>";
         }else{
             return "null";
@@ -101,11 +112,12 @@ public class ShoppingWS {
     public boolean addDeviceToClient(@WebParam(name = "deviceKey")String deviceKey, @WebParam(name = "clientId")long clientId){
         Client client = clientDao.findByKey(clientId);
         if(client != null){
-            RegistedDevice device = registedDeviceDao.findByKey(deviceKey);
-            if(device==null){
-                device = new RegistedDevice(deviceKey,client);
+            List<RegistedDevice> devices = registedDeviceDao.findByDeviceId(deviceKey);
+            if(devices.isEmpty()){
+                RegistedDevice device = new RegistedDevice(deviceKey,client);
                 registedDeviceDao.create(device);
             }else{
+                RegistedDevice device = devices.get(0);
                 if(!device.getClient().equals(client)){
                     device.setClient(client);
                     registedDeviceDao.update(device);
@@ -157,8 +169,8 @@ public class ShoppingWS {
     
     @WebMethod(operationName="deleteRegistedDevice")
     public boolean deleteRegistedDevice(@WebParam(name = "deviceKey")String deviceKey){
-        RegistedDevice device = registedDeviceDao.findByKey(deviceKey);
-        if(device==null){
+        List<RegistedDevice> devices = registedDeviceDao.findByDeviceId(deviceKey);
+        if(devices.isEmpty()){
             return false;
         }else{
             registedDeviceDao.delete(deviceKey);

@@ -6,6 +6,7 @@
 package com.polymtl.wsshoppingsolver.dao;
 
 import com.polymtl.wsshoppingsolver.model.RegistedDevice;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -15,7 +16,7 @@ import javax.ejb.Local;
 @Local
 public interface RegistedDeviceDAOLocal {
     void create(RegistedDevice aDevice);
-    RegistedDevice findByKey(String deviceId);
+    List<RegistedDevice> findByDeviceId(String deviceId);
     void update(RegistedDevice aDevice);
     void delete(String deviceId);
 }
