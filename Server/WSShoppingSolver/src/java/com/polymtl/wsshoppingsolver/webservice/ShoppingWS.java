@@ -202,10 +202,10 @@ public class ShoppingWS {
     //productsCode must be in format xml : <list>   <string>068100047219</string>   <string>068200010311</string> </list>
     //quantities must be in format xml : <list>   <float>1.0</float>   <float>1.0</float> </list>
     @WebMethod(operationName="createTransaction")
-    public boolean createTransaction(@WebParam(name="clientId")long clientId, @WebParam(name="password")String password, @WebParam(name="shopId")long shopId, @WebParam(name = "listProducts")String productsCode,@WebParam(name = "listQuantities")String quantities){
+    public String createTransaction(@WebParam(name="clientId")long clientId, @WebParam(name="password")String password, @WebParam(name="shopId")long shopId, @WebParam(name = "listProducts")String productsCode,@WebParam(name = "listQuantities")String quantities){
         Client client = clientDao.findByKey(clientId);
+        XStream xstream = new XStream();
         if(client!=null && password.equals(client.getPassword())){
-            XStream xstream = new XStream();
             List<String> listProducts = (List<String>)xstream.fromXML(productsCode);
             List<Float> listQuantities = (List<Float>)xstream.fromXML(quantities);
             List<ProductPriceInShop> prices = new ArrayList<>();
@@ -216,7 +216,7 @@ public class ShoppingWS {
                     prices.add(productPriceInShop);
                     total += productPriceInShop.getPrice()*listQuantities.get(i)*(1+productPriceInShop.getRatioTaxFederal()+productPriceInShop.getRatioTaxProvincial());
                 }else{
-                    return false;
+                    return xstream.toXML(null);
                 }
             }
             total = Double.parseDouble(String.format("%.2f",total));
@@ -226,9 +226,11 @@ public class ShoppingWS {
                 ProductTransactRecord aRecord = new ProductTransactRecord(transact,productDao.findByKey(listProducts.get(i)),prices.get(i).getPrice(),listQuantities.get(i),prices.get(i).getRatioTaxFederal(),prices.get(i).getRatioTaxProvincial());
                 productTransactRecordDao.create(aRecord);
             }
-            return true;
+            xstream.processAnnotations(Transact.class);
+            xstream.processAnnotations(ShopBranch.class);
+            return xstream.toXML(transact);
         }else{
-            return false;
+            return xstream.toXML(null);
         }
     }
     

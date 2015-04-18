@@ -39,7 +39,7 @@ public class Transact implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @XStreamOmitField
+    @XStreamAlias("Id")
     private Long id;
     @Column(nullable = false)
     @XStreamAlias("Total")
