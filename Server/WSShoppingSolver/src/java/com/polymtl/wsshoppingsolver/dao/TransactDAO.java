@@ -57,13 +57,13 @@ public class TransactDAO implements TransactDAOLocal {
         queryFindByClientAndDate.setParameter("transactClient", client);
         queryFindByClientAndDate.setParameter("dateBegin", dateBegin);
         queryFindByClientAndDate.setParameter("dateEnd", dateEnd);
-        return queryFindByClientAndDate.setMaxResults(10).getResultList();
+        return queryFindByClientAndDate.getResultList();
     }
 
     @Override
     public List<Transact> findRecentTransactByClient(Client client){
         Query queryFindByShop = em.createNamedQuery("Transact.findRecentTransactByClient");
         queryFindByShop.setParameter("transactClient", client);
-        return queryFindByShop.getResultList();
+        return queryFindByShop.setMaxResults(10).getResultList();
     }
 }
