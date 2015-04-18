@@ -32,7 +32,8 @@ import javax.persistence.TemporalType;
 @Table(name = "transact")
 @NamedQueries({@NamedQuery(name="Transact.findByClient",query="SELECT t FROM Transact t WHERE t.client = :transactClient"),
                @NamedQuery(name="Transact.findByShop",query="SELECT t FROM Transact t WHERE t.shop = :transactShop"),
-               @NamedQuery(name="Transact.findByClientAndDate",query="SELECT t FROM Transact t WHERE t.client = :transactClient AND t.transactionTime > :dateBegin AND t.transactionTime > :dateEnd")})
+               @NamedQuery(name="Transact.findByClientAndDate",query="SELECT t FROM Transact t WHERE t.client = :transactClient AND t.transactionTime > :dateBegin AND t.transactionTime > :dateEnd"),
+               @NamedQuery(name="Transact.findRecentTransactByClient",query="SELECT t FROM Transact t WHERE t.client = :transactClient ORDER BY t.transactionTime DESC")})
 
 @XStreamAlias("Transaction")
 public class Transact implements Serializable {

@@ -23,4 +23,5 @@ public interface TransactDAOLocal {
     List<Transact> findByClient(Client client);
     List<Transact> findByShop(ShopBranch shop); 
     List<Transact> findByClientAndDate(Client client, Date dateBegin, Date dateEnd);
+    List<Transact> findRecentTransactByClient(Client client);
 }

@@ -250,6 +250,20 @@ public class ShoppingWS {
         }
     }
     
+        @WebMethod(operationName="findRecentTransactionByClient")
+    public String findRecentTransactionByClient(@WebParam(name="clientId")long clientId, @WebParam(name="password")String password){
+        Client client = clientDao.findByKey(clientId);
+        XStream xstream = new XStream();
+        if(client!=null && password.equals(client.getPassword())){
+            List<Transact> listTransactions = transactDao.findRecentTransactByClient(client);
+            xstream.processAnnotations(Transact.class);
+            xstream.processAnnotations(ShopBranch.class);
+            return xstream.toXML(listTransactions);
+        }else{
+            return xstream.toXML(null);
+        }
+    }
+    
     @WebMethod(operationName="findTransactionDetail")
     public String findTransactionDetail(@WebParam(name="clientId")long clientId, @WebParam(name="password")String password, @WebParam(name="transactionId")long transactionId){
         Client client = clientDao.findByKey(clientId);
