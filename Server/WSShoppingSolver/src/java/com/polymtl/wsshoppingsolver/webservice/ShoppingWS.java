@@ -248,6 +248,8 @@ public class ShoppingWS {
             List<Transact> listTransactions = transactDao.findByClientAndDate(client, dBegin, dEnd);
             xstream.processAnnotations(Transact.class);
             xstream.processAnnotations(ShopBranch.class);
+            xstream.processAnnotations(ShopBrand.class);
+            xstream.setMode(XStream.NO_REFERENCES);
             return xstream.toXML(listTransactions);
         }else{
             return xstream.toXML(null);
@@ -263,6 +265,7 @@ public class ShoppingWS {
             xstream.processAnnotations(Transact.class);
             xstream.processAnnotations(ShopBranch.class);
             xstream.processAnnotations(ShopBrand.class);
+            xstream.setMode(XStream.NO_REFERENCES);
             return xstream.toXML(listTransactions);
         }else{
             return xstream.toXML(null);
