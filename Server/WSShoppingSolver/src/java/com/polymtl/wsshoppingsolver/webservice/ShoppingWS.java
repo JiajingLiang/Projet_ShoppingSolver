@@ -222,13 +222,17 @@ public class ShoppingWS {
             total = Double.parseDouble(String.format("%.2f",total));
             Transact aTransact = new Transact(total,client,shopBranchDao.findByKey(shopId));
             Transact transact = transactDao.create(aTransact);
+            List<ProductTransactRecord> productTransactRecords = new ArrayList<>();
             for(int i = 0;i<prices.size();i++){
                 ProductTransactRecord aRecord = new ProductTransactRecord(transact,productDao.findByKey(listProducts.get(i)),prices.get(i).getPrice(),listQuantities.get(i),prices.get(i).getRatioTaxFederal(),prices.get(i).getRatioTaxProvincial());
                 productTransactRecordDao.create(aRecord);
+                productTransactRecords.add(aRecord);
             }
             xstream.processAnnotations(Transact.class);
             xstream.processAnnotations(ShopBranch.class);
-            return xstream.toXML(transact);
+            xstream.processAnnotations(ProductTransactRecord.class);
+            xstream.processAnnotations(Product.class);
+            return xstream.toXML(transact) + xstream.toXML(productTransactRecords);
         }else{
             return xstream.toXML(null);
         }
@@ -258,6 +262,7 @@ public class ShoppingWS {
             List<Transact> listTransactions = transactDao.findRecentTransactByClient(client);
             xstream.processAnnotations(Transact.class);
             xstream.processAnnotations(ShopBranch.class);
+            xstream.processAnnotations(ShopBrand.class);
             return xstream.toXML(listTransactions);
         }else{
             return xstream.toXML(null);
