@@ -1,34 +1,67 @@
 package com.polymtl.shoppingsolver.model;
 
 /**
- * Created by Zoe on 15-04-05.
+ * Created by Zoe on 15-04-01.
  */
 public class ShoppingRecord {
 
-    private String code;
-    private String name;
-    private float quantity;
+    private float quantity; //for product sold by individual
+    private String productBarCode;
+    private String categoryName;
+    private String description;
+    private float federalTaxRatio; // Taxe sur les produits et services
+    private float provincialTaxRatio; // Taxe de vente du Quebec
+    private double unit_price;
 
     public ShoppingRecord() {}
-    public ShoppingRecord(String code, String name, float quantity) {
-
-        this.code = code;
-        this.name = name;
-        this.quantity = quantity;
+    public ShoppingRecord(String barCode) {
+        this.productBarCode = barCode;
+        this.quantity++;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setProductBarCode(String code) {
+        this.productBarCode = code;
     }
-    public String getCode() {
-        return this.code;
+    public String getProductBarCode() {
+        return this.productBarCode;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCategoryName(String name) {
+        this.categoryName = name;
     }
-    public String getName() {
-        return this.name;
+    public String getCategoryName() {
+        return this.categoryName;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setFederalTaxRatio(float taxRatio) {
+        this.federalTaxRatio = taxRatio;
+    }
+    public float getFederalTaxRatio() {
+
+        return this.federalTaxRatio;
+    }
+
+    public void setProvincialTaxRatio(float taxRatio) {
+        this.provincialTaxRatio = taxRatio;
+    }
+
+    public float getProvincialTaxRatio() {
+        return this.provincialTaxRatio;
+    }
+
+    public void setUnit_price(double price) {
+        this.unit_price = price;
+    }
+
+    public double getUnit_price() {
+        return this.unit_price;
     }
 
     public void setQuantity(float quantity) {
@@ -39,7 +72,9 @@ public class ShoppingRecord {
         return this.quantity;
     }
 
-    public String toString() {
-        return this.name + "   account: " + this.quantity;
+
+    public double getItemTotalPrice() {
+        return quantity * unit_price;
     }
+
 }

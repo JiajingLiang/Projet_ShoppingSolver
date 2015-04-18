@@ -20,7 +20,7 @@ import javax.xml.bind.JAXBElement;
 /**
  * REST Web Service
  *
- * @author Jiajing
+ * @author Zoe
  */
 @Path("shopproductadminwsport")
 public class ShopProductAdminWSPort {

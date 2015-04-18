@@ -1,18 +1,10 @@
 package com.polymtl.shoppingsolver;
 
-import java.io.BufferedOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 
-import org.json.simple.JSONObject;
-
-import com.polymtl.shoppingsolver.model.Category;
-import com.polymtl.shoppingsolver.model.Product;
-import com.polymtl.shoppingsolver.model.ShoppingItem;
+import com.polymtl.shoppingsolver.model.ShoppingRecord;
+import com.polymtl.shoppingsolver.service.ShoppingSolverIntentService;
 import com.polymtl.shoppingsolver.ui.CustomerBaseAdapter;
+import com.polymtl.shoppingsolver.util.ShoppingSolverApplication;
 import com.zxing.activity.CaptureActivity;
 
 import android.app.AlertDialog;
@@ -20,8 +12,9 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.ResultReceiver;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,23 +25,25 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+
 public class PaymentFragment extends Fragment {
 
     static final int PICK_PRODUCTID_REQUEST = 0;
     static final int PICK_SHOPID_REQUEST = 1;
 
 	private Context mContext;
-	private String urlServlet;
 	private View rootView;
-    private String userId;
+
     private ListView shoppingListView;
     private static CustomerBaseAdapter mAdapter;
-    private TextView tvShopingList;
-    //private List<Map<String, Object>> shoppingListData;
+    private TextView tvShoppingList;
 
-	/**public PaymentFragment(Context context){
-		this.mcontext = context;
-	}*/
 
     public static CustomerBaseAdapter getmAdapter() {
         return mAdapter;
@@ -70,7 +65,7 @@ public class PaymentFragment extends Fragment {
 
     private void init() {
         this.mContext = getActivity().getApplicationContext();
-        //this.mcontext = getActivity();
+        this.mContext = getActivity();
 
         if (this.mContext == null) {
             Log.i("err:", "the fragment is not attached to an activity");
@@ -78,9 +73,8 @@ public class PaymentFragment extends Fragment {
         }
 
         Bundle bundle = getArguments();
-        userId = bundle.getString("userId");
-        urlServlet = bundle.getString("urlServlet");
 
+        // ??
         if(bundle.containsKey("command")) {
 
             getActivity().runOnUiThread(new RefreshListView());
@@ -96,33 +90,30 @@ public class PaymentFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                // Test change list
-                /*Product itemProduct = new Product();
-                itemProduct.setName("Milk");
-                itemProduct.setUnit_price(3.20f);
-                Category itemCategory = new Category();
-                itemCategory.setName("Food");
-                itemCategory.setRatioTVQ(0.00f);
-                itemCategory.setRatioTPS(0.00f);
-                itemProduct.setCategory(itemCategory);
-                ShoppingItem shoppingItem = new ShoppingItem(itemProduct);
-                shoppingItem.setQuantity(1.0f);
-                shoppingItem.getItemTotalPrice();
+                //set begin date
+                //<date>2014-04-08 21:00:00.0 UTC</date>
 
-                Log.i("Update:", "start RefreshListView");
-                MainActivity.addShoppingItem(shoppingItem);
-                getActivity().runOnUiThread(new RefreshListView());*/
+                Date dNow = new Date(); //current time
+                Date dBefore = new Date();
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(dNow);
+                calendar.add(Calendar.DAY_OF_MONTH, -1); // before
+                dBefore = calendar.getTime();
+                final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.s z");
+                sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+                final String dateBegin = sdf.format(dNow);
+                final String dateEnd = sdf.format(dBefore);
+                ShoppingSolverApplication.getInstance().setDateBegin(dateBegin);
+                ShoppingSolverApplication.getInstance().setDateEnd(dateEnd);
 
-                /*TextView tvTotal = (TextView)rootView.findViewById(R.id.tvTotalVal);
-                Double total = Double.parseDouble(tvTotal.getText().toString());
-                TextView tvProducts = (TextView)rootView.findViewById(R.id.tvProductsVal);
-                String products = tvProducts.getText().toString();
-                JSONObject json = new JSONObject();
-                json.put("userID", Integer.parseInt(userId));
-                json.put("total", total);
-                json.put("products", products);
-                MakePaymentTask makePaymentTask = new MakePaymentTask();
-                makePaymentTask.execute(json);*/
+                // create new Intent to invoke ShoppingSolverIntentService
+                Intent mServerIntent = new Intent(getActivity(), ShoppingSolverIntentService.class);
+                mServerIntent.putExtra("command", "payment"); // get product price in shop
+                mServerIntent.putExtra("receiver", new PayResultReceiver(new Handler()));
+                // start IntentService
+                getActivity().startService(mServerIntent);
+
+
             }
         });
 
@@ -135,7 +126,7 @@ public class PaymentFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if (MainActivity.getShopId() == 0) {
+                if (ShoppingSolverApplication.getInstance().getShop().getShopId() == 0) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     // Add the buttons
                     builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -167,18 +158,21 @@ public class PaymentFragment extends Fragment {
 
     private void setUpShoppingList(LayoutInflater inflater) {
 
-        tvShopingList = (TextView) rootView.findViewById(R.id.tvShoppingList);
+        tvShoppingList = (TextView) rootView.findViewById(R.id.tvShoppingList);
 
+        ShoppingSolverApplication app = ShoppingSolverApplication.getInstance();
+        ArrayList<ShoppingRecord> shoppingRecords = app.getShoppingRecords();
         // TODO: when list cleared, should show this text
-        if(MainActivity.getShoppingItems().size() < 1) {
-            tvShopingList.setText("Nothing in the list, please scan your products...");
+        if(shoppingRecords.size() < 1) {
+            tvShoppingList.setText("Nothing in the list, please scan your products...");
         } else {
-            tvShopingList.setEnabled(false);
+            tvShoppingList.setEnabled(false);
         }
 
         shoppingListView = (ListView) rootView.findViewById(R.id.shoppingList);
-        mAdapter = new CustomerBaseAdapter(mContext, MainActivity.getShoppingItems());
+        mAdapter = new CustomerBaseAdapter(mContext);
 
+        ShoppingSolverApplication.getInstance().setAdapter(mAdapter);
         shoppingListView.setAdapter(mAdapter);
 
 
@@ -187,7 +181,6 @@ public class PaymentFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.i("click", "click");
                 // open ItemDialogFragment
-                // TODO:
                 Log.i("Open item:", "click");
                 StartCommunication comm = (StartCommunication) getActivity();
                 comm.setComm(position);
@@ -214,14 +207,47 @@ public class PaymentFragment extends Fragment {
     }
 
 
+    private class PayResultReceiver extends ResultReceiver {
+
+        /**
+         * Create a new ResultReceive to receive results.  Your
+         * {@link #onReceiveResult} method will be called from the thread running
+         * <var>handler</var> if given, or from an arbitrary thread if null.
+         *
+         * @param handler
+         */
+        public PayResultReceiver(Handler handler) {
+            super(handler);
+        }
+
+        @Override
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+            super.onReceiveResult(resultCode, resultData);
+            switch (resultCode) {
+                case 1:
+                    new AlertDialog.Builder(getActivity()).setMessage("Payment successfully! Do you want to get the reception?")
+                            .setIcon(android.R.drawable.ic_dialog_info)
+                            .setTitle("Payment Confirm")
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    // create new Intent to invoke ShoppingSolverIntentService
+                                    Intent mServerIntent = new Intent(getActivity(), ShoppingSolverIntentService.class);
+                                    mServerIntent.putExtra("command", "getTransaction"); // get product price in shop
+                                    mServerIntent.putExtra("receiver", new PayResultReceiver(new Handler()));
+                                    // start IntentService
+                                    getActivity().startService(mServerIntent);
+
+                                }
+                            }).setNegativeButton(android.R.string.no, null).show();
+                    break;
+            }
 
 
+        }
 
-
-
-
-
-
+    }
 
 
 

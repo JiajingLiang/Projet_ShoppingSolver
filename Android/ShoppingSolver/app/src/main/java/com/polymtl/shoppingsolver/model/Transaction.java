@@ -1,7 +1,6 @@
 package com.polymtl.shoppingsolver.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Zoe on 15-04-01.
@@ -17,17 +16,17 @@ public class Transaction {
     private float taxTPS;
     private float taxTVQ;
     private float totalPriceWithTax;
-    private ArrayList<ShoppingItem> shoppingList;
+    private ArrayList<ShoppingRecord> shoppingList;
     private short amountProducts;
 
-    public Transaction(ArrayList<ShoppingItem> shoppingList) {
+    public Transaction(ArrayList<ShoppingRecord> shoppingList) {
         this.shoppingList = shoppingList;
     }
 
-    public void setShoppingList(ArrayList<ShoppingItem> list) {
+    public void setShoppingList(ArrayList<ShoppingRecord> list) {
         this.shoppingList = list;
     }
-    public ArrayList<ShoppingItem> getShoppingList() {
+    public ArrayList<ShoppingRecord> getShoppingList() {
         return this.shoppingList;
 
     }
@@ -40,7 +39,7 @@ public class Transaction {
     }
     public short calculateAmountProducts() {
 
-        for (ShoppingItem item : this.shoppingList ) {
+        for (ShoppingRecord item : this.shoppingList ) {
             this.amountProducts += item.getQuantity();
         }
         return this.amountProducts ;
@@ -54,8 +53,8 @@ public class Transaction {
     }
     public float calculateTaxTPS() {
 
-        for (ShoppingItem item : this.shoppingList ) {
-            this.taxTPS += item.getItemTotalPrice() * item.getProduct().getFederalTaxRatio();
+        for (ShoppingRecord item : this.shoppingList ) {
+            this.taxTPS += item.getItemTotalPrice() * item.getFederalTaxRatio();
         }
         return this.taxTPS;
     }
@@ -68,8 +67,8 @@ public class Transaction {
     }
     public float calculateTVQ() {
 
-        for (ShoppingItem item : this.shoppingList ) {
-            this.taxTVQ += item.getItemTotalPrice() * item.getProduct().getProvincialTaxRatio();
+        for (ShoppingRecord item : this.shoppingList ) {
+            this.taxTVQ += item.getItemTotalPrice() * item.getProvincialTaxRatio();
         }
         return this.taxTVQ;
     }

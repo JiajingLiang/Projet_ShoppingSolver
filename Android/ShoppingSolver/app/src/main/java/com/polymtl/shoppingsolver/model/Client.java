@@ -1,6 +1,7 @@
 package com.polymtl.shoppingsolver.model;
 
 import java.io.Serializable;
+import com.thoughtworks.xstream.XStream;
 
 /**
  * Created by Zoe on 15-04-08.
@@ -16,6 +17,7 @@ public class Client implements Serializable {
     private String postcode;
     private String country;
     private double balance;
+    private String deviceKey;
 
     public Client() {}
     public Client(long id, String name,String email, String password,
@@ -102,5 +104,26 @@ public class Client implements Serializable {
         return this.balance;
     }
 
+    public void setDeviceKey(String key) {
+        deviceKey = key;
+    }
+    public String getDeviceKey() {
+        return this.deviceKey;
+    }
+
+    @Override
+    public String toString() {
+        return "com.polymtl.wsshoppingsolver.model.Client{"
+                + "id=" + clientId + ", email=" + email + ", name="
+                + name + ", password=" + password + ", telephone="
+                + telephone + ", street=" + street + ", city="
+                + city + ", postCode=" + postcode + ", country=" + country + ", balance=" + balance + '}';
+    }
+
+    public String toXmlString(){
+        XStream xstream = new XStream();
+        xstream.processAnnotations(Client.class);
+        return xstream.toXML(this);
+    }
 
 }

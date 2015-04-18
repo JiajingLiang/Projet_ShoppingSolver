@@ -2,8 +2,9 @@ package com.polymtl.shoppingsolver.util;
 
 import android.util.Log;
 
+import com.polymtl.shoppingsolver.database.ClientDataSource;
 import com.polymtl.shoppingsolver.model.Client;
-import com.polymtl.shoppingsolver.model.Product;
+import com.polymtl.shoppingsolver.model.ShoppingRecord;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -25,9 +26,73 @@ public class HandleXML {
         Log.i("data", data);
     }
 
-    public Product getProduct() throws XmlPullParserException, IOException{
+    public void setCurrentProductInfo()  throws XmlPullParserException, IOException{
+        XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+        factory.setNamespaceAware(true);
+        XmlPullParser xpp = factory.newPullParser();
 
-        Product product = new Product();
+        xpp.setInput ( new StringReader ( data ) );
+        int eventType = xpp.getEventType();
+        String text = null;
+        while (eventType != xpp.END_DOCUMENT) {
+            if(eventType == xpp.START_DOCUMENT) {
+                System.out.println("Start document");
+            } else if(eventType == xpp.END_DOCUMENT) {
+                System.out.println("End document");
+            } else if(eventType == xpp.START_TAG) {
+                System.out.println("Start tag "+xpp.getName());
+            } else if(eventType == xpp.END_TAG) {
+                System.out.println("End tag "+xpp.getName());
+
+                if (xpp.getName().equals("BarCode")) {
+
+                    System.out.println("next text "+ text);
+                } else if (xpp.getName().equals("Description")) {
+                    ShoppingSolverApplication.getInstance().getCurrentRecord().setDescription(text);
+
+                } else if (xpp.getName().equals("CategoryId")) {
+                    System.out.print("CategoryId" + text);
+                } else if (xpp.getName().equals("CategoryName")) {
+                    ShoppingSolverApplication.getInstance().getCurrentRecord().setCategoryName(text);
+
+                } else if (xpp.getName().equals("ShopId")) {
+                    System.out.print("next text " + text);
+                } else if (xpp.getName().equals("Street")) {
+                    System.out.print("next text " + text);
+                } else if (xpp.getName().equals("City")) {
+                    System.out.print("next text " + text);
+                } else if (xpp.getName().equals("Postcode")) {
+                    System.out.print("next text " + text);
+                } else if (xpp.getName().equals("Country")) {
+                    System.out.print("next text " + text);
+                } else if (xpp.getName().equals("BrandId")) {
+                    System.out.print("next text " + text);
+                } else if (xpp.getName().equals("BrandName")) {
+                    System.out.print("next text " + text);
+                } else if (xpp.getName().equals("Price")) {
+                    ShoppingSolverApplication.getInstance().getCurrentRecord().setUnit_price(Double.parseDouble(text));
+
+                } else if (xpp.getName().equals("RatioTaxFederal")) {
+                    ShoppingSolverApplication.getInstance().getCurrentRecord().setFederalTaxRatio(Float.parseFloat(text));
+
+                } else if (xpp.getName().equals("RatioTaxProvincial")) {
+                    ShoppingSolverApplication.getInstance().getCurrentRecord().setProvincialTaxRatio(Float.parseFloat(text));
+
+                }
+
+
+            } else if(eventType == xpp.TEXT) {
+                text = xpp.getText();
+                Log.i("text", text);
+            }
+            eventType = xpp.next();
+        }
+
+    }
+
+    public ShoppingRecord getShoppingRecord() throws XmlPullParserException, IOException{
+
+        ShoppingRecord product = new ShoppingRecord();
         XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
         factory.setNamespaceAware(true);
         XmlPullParser xpp = factory.newPullParser();
@@ -92,7 +157,7 @@ public class HandleXML {
         return product;
     }
 
-    public Client getClient()
+    public void updataClientInfo()
             throws XmlPullParserException, IOException
     {
         Client client = new Client();
@@ -159,8 +224,95 @@ public class HandleXML {
             eventType = xpp.next();
         }
 
-        return client;
+        Log.i("ClientInfo:", client.toString());
+
+        ShoppingSolverApplication.getInstance().setNewCount(client);
+
     }
 
+    public void getClientId()
+            throws XmlPullParserException, IOException
+    {
+        XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+        factory.setNamespaceAware(true);
+        XmlPullParser xpp = factory.newPullParser();
+
+        xpp.setInput ( new StringReader ( data ) );
+        int eventType = xpp.getEventType();
+        String text = null;
+        while (eventType != xpp.END_DOCUMENT) {
+            if(eventType == xpp.START_DOCUMENT) {
+                System.out.println("Start document");
+            } else if(eventType == xpp.END_DOCUMENT) {
+                System.out.println("End document");
+            } else if(eventType == xpp.START_TAG) {
+                System.out.println("Start tag "+xpp.getName());
+            } else if(eventType == xpp.END_TAG) {
+                System.out.println("End tag "+xpp.getName());
+                if (xpp.getName().equals("ClientId")) {
+                    //long id = Long.parseLong(xpp.nextText());
+                    long id = Long.parseLong(text);
+                    System.out.println("ClientId " + id);
+                    ShoppingSolverApplication.getInstance().getNewCount().setClientId(id);
+
+                }
+            } else if(eventType == xpp.TEXT) {
+                text = xpp.getText();
+                Log.i("text", text);
+            }
+            eventType = xpp.next();
+        }
+
+
+    }
+
+    public void getShopInfo() throws XmlPullParserException, IOException
+    {
+        XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+        factory.setNamespaceAware(true);
+        XmlPullParser xpp = factory.newPullParser();
+
+        xpp.setInput ( new StringReader ( data ) );
+        int eventType = xpp.getEventType();
+        String text = null;
+
+        String street = null, city = null, postcode = null, country = null;
+
+        while (eventType != xpp.END_DOCUMENT) {
+            if(eventType == xpp.START_DOCUMENT) {
+                System.out.println("Start document");
+            } else if(eventType == xpp.END_DOCUMENT) {
+                System.out.println("End document");
+            } else if(eventType == xpp.START_TAG) {
+                System.out.println("Start tag "+xpp.getName());
+            } else if(eventType == xpp.END_TAG) {
+                System.out.println("End tag "+xpp.getName());
+                if (xpp.getName().equals("BrandName")) {
+
+                    System.out.println("BrandName " + text);
+                    ShoppingSolverApplication.getInstance().getShop().setName(text);
+
+                } else if (xpp.getName().equals("Street")) {
+                    street = text;
+                } else if (xpp.getName().equals("city")) {
+                    city = text;
+                } else if (xpp.getName().equals("PostCode")) {
+                    postcode = text;
+                } else if (xpp.getName().equals("Country")) {
+                    country = text;
+                }
+
+            } else if(eventType == xpp.TEXT) {
+                text = xpp.getText();
+                Log.i("text", text);
+            }
+            eventType = xpp.next();
+        }
+
+        String address = street + ", " + city + ", " + postcode + ", " + country;
+
+        ShoppingSolverApplication.getInstance().getShop().setAddress(address);
+
+    }
 
 }

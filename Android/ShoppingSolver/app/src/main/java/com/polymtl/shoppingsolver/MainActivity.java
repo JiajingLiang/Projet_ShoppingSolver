@@ -1,23 +1,10 @@
 package com.polymtl.shoppingsolver;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
-import org.json.simple.JSONObject;
-import org.json.simple.parser.ContainerFactory;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
 import android.app.Activity;
 import android.app.Fragment;
-//import android.support.v4.app.FragmentManager;
 import android.app.FragmentManager;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
@@ -28,18 +15,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Toast;
 
-import com.polymtl.shoppingsolver.model.Category;
 import com.polymtl.shoppingsolver.model.NavDrawerItem;
-import com.polymtl.shoppingsolver.model.Product;
-import com.polymtl.shoppingsolver.model.ShoppingItem;
+import com.polymtl.shoppingsolver.model.ShoppingRecord;
 import com.polymtl.shoppingsolver.service.ShoppingSolverIntentService;
 import com.polymtl.shoppingsolver.ui.HabitFragment;
 import com.polymtl.shoppingsolver.ui.ItemDialogFragment;
 import com.polymtl.shoppingsolver.ui.ReceptionFragment;
+import com.polymtl.shoppingsolver.util.ShoppingSolverApplication;
 
 public class MainActivity extends Activity implements PaymentFragment.StartCommunication{
 
@@ -51,25 +36,17 @@ public class MainActivity extends Activity implements PaymentFragment.StartCommu
 	private CharSequence mDrawerTitle;
 	// used to store app title
 	private CharSequence mTitle;
-	
-	//private String userId;
-	//private String urlServlet;
-	
+
 	private final static int SCANNIN_GREQUEST_CODE = 1;
 
-    private static ArrayList<ShoppingItem> shoppingItems;
-    private static int currentPosition;
-    private static long shopId;
-
-    private Product itemProduct;
-    private ShoppingItem shoppingItem;
+    private ShoppingSolverApplication shoppingSolverApp;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-        init();
+        shoppingSolverApp = ShoppingSolverApplication.getInstance();
 
         testShoppingList(); // Test data
 
@@ -81,40 +58,36 @@ public class MainActivity extends Activity implements PaymentFragment.StartCommu
 
 	}
 
-    private void init() {
-
-        Intent intent = getIntent();
-        //userId = intent.getStringExtra("login");
-        //urlServlet = intent.getStringExtra("urlServlet");
-
-        shoppingItems = new ArrayList<>();
-    }
-
     private void testShoppingList() {
 
-        itemProduct = new Product();
-        itemProduct.setProductName("Milk");
-        itemProduct.setUnit_price(3.20f);
+        ArrayList<ShoppingRecord> shoppingRecords = new ArrayList<>();
+        ShoppingRecord shoppingRecord = new ShoppingRecord();
+        shoppingRecord.setDescription("Milk");
+        shoppingRecord.setUnit_price(3.20f);
 
-        itemProduct.setCategoryName("Food");
-        itemProduct.setFederalTaxRatio(0.00f);
-        itemProduct.setProvincialTaxRatio(0.00f);
-        shoppingItem = new ShoppingItem(itemProduct);
-        shoppingItem.setQuantity(1.0f);
-        shoppingItem.getItemTotalPrice();
-        shoppingItems.add(shoppingItem);
+        shoppingRecord.setCategoryName("Food");
+        shoppingRecord.setFederalTaxRatio(0.00f);
+        shoppingRecord.setProvincialTaxRatio(0.00f);
 
-        itemProduct = new Product();
-        itemProduct.setProductName("Beer");
-        itemProduct.setUnit_price(2.50f);
-        itemProduct.setCategoryName("Alcohol");
-        itemProduct.setFederalTaxRatio(0.15f);
-        itemProduct.setProvincialTaxRatio(0.26f);
-        shoppingItem = new ShoppingItem(itemProduct);
-        shoppingItem.setQuantity(12.0f);
-        shoppingItem.getItemTotalPrice();
+        shoppingRecord.setQuantity(1.0f);
+        shoppingRecord.getItemTotalPrice();
+        shoppingRecord.setProductBarCode("068100047219");
+        shoppingRecords.add(shoppingRecord);
 
-        shoppingItems.add(shoppingItem);
+        shoppingRecord = new ShoppingRecord();
+        shoppingRecord.setDescription("Beer");
+        shoppingRecord.setUnit_price(2.50f);
+        shoppingRecord.setCategoryName("Alcohol");
+        shoppingRecord.setFederalTaxRatio(0.15f);
+        shoppingRecord.setProvincialTaxRatio(0.26f);
+
+        shoppingRecord.setQuantity(12.0f);
+        shoppingRecord.getItemTotalPrice();
+        shoppingRecord.setProductBarCode("068200010311");
+
+        shoppingRecords.add(shoppingRecord);
+
+        shoppingSolverApp.setShoppingRecords(shoppingRecords);
 
     }
 
@@ -216,6 +189,7 @@ public class MainActivity extends Activity implements PaymentFragment.StartCommu
          Log.i("Open item:", "open item fragment");
          fragmentManager.beginTransaction().replace(R.id.content_frame, itemDialogFragment)
                  .addToBackStack("payment").commit();
+        setTitle("Product");
 
     }
 
@@ -231,31 +205,40 @@ public class MainActivity extends Activity implements PaymentFragment.StartCommu
     /** Swaps fragments in the main content view */
 	private void selectItem(int position) {
 	    Fragment fragment = null;
+        FragmentManager fragmentManager = getFragmentManager();
 	    Bundle bundle=new Bundle();
 	    switch (position) {
 	        case 0:
 	            fragment = new PaymentFragment();
+                fragment.setArguments(bundle);
+                fragmentManager.beginTransaction().
+                        replace(R.id.content_frame, fragment).commit();
 	            break;
 	        case 1:
 	            fragment = new CountFragment();
+                fragment.setArguments(bundle);
+                fragmentManager.beginTransaction().
+                        replace(R.id.content_frame, fragment).addToBackStack(null).commit();
 	            break;
             case 2:
                 fragment = new HabitFragment();
+                fragment.setArguments(bundle);
+                fragmentManager.beginTransaction().
+                        replace(R.id.content_frame, fragment).addToBackStack(null).commit();
                 break;
             case 3:
                 fragment = new ReceptionFragment();
+                fragment.setArguments(bundle);
+                fragmentManager.beginTransaction().
+                        replace(R.id.content_frame, fragment).addToBackStack(null).commit();
                 break;
 	        default:
 	            break;
 	    }
 	    if (fragment != null) {
-	    	//bundle.putString("userId", userId);
-	    	//bundle.putString("urlServlet", urlServlet);
-	    	fragment.setArguments(bundle);
-	    	
-	        FragmentManager fragmentManager = getFragmentManager();
+	    	/*fragment.setArguments(bundle);
 	        fragmentManager.beginTransaction().
-                    replace(R.id.content_frame, fragment).commit();
+                    replace(R.id.content_frame, fragment).addToBackStack(null).commit();*/
 	        mDrawerList.setItemChecked(position, true);
 	        mDrawerList.setSelection(position);
 	        setTitle(mNavigationDrawerItemTitles[position]);
@@ -265,7 +248,8 @@ public class MainActivity extends Activity implements PaymentFragment.StartCommu
 	    }	    
 	}
 
-	
+
+    // After finishing scan, the scan result will come back to MainActivity by onActivityResult method
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
 		super.onActivityResult(requestCode, resultCode, data);
@@ -274,15 +258,22 @@ public class MainActivity extends Activity implements PaymentFragment.StartCommu
         if (requestCode == PaymentFragment.PICK_PRODUCTID_REQUEST) {
 
             if (resultCode == RESULT_OK) {
+
+
                 Bundle bundle = data.getExtras();
                 String scanResult = bundle.getString("result");
 
-                // TODO:
+                //create new ShoppingItem object
+                ShoppingRecord shoppingRecord = new ShoppingRecord(scanResult);
+
+                shoppingRecord.setProductBarCode(scanResult);
+                shoppingRecord.setQuantity(1.0f);
+                shoppingSolverApp.setCurrentRecord(shoppingRecord);
+
                 // create new Intent to invoke ShoppingSolverIntentService
                 Intent mServerIntent = new Intent(MainActivity.this, ShoppingSolverIntentService.class);
-                mServerIntent.putExtra("command", "productInfo");
-                mServerIntent.putExtra("productBarCode", scanResult);
-                mServerIntent.putExtra("idShop", MainActivity.getShopId());
+                mServerIntent.putExtra("command", "productInfo"); // get product price in shop
+
                 mServerIntent.putExtra("receiver", new SSResultReceiver(new Handler()));
                 // start IntentService
                 MainActivity.this.startService(mServerIntent);
@@ -290,43 +281,27 @@ public class MainActivity extends Activity implements PaymentFragment.StartCommu
         } else if (requestCode == PaymentFragment.PICK_SHOPID_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Bundle bundle = data.getExtras();
-                MainActivity.setShopId(Long.parseLong(bundle.getString("result")));
+                long shopId = Long.parseLong(bundle.getString("result"));
+                shoppingSolverApp.getShop().setShopId(shopId);
+
+                // create new Intent to invoke ShoppingSolverIntentService
+                Intent mServerIntent = new Intent(MainActivity.this, ShoppingSolverIntentService.class);
+                mServerIntent.putExtra("command", "shopInfo"); // get product price in shop
+                mServerIntent.putExtra("shopId", shopId);
+                mServerIntent.putExtra("receiver", new SSResultReceiver(new Handler()));
+                // start IntentService to get shop info
+                MainActivity.this.startService(mServerIntent);
             }
         }
 	}
 
-    public static ArrayList<ShoppingItem> getShoppingItems() {
-        return MainActivity.shoppingItems;
-    }
 
-    public static void addShoppingItem(ShoppingItem item) {
-        MainActivity.shoppingItems.add(item);
-    }
-
-    public static void removeOneShoppingItem(int position) {
-        MainActivity.shoppingItems.remove(position);
-    }
-
-
-    public static void setCurrentPosition(int position) {
-        currentPosition = position;
-    }
-
-    public static int getCurrentPosition() {
-        return currentPosition;
-    }
-
-    public static void setShopId(long id) {
-        shopId = id;
-    }
-    public static long getShopId() {
-        return shopId;
-    }
-
+    /**
+     * Class SSResultReceiver used for receiving a callback result from ShoppingSolverIntentService
+     * */
     private class SSResultReceiver extends ResultReceiver {
 
-        private final int ERROR = 0, PRODUCTINFO = 1, PAYMENT = 2,
-                CLIENTINFO = 3, CONSUMPTIVEHABIT = 4, SALEINFO = 5;
+        private final int ERROR = 0, SUCCESS = 1;
 
 
         /**
@@ -344,31 +319,50 @@ public class MainActivity extends Activity implements PaymentFragment.StartCommu
         protected void onReceiveResult(int resultCode, Bundle resultData) {
             super.onReceiveResult(resultCode, resultData);
 
-            switch (resultCode) {
-                case PRODUCTINFO:
-                    Product newProduct = (Product)resultData.getSerializable("product");
-                    boolean isExist = false;
-                    for (ShoppingItem item: shoppingItems) {
-                        // if this product is in the list, then add quantity
-                        if (item.getProduct().getProductBarCode().equals(newProduct.getProductBarCode())) {
-                            isExist = true;
-                            item.setQuantity(item.getQuantity() + 1.0f);
-                            PaymentFragment.getmAdapter().notifyDataSetChanged();
-                        }
-                    }
-                    // if this product is not in the list, then add new item
-                    if (!isExist) {
-                        ShoppingItem newItem = new ShoppingItem(newProduct);
-                        newItem.setQuantity(1.0f);
+            String type = resultData.getString("requestType");
+            if ("getProductInfo".equals(type)) {
+                switch (resultCode) {
+                    case SUCCESS:
+                        shoppingSolverApp.addCurrentShoppingRecord();
+                        shoppingSolverApp.getAdapter().notifyDataSetChanged();
+                        break;
 
-                    }
-                    break;
-
-                case ERROR:
-                    break;
-                default:
-                    break;
+                    case ERROR:
+                        Toast.makeText(MainActivity.this,
+                                "Sorry! Didn't find this product's information!",
+                                Toast.LENGTH_SHORT).show();
+                        ShoppingSolverApplication.getInstance().getShop().setShopId(0);
+                        break;
+                    default:
+                        break;
+                }
+            } else if ("getShopInfo".equals(type)) {
+                switch (resultCode) {
+                    case SUCCESS:
+                        break;
+                    case ERROR:
+                        Toast.makeText(MainActivity.this,
+                                "Sorry! This shop is not registered our service!",
+                                Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        break;
+                }
             }
+        }
+    }
+
+    @Override
+    public void onBackPressed(){
+        FragmentManager fm = getFragmentManager();
+        if (fm.getBackStackEntryCount() > 0) {
+            Log.i("MainActivity", "popping backstack");
+            mDrawerList.setSelection(0);
+            setTitle(mNavigationDrawerItemTitles[0]);
+            fm.popBackStack();
+        } else {
+            Log.i("MainActivity", "nothing on backstack, calling super");
+            super.onBackPressed();
         }
     }
 	

@@ -4,20 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.polymtl.shoppingsolver.MainActivity;
 import com.polymtl.shoppingsolver.R;
-import com.polymtl.shoppingsolver.model.Category;
-import com.polymtl.shoppingsolver.model.Product;
-import com.polymtl.shoppingsolver.model.ShoppingItem;
+import com.polymtl.shoppingsolver.util.ShoppingSolverApplication;
 
-import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -27,15 +20,20 @@ public class CustomerBaseAdapter extends BaseAdapter {
 
     private static LayoutInflater inflater = null;
 
+    private ShoppingSolverApplication application;
 
+    private Context context;
 
-    private List<ShoppingItem> data;
-    public CustomerBaseAdapter(Context context, List<ShoppingItem> data) {
+    public CustomerBaseAdapter() {}
+
+    public CustomerBaseAdapter(Context context) {
+
+        this.context = context;
 
         /****Layout inflator to call external xml layout*/
         inflater = LayoutInflater.from(context);
 
-        this.data = data;
+        application = ShoppingSolverApplication.getInstance();
 
     }
 
@@ -52,7 +50,7 @@ public class CustomerBaseAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         // How many items are in the data set represented by this Adapter
-        return data.size();
+        return application.getRecordsCount();
 
     }
 
@@ -86,14 +84,14 @@ public class CustomerBaseAdapter extends BaseAdapter {
             holder.btn_delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MainActivity.removeOneShoppingItem(position);
+                    application.removeRecord(position);
                     notifyDataSetChanged();
                 }
             });
 
-            holder.productName.setText(data.get(position).getProduct().getProductName());
-            holder.priceQuantity.setText("Unit price: " + data.get(position).getProduct().getUnit_price()
-                    + "$  quantity: " + data.get(position).getQuantity());
+            holder.productName.setText(application.getShoppingRecords().get(position).getDescription());
+            holder.priceQuantity.setText("Unit price: " + application.getShoppingRecords().get(position).getUnit_price()
+                    + "$  quantity: " + application.getShoppingRecords().get(position).getQuantity());
             /***** Set holder with LayoutInflater *****/
             convertView.setTag(holder);
 

@@ -1,7 +1,6 @@
 package com.polymtl.shoppingsolver.ui;
 
 import android.app.Activity;
-import android.os.Build;
 import android.os.Bundle;
 import android.app.DialogFragment;
 import android.text.Editable;
@@ -13,17 +12,14 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import com.polymtl.shoppingsolver.MainActivity;
 import com.polymtl.shoppingsolver.PaymentFragment;
 import com.polymtl.shoppingsolver.R;
-import com.polymtl.shoppingsolver.model.Product;
-import com.polymtl.shoppingsolver.model.ShoppingItem;
+import com.polymtl.shoppingsolver.model.ShoppingRecord;
+import com.polymtl.shoppingsolver.util.ShoppingSolverApplication;
 
 /**
  * Created by Zoe on 15-04-03.
@@ -40,13 +36,15 @@ public class ItemDialogFragment extends DialogFragment {
     private Spinner spinnerUnit;
     private ImageButton btnDecrease, btnIncrease, btnDelete, btnSave, btnCancel;
 
-    private ShoppingItem shoppingItem;
+    private ShoppingRecord shoppingRecord;
 
     private float tempQuantity;
     private double tempTotalPrice;
 
 
     private ArrayAdapter<String> adapter;
+
+    private ShoppingSolverApplication application;
 
     private static final String[] unitItems = {"none", "each", "kg", "g", "gallon"};
 
@@ -81,29 +79,31 @@ public class ItemDialogFragment extends DialogFragment {
             Log.i("getArguments", "is null");
             return null;
         }
-        position = getArguments().getInt("position");
-        shoppingItem = MainActivity.getShoppingItems().get(position);
 
-        tempQuantity = shoppingItem.getQuantity();
-        tempTotalPrice = shoppingItem.getItemTotalPrice();
+        application = ShoppingSolverApplication.getInstance();
+        position = getArguments().getInt("position");
+        shoppingRecord = application.getShoppingRecords().get(position);
+
+        tempQuantity = shoppingRecord.getQuantity();
+        tempTotalPrice = shoppingRecord.getItemTotalPrice();
 
         tvItemName = (TextView) rootView.findViewById(R.id.tvItem_name);
-        tvItemName.setText(shoppingItem.getProduct().getProductName());
+        tvItemName.setText(shoppingRecord.getDescription());
 
         tvUnitPrice = (TextView) rootView.findViewById(R.id.unitPrice);
-        tvUnitPrice.setText("Unit Price: " + shoppingItem.getProduct().getUnit_price() + "$");
+        tvUnitPrice.setText("Unit Price: " + shoppingRecord.getUnit_price() + "$");
 
         tvTotalPrice = (TextView) rootView.findViewById(R.id.totalPrice);
-        tvTotalPrice.setText("Total: " +shoppingItem.getItemTotalPrice() + "$");
+        tvTotalPrice.setText("Total: " + shoppingRecord.getItemTotalPrice() + "$");
 
         tvRatioTPS = (TextView) rootView.findViewById(R.id.tvratioTPS);
-        tvRatioTPS.setText("RatioTaxFederal: " + shoppingItem.getProduct().getFederalTaxRatio());
+        tvRatioTPS.setText("RatioTaxFederal: " + shoppingRecord.getFederalTaxRatio());
 
         tvRatioTVQ = (TextView) rootView.findViewById(R.id.tvratioTVQ);
-        tvRatioTVQ.setText("RatioTaxProvincial: " + shoppingItem.getProduct().getProvincialTaxRatio());
+        tvRatioTVQ.setText("RatioTaxProvincial: " + shoppingRecord.getProvincialTaxRatio());
 
         edQuantity = (EditText) rootView.findViewById(R.id.edQuantity);
-        edQuantity.setText(String.valueOf(shoppingItem.getQuantity()));
+        edQuantity.setText(String.valueOf(shoppingRecord.getQuantity()));
         edQuantity.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -127,7 +127,7 @@ public class ItemDialogFragment extends DialogFragment {
                 //tvTotalPrice.setText("Total: " + shoppingItem.getItemTotalPrice() + "$");
 
                 tempQuantity = Float.parseFloat(edQuantity.getText().toString());
-                tvTotalPrice.setText("Total: " + tempQuantity * shoppingItem.getProduct().getUnit_price() + "$");
+                tvTotalPrice.setText("Total: " + tempQuantity * shoppingRecord.getUnit_price() + "$");
 
             }
         });
@@ -143,7 +143,7 @@ public class ItemDialogFragment extends DialogFragment {
 
                     tempQuantity -= 1.0f;
                     edQuantity.setText(String.valueOf(tempQuantity));
-                    tvTotalPrice.setText("Total: " + tempQuantity * shoppingItem.getProduct().getUnit_price() + "$");
+                    tvTotalPrice.setText("Total: " + tempQuantity * shoppingRecord.getUnit_price() + "$");
                 }
             }
         });
@@ -156,7 +156,7 @@ public class ItemDialogFragment extends DialogFragment {
                 tempQuantity += 1.0f;
                 edQuantity.setText(String.valueOf(tempQuantity));
 
-                tvTotalPrice.setText("Total: " + tempQuantity * shoppingItem.getProduct().getUnit_price() + "$");
+                tvTotalPrice.setText("Total: " + tempQuantity * shoppingRecord.getUnit_price() + "$");
             }
         });
 
@@ -187,7 +187,8 @@ public class ItemDialogFragment extends DialogFragment {
 
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(edQuantity.getWindowToken(),0);
-                MainActivity.removeOneShoppingItem(position);
+
+                application.removeRecord(position);
                 // return to previous fragment
                 PaymentFragment.StartCommunication comm = (PaymentFragment.StartCommunication) getActivity();
                 getFragmentManager().popBackStackImmediate();
@@ -202,7 +203,7 @@ public class ItemDialogFragment extends DialogFragment {
 
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(edQuantity.getWindowToken(),0);
-                shoppingItem.setQuantity(tempQuantity);
+                shoppingRecord.setQuantity(tempQuantity);
                // return to previous fragment
                 getFragmentManager().popBackStackImmediate();
             }
@@ -221,28 +222,5 @@ public class ItemDialogFragment extends DialogFragment {
 
         return rootView;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

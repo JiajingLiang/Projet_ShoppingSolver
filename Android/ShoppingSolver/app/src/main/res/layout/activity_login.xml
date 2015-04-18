@@ -51,19 +51,33 @@
         android:layout_marginTop="10dp"
         android:ems="10"
         android:inputType="textPassword" />
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/checkbox_save"
-        android:text="@string/checkbox_save"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText_password"
+        android:layout_marginTop="10dp" >
     <Button
         android:id="@+id/button_Connextion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText_password"
+        android:layout_weight = "1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+
         android:text="@string/button_connexion" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_create"
+        android:layout_weight = "1"
+        android:layout_centerHorizontal="true"
+        android:text="@string/btn_newuser"/>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

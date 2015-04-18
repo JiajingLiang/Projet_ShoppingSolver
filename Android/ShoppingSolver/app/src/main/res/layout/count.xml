@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+	<TableLayout
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+        android:id="@+id/client_table"
+	    android:layout_alignParentTop="true"
+	    android:layout_alignParentLeft="true"
+	    android:layout_marginTop="50dp"
+	    android:layout_marginLeft="50dp"
+	    android:gravity="left" >
+
+   		<TableRow
+			android:id="@+id/tableRow1"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+
+			<TextView
+			    android:id="@+id/tvEmail"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="@string/textview_email" />
+
+			<EditText
+				android:id="@+id/editText_email"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="20dp"
+				android:inputType="textEmailAddress"
+                android:nextFocusForward="@+id/editText_password"/>
+		</TableRow>
+	    
+		<TableRow
+			android:id="@+id/tableRow2"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+
+			<TextView
+			    android:id="@+id/tvPassword"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="@string/textview_password" />
+
+			<EditText
+				android:id="@+id/editText_password"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="20dp"
+				android:inputType="textPassword"
+                android:nextFocusForward="@+id/editText_name"/>
+		</TableRow>
+		
+		<TableRow
+			android:id="@+id/tableRow3"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+
+			<TextView
+			    android:id="@+id/tvName"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="@string/textview_name" />
+
+			<EditText
+				android:id="@+id/editText_name"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="20dp"
+                android:nextFocusForward="@+id/editText_phone"/>
+		</TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/textview_phone" />
+
+            <EditText
+                android:id="@+id/editText_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:inputType="phone"
+                android:nextFocusForward="@+id/editText_balance"/>
+        </TableRow>
+
+		<TableRow
+			android:id="@+id/tableRow5"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+
+			<TextView
+			    android:id="@+id/tvBalance"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="@string/textview_balance" />
+
+			<EditText
+				android:id="@+id/editText_balance"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="20dp"
+                android:inputType="numberDecimal"
+                android:nextFocusForward="@+id/editText_street"
+                />
+		</TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvStreet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/textview_street" />
+
+            <EditText
+                android:id="@+id/editText_street"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:nextFocusForward="@+id/editText_city"/>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/textview_city" />
+
+            <EditText
+                android:id="@+id/editText_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:nextFocusForward="@+id/editText_country"/>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvCountry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/textview_country" />
+
+            <EditText
+                android:id="@+id/editText_country"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:nextFocusForward="@+id/editText_postcode"/>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvPostcode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/textview_postcode" />
+
+            <EditText
+                android:id="@+id/editText_postcode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:imeOptions="actionDone"/>
+        </TableRow>
+
+    </TableLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_saveClientInfo"
+        android:layout_below="@+id/client_table"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/button_saveClientInfo"/>
+</RelativeLayout>

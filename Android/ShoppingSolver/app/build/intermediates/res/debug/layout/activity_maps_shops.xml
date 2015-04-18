@@ -1,0 +1,7 @@
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:id="@+id/map"
+    tools:context="com.polymtl.shoppingsolver.MapsShopsActivity"
+    android:name="com.google.android.gms.maps.SupportMapFragment"
+    />
+<!-- From: file:/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/src/main/res/layout/activity_maps_shops.xml -->

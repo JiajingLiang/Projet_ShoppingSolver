@@ -42,11 +42,31 @@ public class HabitDataSource {
         cursor.moveToFirst();
         while (cursor.moveToNext()) {
             ShoppingRecord shoppingRecord = new ShoppingRecord();
-            shoppingRecord.setCode(cursor.getString(cursor.getColumnIndex(DBHelper.KEY_PRIMARY_CODE)));
-            shoppingRecord.setName(cursor.getString(cursor.getColumnIndex(DBHelper.KEY_PRODUCT_NAME)));
+            shoppingRecord.setProductBarCode(cursor.getString(cursor.getColumnIndex(DBHelper.KEY_PRIMARY_CODE)));
             shoppingRecord.setQuantity(cursor.getFloat(cursor.getColumnIndex(DBHelper.KEY_QUANTITY)));
 
             result.add(shoppingRecord);
+        }
+
+        // make sure to close the cursor
+        cursor.close();
+
+        return result;
+    }
+
+    public ArrayList<String> getNecessaryProductsCode() {
+
+        ArrayList<String> result = new ArrayList<>();
+
+        Cursor cursor = database.rawQuery("SELECT * FROM " + DBHelper.TABLE_CONSUMPTION_HABIT +
+                " ORDER BY quantity DESC LIMIT 10", null);
+
+        cursor.moveToFirst();
+        while (cursor.moveToNext()) {
+            String barCode = cursor.getString(cursor.getColumnIndex(DBHelper.KEY_PRIMARY_CODE));
+
+
+            result.add(barCode);
         }
 
         // make sure to close the cursor
@@ -80,8 +100,7 @@ public class HabitDataSource {
     public long insertRecord(ShoppingRecord record) {
 
         ContentValues values = new ContentValues();
-        values.put(DBHelper.KEY_PRIMARY_CODE, record.getCode());
-        values.put(DBHelper.KEY_PRODUCT_NAME, record.getName());
+        values.put(DBHelper.KEY_PRIMARY_CODE, record.getProductBarCode());
         values.put(DBHelper.KEY_QUANTITY, record.getQuantity());
 
         long id = database.insert(DBHelper.TABLE_CONSUMPTION_HABIT, null, values);
