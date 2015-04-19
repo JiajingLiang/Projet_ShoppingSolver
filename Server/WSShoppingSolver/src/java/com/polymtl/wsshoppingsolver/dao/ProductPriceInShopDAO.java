@@ -51,8 +51,8 @@ public class ProductPriceInShopDAO implements ProductPriceInShopDAOLocal {
     }
 
     @Override
-    public void update(ProductPriceInShop aProductPriceInShop) {
-        em.merge(aProductPriceInShop);
+    public ProductPriceInShop update(ProductPriceInShop aProductPriceInShop) {
+        return em.merge(aProductPriceInShop);
     }
 
     @Override

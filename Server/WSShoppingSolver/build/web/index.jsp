@@ -13,7 +13,7 @@
     </head>
     <body>
         <h1>Hello World!</h1>
-        <form name="pageWelcom" action="ControllerServlet?action=ShopAdmin" method="POST">
+        <form name="formShopAdmin" action="ControllerServlet?action=ShopAdmin" method="POST">
             <input type="submit" value="ShopAdmin" name="btnShopAdmin" />
         </form>
     </body>

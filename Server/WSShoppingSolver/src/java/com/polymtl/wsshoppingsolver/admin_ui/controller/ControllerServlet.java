@@ -6,8 +6,12 @@
 package com.polymtl.wsshoppingsolver.admin_ui.controller;
 
 import com.polymtl.wsshoppingsolver.admin_ui.action.Action;
+import com.polymtl.wsshoppingsolver.admin_ui.action.AddBranch;
 import com.polymtl.wsshoppingsolver.admin_ui.action.AddBrand;
+import com.polymtl.wsshoppingsolver.admin_ui.action.AddProductToShop;
+import com.polymtl.wsshoppingsolver.admin_ui.action.ChangeProductPriceInShop;
 import com.polymtl.wsshoppingsolver.admin_ui.action.ShopAdmin;
+import com.polymtl.wsshoppingsolver.admin_ui.action.ShopBranchProductAdmin;
 import com.polymtl.wsshoppingsolver.webservice_client.ShopProductAdminWS;
 //import shopproduct_admin_webservice.ShopProductAdminWS;
 import java.io.IOException;
@@ -75,6 +79,18 @@ public class ControllerServlet extends HttpServlet {
         }
         if("AddBrand".equals(actionName)){
             action = new AddBrand();
+        }
+        if("AddBranch".equals(actionName)){
+            action = new AddBranch();
+        }
+        if("ShopBranchProductAdmin".equals(actionName)){
+            action = new ShopBranchProductAdmin();
+        }
+        if("ChangeProductPriceInShop".equals(actionName)){
+            action = new ChangeProductPriceInShop();
+        }
+        if("AddProductToShop".equals(actionName)){
+            action = new AddProductToShop();
         }
         return action;
     }

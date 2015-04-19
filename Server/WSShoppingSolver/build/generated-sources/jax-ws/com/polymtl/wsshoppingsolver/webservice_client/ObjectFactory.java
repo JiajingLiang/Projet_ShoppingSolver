@@ -24,23 +24,27 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _GetProductPriceFromShopResponse_QNAME = new QName("http://shopproduct_admin_webservice/", "getProductPriceFromShopResponse");
+    private final static QName _CreateShopBranchResponse_QNAME = new QName("http://shopproduct_admin_webservice/", "createShopBranchResponse");
+    private final static QName _CreateShopBranch_QNAME = new QName("http://shopproduct_admin_webservice/", "createShopBranch");
+    private final static QName _FindAllShopBrandResponse_QNAME = new QName("http://shopproduct_admin_webservice/", "findAllShopBrandResponse");
+    private final static QName _GetAllProductsInShopResponse_QNAME = new QName("http://shopproduct_admin_webservice/", "getAllProductsInShopResponse");
+    private final static QName _SetProductPriceInShop_QNAME = new QName("http://shopproduct_admin_webservice/", "setProductPriceInShop");
     private final static QName _CreateProduct_QNAME = new QName("http://shopproduct_admin_webservice/", "createProduct");
     private final static QName _CreateProductCategory_QNAME = new QName("http://shopproduct_admin_webservice/", "createProductCategory");
-    private final static QName _GetProductPriceInShopResponse_QNAME = new QName("http://shopproduct_admin_webservice/", "getProductPriceInShopResponse");
+    private final static QName _GetClientDevicesByFavoriteProducts_QNAME = new QName("http://shopproduct_admin_webservice/", "getClientDevicesByFavoriteProducts");
+    private final static QName _GetClientDevicesByFavoriteProductsResponse_QNAME = new QName("http://shopproduct_admin_webservice/", "getClientDevicesByFavoriteProductsResponse");
     private final static QName _FindAllProductResponse_QNAME = new QName("http://shopproduct_admin_webservice/", "findAllProductResponse");
     private final static QName _FindAllShopBranch_QNAME = new QName("http://shopproduct_admin_webservice/", "findAllShopBranch");
     private final static QName _AddProductToShopResponse_QNAME = new QName("http://shopproduct_admin_webservice/", "addProductToShopResponse");
-    private final static QName _CreateShopBranchResponse_QNAME = new QName("http://shopproduct_admin_webservice/", "createShopBranchResponse");
     private final static QName _FindAllProduct_QNAME = new QName("http://shopproduct_admin_webservice/", "findAllProduct");
     private final static QName _FindAllShopBrand_QNAME = new QName("http://shopproduct_admin_webservice/", "findAllShopBrand");
     private final static QName _FindAllProductCategory_QNAME = new QName("http://shopproduct_admin_webservice/", "findAllProductCategory");
-    private final static QName _GetProductPriceInShop_QNAME = new QName("http://shopproduct_admin_webservice/", "getProductPriceInShop");
+    private final static QName _GetProductPriceFromShop_QNAME = new QName("http://shopproduct_admin_webservice/", "getProductPriceFromShop");
+    private final static QName _SetProductPriceInShopResponse_QNAME = new QName("http://shopproduct_admin_webservice/", "setProductPriceInShopResponse");
     private final static QName _AddProductToShop_QNAME = new QName("http://shopproduct_admin_webservice/", "addProductToShop");
     private final static QName _CreateProductResponse_QNAME = new QName("http://shopproduct_admin_webservice/", "createProductResponse");
-    private final static QName _CreateShopBranch_QNAME = new QName("http://shopproduct_admin_webservice/", "createShopBranch");
     private final static QName _GetAllProductsInShop_QNAME = new QName("http://shopproduct_admin_webservice/", "getAllProductsInShop");
-    private final static QName _FindAllShopBrandResponse_QNAME = new QName("http://shopproduct_admin_webservice/", "findAllShopBrandResponse");
-    private final static QName _GetAllProductsInShopResponse_QNAME = new QName("http://shopproduct_admin_webservice/", "getAllProductsInShopResponse");
     private final static QName _CreateShopBrandResponse_QNAME = new QName("http://shopproduct_admin_webservice/", "createShopBrandResponse");
     private final static QName _FindAllProductCategoryResponse_QNAME = new QName("http://shopproduct_admin_webservice/", "findAllProductCategoryResponse");
     private final static QName _CreateProductCategoryResponse_QNAME = new QName("http://shopproduct_admin_webservice/", "createProductCategoryResponse");
@@ -55,11 +59,59 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetProductPriceInShopResponse }
+     * Create an instance of {@link GetProductPriceFromShopResponse }
      * 
      */
-    public GetProductPriceInShopResponse createGetProductPriceInShopResponse() {
-        return new GetProductPriceInShopResponse();
+    public GetProductPriceFromShopResponse createGetProductPriceFromShopResponse() {
+        return new GetProductPriceFromShopResponse();
+    }
+
+    /**
+     * Create an instance of {@link CreateShopBranchResponse }
+     * 
+     */
+    public CreateShopBranchResponse createCreateShopBranchResponse() {
+        return new CreateShopBranchResponse();
+    }
+
+    /**
+     * Create an instance of {@link FindAllShopBrandResponse }
+     * 
+     */
+    public FindAllShopBrandResponse createFindAllShopBrandResponse() {
+        return new FindAllShopBrandResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetAllProductsInShopResponse }
+     * 
+     */
+    public GetAllProductsInShopResponse createGetAllProductsInShopResponse() {
+        return new GetAllProductsInShopResponse();
+    }
+
+    /**
+     * Create an instance of {@link SetProductPriceInShop }
+     * 
+     */
+    public SetProductPriceInShop createSetProductPriceInShop() {
+        return new SetProductPriceInShop();
+    }
+
+    /**
+     * Create an instance of {@link CreateShopBranch }
+     * 
+     */
+    public CreateShopBranch createCreateShopBranch() {
+        return new CreateShopBranch();
+    }
+
+    /**
+     * Create an instance of {@link GetClientDevicesByFavoriteProducts }
+     * 
+     */
+    public GetClientDevicesByFavoriteProducts createGetClientDevicesByFavoriteProducts() {
+        return new GetClientDevicesByFavoriteProducts();
     }
 
     /**
@@ -95,6 +147,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetClientDevicesByFavoriteProductsResponse }
+     * 
+     */
+    public GetClientDevicesByFavoriteProductsResponse createGetClientDevicesByFavoriteProductsResponse() {
+        return new GetClientDevicesByFavoriteProductsResponse();
+    }
+
+    /**
      * Create an instance of {@link AddProductToShop }
      * 
      */
@@ -111,11 +171,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetProductPriceInShop }
+     * Create an instance of {@link GetProductPriceFromShop }
      * 
      */
-    public GetProductPriceInShop createGetProductPriceInShop() {
-        return new GetProductPriceInShop();
+    public GetProductPriceFromShop createGetProductPriceFromShop() {
+        return new GetProductPriceFromShop();
+    }
+
+    /**
+     * Create an instance of {@link SetProductPriceInShopResponse }
+     * 
+     */
+    public SetProductPriceInShopResponse createSetProductPriceInShopResponse() {
+        return new SetProductPriceInShopResponse();
     }
 
     /**
@@ -132,14 +200,6 @@ public class ObjectFactory {
      */
     public AddProductToShopResponse createAddProductToShopResponse() {
         return new AddProductToShopResponse();
-    }
-
-    /**
-     * Create an instance of {@link CreateShopBranchResponse }
-     * 
-     */
-    public CreateShopBranchResponse createCreateShopBranchResponse() {
-        return new CreateShopBranchResponse();
     }
 
     /**
@@ -199,35 +259,65 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link FindAllShopBrandResponse }
-     * 
-     */
-    public FindAllShopBrandResponse createFindAllShopBrandResponse() {
-        return new FindAllShopBrandResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetAllProductsInShopResponse }
-     * 
-     */
-    public GetAllProductsInShopResponse createGetAllProductsInShopResponse() {
-        return new GetAllProductsInShopResponse();
-    }
-
-    /**
-     * Create an instance of {@link CreateShopBranch }
-     * 
-     */
-    public CreateShopBranch createCreateShopBranch() {
-        return new CreateShopBranch();
-    }
-
-    /**
      * Create an instance of {@link GetAllProductsInShop }
      * 
      */
     public GetAllProductsInShop createGetAllProductsInShop() {
         return new GetAllProductsInShop();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetProductPriceFromShopResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://shopproduct_admin_webservice/", name = "getProductPriceFromShopResponse")
+    public JAXBElement<GetProductPriceFromShopResponse> createGetProductPriceFromShopResponse(GetProductPriceFromShopResponse value) {
+        return new JAXBElement<GetProductPriceFromShopResponse>(_GetProductPriceFromShopResponse_QNAME, GetProductPriceFromShopResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CreateShopBranchResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://shopproduct_admin_webservice/", name = "createShopBranchResponse")
+    public JAXBElement<CreateShopBranchResponse> createCreateShopBranchResponse(CreateShopBranchResponse value) {
+        return new JAXBElement<CreateShopBranchResponse>(_CreateShopBranchResponse_QNAME, CreateShopBranchResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CreateShopBranch }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://shopproduct_admin_webservice/", name = "createShopBranch")
+    public JAXBElement<CreateShopBranch> createCreateShopBranch(CreateShopBranch value) {
+        return new JAXBElement<CreateShopBranch>(_CreateShopBranch_QNAME, CreateShopBranch.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link FindAllShopBrandResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://shopproduct_admin_webservice/", name = "findAllShopBrandResponse")
+    public JAXBElement<FindAllShopBrandResponse> createFindAllShopBrandResponse(FindAllShopBrandResponse value) {
+        return new JAXBElement<FindAllShopBrandResponse>(_FindAllShopBrandResponse_QNAME, FindAllShopBrandResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetAllProductsInShopResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://shopproduct_admin_webservice/", name = "getAllProductsInShopResponse")
+    public JAXBElement<GetAllProductsInShopResponse> createGetAllProductsInShopResponse(GetAllProductsInShopResponse value) {
+        return new JAXBElement<GetAllProductsInShopResponse>(_GetAllProductsInShopResponse_QNAME, GetAllProductsInShopResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SetProductPriceInShop }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://shopproduct_admin_webservice/", name = "setProductPriceInShop")
+    public JAXBElement<SetProductPriceInShop> createSetProductPriceInShop(SetProductPriceInShop value) {
+        return new JAXBElement<SetProductPriceInShop>(_SetProductPriceInShop_QNAME, SetProductPriceInShop.class, null, value);
     }
 
     /**
@@ -249,12 +339,21 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetProductPriceInShopResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetClientDevicesByFavoriteProducts }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://shopproduct_admin_webservice/", name = "getProductPriceInShopResponse")
-    public JAXBElement<GetProductPriceInShopResponse> createGetProductPriceInShopResponse(GetProductPriceInShopResponse value) {
-        return new JAXBElement<GetProductPriceInShopResponse>(_GetProductPriceInShopResponse_QNAME, GetProductPriceInShopResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://shopproduct_admin_webservice/", name = "getClientDevicesByFavoriteProducts")
+    public JAXBElement<GetClientDevicesByFavoriteProducts> createGetClientDevicesByFavoriteProducts(GetClientDevicesByFavoriteProducts value) {
+        return new JAXBElement<GetClientDevicesByFavoriteProducts>(_GetClientDevicesByFavoriteProducts_QNAME, GetClientDevicesByFavoriteProducts.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetClientDevicesByFavoriteProductsResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://shopproduct_admin_webservice/", name = "getClientDevicesByFavoriteProductsResponse")
+    public JAXBElement<GetClientDevicesByFavoriteProductsResponse> createGetClientDevicesByFavoriteProductsResponse(GetClientDevicesByFavoriteProductsResponse value) {
+        return new JAXBElement<GetClientDevicesByFavoriteProductsResponse>(_GetClientDevicesByFavoriteProductsResponse_QNAME, GetClientDevicesByFavoriteProductsResponse.class, null, value);
     }
 
     /**
@@ -285,15 +384,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link CreateShopBranchResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://shopproduct_admin_webservice/", name = "createShopBranchResponse")
-    public JAXBElement<CreateShopBranchResponse> createCreateShopBranchResponse(CreateShopBranchResponse value) {
-        return new JAXBElement<CreateShopBranchResponse>(_CreateShopBranchResponse_QNAME, CreateShopBranchResponse.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link FindAllProduct }{@code >}}
      * 
      */
@@ -321,12 +411,21 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetProductPriceInShop }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetProductPriceFromShop }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://shopproduct_admin_webservice/", name = "getProductPriceInShop")
-    public JAXBElement<GetProductPriceInShop> createGetProductPriceInShop(GetProductPriceInShop value) {
-        return new JAXBElement<GetProductPriceInShop>(_GetProductPriceInShop_QNAME, GetProductPriceInShop.class, null, value);
+    @XmlElementDecl(namespace = "http://shopproduct_admin_webservice/", name = "getProductPriceFromShop")
+    public JAXBElement<GetProductPriceFromShop> createGetProductPriceFromShop(GetProductPriceFromShop value) {
+        return new JAXBElement<GetProductPriceFromShop>(_GetProductPriceFromShop_QNAME, GetProductPriceFromShop.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SetProductPriceInShopResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://shopproduct_admin_webservice/", name = "setProductPriceInShopResponse")
+    public JAXBElement<SetProductPriceInShopResponse> createSetProductPriceInShopResponse(SetProductPriceInShopResponse value) {
+        return new JAXBElement<SetProductPriceInShopResponse>(_SetProductPriceInShopResponse_QNAME, SetProductPriceInShopResponse.class, null, value);
     }
 
     /**
@@ -348,39 +447,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link CreateShopBranch }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://shopproduct_admin_webservice/", name = "createShopBranch")
-    public JAXBElement<CreateShopBranch> createCreateShopBranch(CreateShopBranch value) {
-        return new JAXBElement<CreateShopBranch>(_CreateShopBranch_QNAME, CreateShopBranch.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetAllProductsInShop }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://shopproduct_admin_webservice/", name = "getAllProductsInShop")
     public JAXBElement<GetAllProductsInShop> createGetAllProductsInShop(GetAllProductsInShop value) {
         return new JAXBElement<GetAllProductsInShop>(_GetAllProductsInShop_QNAME, GetAllProductsInShop.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link FindAllShopBrandResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://shopproduct_admin_webservice/", name = "findAllShopBrandResponse")
-    public JAXBElement<FindAllShopBrandResponse> createFindAllShopBrandResponse(FindAllShopBrandResponse value) {
-        return new JAXBElement<FindAllShopBrandResponse>(_FindAllShopBrandResponse_QNAME, FindAllShopBrandResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetAllProductsInShopResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://shopproduct_admin_webservice/", name = "getAllProductsInShopResponse")
-    public JAXBElement<GetAllProductsInShopResponse> createGetAllProductsInShopResponse(GetAllProductsInShopResponse value) {
-        return new JAXBElement<GetAllProductsInShopResponse>(_GetAllProductsInShopResponse_QNAME, GetAllProductsInShopResponse.class, null, value);
     }
 
     /**

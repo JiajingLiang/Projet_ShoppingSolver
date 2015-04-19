@@ -20,7 +20,7 @@ import javax.xml.bind.JAXBElement;
 /**
  * REST Web Service
  *
- * @author Zoe
+ * @author Jiajing
  */
 @Path("shopproductadminwsport")
 public class ShopProductAdminWSPort {
@@ -37,23 +37,22 @@ public class ShopProductAdminWSPort {
     }
 
     /**
-     * Invokes the SOAP method addProductToShop
-     * @param idProduct resource URI parameter
-     * @param idShop resource URI parameter
-     * @param price resource URI parameter
-     * @param ratioTaxFederal resource URI parameter
-     * @param ratioTaxProvincial resource URI parameter
+     * Invokes the SOAP method createProduct
+     * @param idCategory resource URI parameter
+     * @param barCode resource URI parameter
+     * @param description resource URI parameter
      * @return an instance of java.lang.String
      */
-    @POST
+    @GET
     @Produces("text/plain")
-    @Consumes("application/xml")
-    @Path("addproducttoshop/")
-    public String postAddProductToShop(String idProduct, long idShop, JAXBElement<Double> price, JAXBElement<Float> ratioTaxFederal, JAXBElement<Float> ratioTaxProvincial) {
+    @Consumes("text/plain")
+    @Path("createproduct/")
+    public String getCreateProduct(@QueryParam("idCategory")
+            @DefaultValue("0") long idCategory, @QueryParam("barCode") String barCode, @QueryParam("description") String description) {
         try {
             // Call Web Service Operation
             if (port != null) {
-                boolean result = port.addProductToShop(idProduct, idShop, price.getValue(), ratioTaxFederal.getValue(), ratioTaxProvincial.getValue());
+                boolean result = port.createProduct(idCategory, barCode, description);
                 return new java.lang.Boolean(result).toString();
             }
         } catch (Exception ex) {
@@ -106,6 +105,53 @@ public class ShopProductAdminWSPort {
     }
 
     /**
+     * Invokes the SOAP method findAllProduct
+     * @return an instance of java.lang.String
+     */
+    @GET
+    @Produces("text/plain")
+    @Consumes("text/plain")
+    @Path("findallproduct/")
+    public String getFindAllProduct() {
+        try {
+            // Call Web Service Operation
+            if (port != null) {
+                java.lang.String result = port.findAllProduct();
+                return result;
+            }
+        } catch (Exception ex) {
+            // TODO handle custom exceptions here
+        }
+        return null;
+    }
+
+    /**
+     * Invokes the SOAP method addProductToShop
+     * @param idProduct resource URI parameter
+     * @param idShop resource URI parameter
+     * @param price resource URI parameter
+     * @param ratioTaxFederal resource URI parameter
+     * @param ratioTaxProvincial resource URI parameter
+     * @return an instance of java.lang.String
+     */
+    @POST
+    @Produces("text/plain")
+    @Consumes("application/xml")
+    @Path("addproducttoshop/")
+    public String postAddProductToShop(String idProduct, long idShop, JAXBElement<Double> price, JAXBElement<Float> ratioTaxFederal, JAXBElement<Float> ratioTaxProvincial) {
+        try {
+            // Call Web Service Operation
+            if (port != null) {
+                boolean result = port.addProductToShop(idProduct, idShop, price.getValue(), ratioTaxFederal.getValue(), ratioTaxProvincial.getValue());
+                return new java.lang.Boolean(result).toString();
+            }
+        } catch (Exception ex) {
+            // TODO handle custom exceptions here
+        }
+        return null;
+    }
+
+    /**
      * Invokes the SOAP method createShopBranch
      * @param idBrand resource URI parameter
      * @param street resource URI parameter
@@ -133,109 +179,19 @@ public class ShopProductAdminWSPort {
     }
 
     /**
-     * Invokes the SOAP method createProduct
-     * @param idCategory resource URI parameter
-     * @param barCode resource URI parameter
-     * @param description resource URI parameter
-     * @return an instance of java.lang.String
-     */
-    @GET
-    @Produces("text/plain")
-    @Consumes("text/plain")
-    @Path("createproduct/")
-    public String getCreateProduct(@QueryParam("idCategory")
-            @DefaultValue("0") long idCategory, @QueryParam("barCode") String barCode, @QueryParam("description") String description) {
-        try {
-            // Call Web Service Operation
-            if (port != null) {
-                boolean result = port.createProduct(idCategory, barCode, description);
-                return new java.lang.Boolean(result).toString();
-            }
-        } catch (Exception ex) {
-            // TODO handle custom exceptions here
-        }
-        return null;
-    }
-
-    /**
-     * Invokes the SOAP method findAllProduct
-     * @return an instance of java.lang.String
-     */
-    @GET
-    @Produces("text/plain")
-    @Consumes("text/plain")
-    @Path("findallproduct/")
-    public String getFindAllProduct() {
-        try {
-            // Call Web Service Operation
-            if (port != null) {
-                java.lang.String result = port.findAllProduct();
-                return result;
-            }
-        } catch (Exception ex) {
-            // TODO handle custom exceptions here
-        }
-        return null;
-    }
-
-    /**
-     * Invokes the SOAP method findAllProductCategory
-     * @return an instance of java.lang.String
-     */
-    @GET
-    @Produces("text/plain")
-    @Consumes("text/plain")
-    @Path("findallproductcategory/")
-    public String getFindAllProductCategory() {
-        try {
-            // Call Web Service Operation
-            if (port != null) {
-                java.lang.String result = port.findAllProductCategory();
-                return result;
-            }
-        } catch (Exception ex) {
-            // TODO handle custom exceptions here
-        }
-        return null;
-    }
-
-    /**
-     * Invokes the SOAP method getProductPriceInShop
+     * Invokes the SOAP method getClientDevicesByFavoriteProducts
      * @param productBarCode resource URI parameter
-     * @param idShop resource URI parameter
      * @return an instance of java.lang.String
      */
     @GET
     @Produces("text/plain")
     @Consumes("text/plain")
-    @Path("getproductpriceinshop/")
-    public String getProductPriceInShop(@QueryParam("productBarCode") String productBarCode, @QueryParam("idShop")
-            @DefaultValue("0") long idShop) {
+    @Path("getclientdevicesbyfavoriteproducts/")
+    public String getClientDevicesByFavoriteProducts(@QueryParam("productBarCode") String productBarCode) {
         try {
             // Call Web Service Operation
             if (port != null) {
-                java.lang.String result = port.getProductPriceInShop(productBarCode, idShop);
-                return result;
-            }
-        } catch (Exception ex) {
-            // TODO handle custom exceptions here
-        }
-        return null;
-    }
-
-    /**
-     * Invokes the SOAP method findAllShopBranch
-     * @return an instance of java.lang.String
-     */
-    @GET
-    @Produces("text/plain")
-    @Consumes("text/plain")
-    @Path("findallshopbranch/")
-    public String getFindAllShopBranch() {
-        try {
-            // Call Web Service Operation
-            if (port != null) {
-                java.lang.String result = port.findAllShopBranch();
+                java.lang.String result = port.getClientDevicesByFavoriteProducts(productBarCode);
                 return result;
             }
         } catch (Exception ex) {
@@ -267,6 +223,56 @@ public class ShopProductAdminWSPort {
     }
 
     /**
+     * Invokes the SOAP method getProductPriceFromShop
+     * @param productBarCode resource URI parameter
+     * @param idShop resource URI parameter
+     * @return an instance of java.lang.String
+     */
+    @GET
+    @Produces("text/plain")
+    @Consumes("text/plain")
+    @Path("getproductpricefromshop/")
+    public String getProductPriceFromShop(@QueryParam("productBarCode") String productBarCode, @QueryParam("idShop")
+            @DefaultValue("0") long idShop) {
+        try {
+            // Call Web Service Operation
+            if (port != null) {
+                java.lang.String result = port.getProductPriceFromShop(productBarCode, idShop);
+                return result;
+            }
+        } catch (Exception ex) {
+            // TODO handle custom exceptions here
+        }
+        return null;
+    }
+
+    /**
+     * Invokes the SOAP method setProductPriceInShop
+     * @param productBarCode resource URI parameter
+     * @param idShop resource URI parameter
+     * @param newPrice resource URI parameter
+     * @return an instance of java.lang.String
+     */
+    @GET
+    @Produces("text/plain")
+    @Consumes("text/plain")
+    @Path("setproductpriceinshop/")
+    public String getSetProductPriceInShop(@QueryParam("productBarCode") String productBarCode, @QueryParam("idShop")
+            @DefaultValue("0") long idShop, @QueryParam("newPrice")
+            @DefaultValue("0.0") double newPrice) {
+        try {
+            // Call Web Service Operation
+            if (port != null) {
+                java.lang.String result = port.setProductPriceInShop(productBarCode, idShop, newPrice);
+                return result;
+            }
+        } catch (Exception ex) {
+            // TODO handle custom exceptions here
+        }
+        return null;
+    }
+
+    /**
      * Invokes the SOAP method getAllProductsInShop
      * @param idShop resource URI parameter
      * @return an instance of java.lang.String
@@ -281,6 +287,48 @@ public class ShopProductAdminWSPort {
             // Call Web Service Operation
             if (port != null) {
                 java.lang.String result = port.getAllProductsInShop(idShop);
+                return result;
+            }
+        } catch (Exception ex) {
+            // TODO handle custom exceptions here
+        }
+        return null;
+    }
+
+    /**
+     * Invokes the SOAP method findAllShopBranch
+     * @return an instance of java.lang.String
+     */
+    @GET
+    @Produces("text/plain")
+    @Consumes("text/plain")
+    @Path("findallshopbranch/")
+    public String getFindAllShopBranch() {
+        try {
+            // Call Web Service Operation
+            if (port != null) {
+                java.lang.String result = port.findAllShopBranch();
+                return result;
+            }
+        } catch (Exception ex) {
+            // TODO handle custom exceptions here
+        }
+        return null;
+    }
+
+    /**
+     * Invokes the SOAP method findAllProductCategory
+     * @return an instance of java.lang.String
+     */
+    @GET
+    @Produces("text/plain")
+    @Consumes("text/plain")
+    @Path("findallproductcategory/")
+    public String getFindAllProductCategory() {
+        try {
+            // Call Web Service Operation
+            if (port != null) {
+                java.lang.String result = port.findAllProductCategory();
                 return result;
             }
         } catch (Exception ex) {

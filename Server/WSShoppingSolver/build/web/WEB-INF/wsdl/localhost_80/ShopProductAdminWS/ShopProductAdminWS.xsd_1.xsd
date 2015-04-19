@@ -40,9 +40,17 @@
 
 <xs:element name="getAllProductsInShopResponse" type="tns:getAllProductsInShopResponse"/>
 
-<xs:element name="getProductPriceInShop" type="tns:getProductPriceInShop"/>
+<xs:element name="getClientDevicesByFavoriteProducts" type="tns:getClientDevicesByFavoriteProducts"/>
 
-<xs:element name="getProductPriceInShopResponse" type="tns:getProductPriceInShopResponse"/>
+<xs:element name="getClientDevicesByFavoriteProductsResponse" type="tns:getClientDevicesByFavoriteProductsResponse"/>
+
+<xs:element name="getProductPriceFromShop" type="tns:getProductPriceFromShop"/>
+
+<xs:element name="getProductPriceFromShopResponse" type="tns:getProductPriceFromShopResponse"/>
+
+<xs:element name="setProductPriceInShop" type="tns:setProductPriceInShop"/>
+
+<xs:element name="setProductPriceInShopResponse" type="tns:setProductPriceInShopResponse"/>
 
 <xs:complexType name="createProductCategory">
 <xs:sequence>
@@ -53,6 +61,42 @@
 <xs:complexType name="createProductCategoryResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getClientDevicesByFavoriteProducts">
+<xs:sequence>
+<xs:element name="productBarCode" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getClientDevicesByFavoriteProductsResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="createProduct">
+<xs:sequence>
+<xs:element name="idCategory" type="xs:long"/>
+<xs:element name="barCode" type="xs:string" minOccurs="0"/>
+<xs:element name="description" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="createProductResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="findAllShopBranch">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="findAllShopBranchResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -82,14 +126,14 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="getProductPriceInShop">
+<xs:complexType name="getProductPriceFromShop">
 <xs:sequence>
 <xs:element name="productBarCode" type="xs:string" minOccurs="0"/>
 <xs:element name="idShop" type="xs:long"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="getProductPriceInShopResponse">
+<xs:complexType name="getProductPriceFromShopResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
@@ -102,20 +146,6 @@
 <xs:complexType name="findAllShopBrandResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="createProduct">
-<xs:sequence>
-<xs:element name="idCategory" type="xs:long"/>
-<xs:element name="barCode" type="xs:string" minOccurs="0"/>
-<xs:element name="description" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="createProductResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:boolean"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -141,11 +171,15 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="findAllShopBranch">
-<xs:sequence/>
+<xs:complexType name="setProductPriceInShop">
+<xs:sequence>
+<xs:element name="productBarCode" type="xs:string" minOccurs="0"/>
+<xs:element name="idShop" type="xs:long"/>
+<xs:element name="newPrice" type="xs:double"/>
+</xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="findAllShopBranchResponse">
+<xs:complexType name="setProductPriceInShopResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>

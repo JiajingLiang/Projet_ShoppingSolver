@@ -10,14 +10,16 @@ import com.polymtl.wsshoppingsolver.dao.ProductDAOLocal;
 import com.polymtl.wsshoppingsolver.dao.ProductPriceInShopDAOLocal;
 import com.polymtl.wsshoppingsolver.dao.ShopBranchDAOLocal;
 import com.polymtl.wsshoppingsolver.dao.ShopBrandDAOLocal;
+import com.polymtl.wsshoppingsolver.model.Client;
 import com.polymtl.wsshoppingsolver.model.Product;
 import com.polymtl.wsshoppingsolver.model.ProductCategory;
 import com.polymtl.wsshoppingsolver.model.ProductPriceInShop;
+import com.polymtl.wsshoppingsolver.model.RegistedDevice;
 import com.polymtl.wsshoppingsolver.model.ShopBranch;
 import com.polymtl.wsshoppingsolver.model.ShopBrand;
 import com.thoughtworks.xstream.XStream;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import javax.ejb.EJB;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -135,7 +137,7 @@ public class ShopProductAdminWS {
         }
     }
     
-    @WebMethod(operationName = "getProductPriceInShop")
+    @WebMethod(operationName = "getProductPriceFromShop")
     public String getProductPriceFromShop(@WebParam(name="productBarCode")String productBarCode, @WebParam(name="idShop")long shopId){
         ProductPriceInShop productPriceInShop = productPriceInShopDao.findByKey(productBarCode, shopId);
         XStream xstream = new XStream();
@@ -147,23 +149,65 @@ public class ShopProductAdminWS {
         return xstream.toXML(productPriceInShop);
     }
     
+    @WebMethod(operationName = "setProductPriceInShop")
+    public String setProductPriceInShop(@WebParam(name="productBarCode")String productBarCode, @WebParam(name="idShop")long shopId, @WebParam(name="newPrice")double newPrice){
+        ProductPriceInShop productPriceInShop = productPriceInShopDao.findByKey(productBarCode, shopId);
+        XStream xstream = new XStream();
+        if(productPriceInShop != null){
+            productPriceInShop.setPrice(newPrice);
+            ProductPriceInShop newProductPrice = productPriceInShopDao.update(productPriceInShop);
+            xstream.processAnnotations(ProductPriceInShop.class);
+            xstream.processAnnotations(Product.class);
+            xstream.processAnnotations(ProductCategory.class);
+            xstream.processAnnotations(ShopBranch.class);
+            xstream.processAnnotations(ShopBrand.class);
+            return xstream.toXML(newProductPrice);
+        }else{
+            return xstream.toXML(null);
+        }
+    }
+    
     @WebMethod(operationName = "getAllProductsInShop")
     public String getAllProductsInShop(@WebParam(name="idShop")long shopId){
         ShopBranch shop = shopBranchDao.findByKey(shopId);
         XStream xstream = new XStream();
         if(shop != null){
             List<ProductPriceInShop> productsInShop = productPriceInShopDao.findByShop(shop);
-            List<Product> products = new Vector<>();
-            if(productsInShop.size()>0){
-                for (ProductPriceInShop productInShop : productsInShop) {
-                    products.add(productInShop.getProduct());
-                }
-            }
+//            List<Product> products = new ArrayList<>();
+//            if(productsInShop.size()>0){
+//                for (ProductPriceInShop productInShop : productsInShop) {
+//                    products.add(productInShop.getProduct());
+//                }
+//            }
             xstream.processAnnotations(Product.class);
             xstream.processAnnotations(ProductCategory.class);
-            return xstream.toXML(products);
+            xstream.processAnnotations(ShopBranch.class);
+            xstream.processAnnotations(ShopBrand.class);
+            xstream.setMode(XStream.NO_REFERENCES);
+            return xstream.toXML(productsInShop);
         }else{
             return xstream.toXML(null);
         }       
+    }
+    
+    @WebMethod(operationName = "getClientDevicesByFavoriteProducts")
+    public String getClientDevicesByFavoriteProducts(@WebParam(name="productBarCode")String productBarCode){
+        Product product = productDao.findByKey(productBarCode);
+        XStream xstream = new XStream();
+        if(product!=null){
+            List<Client> potentialClients = product.getPotentialClients();
+            List<RegistedDevice> relativeDevices = new ArrayList<>();
+            if(!potentialClients.isEmpty()){
+                for (Client potentialClient : potentialClients) {
+                    relativeDevices.addAll(potentialClient.getDevices());
+                }
+                xstream.processAnnotations(RegistedDevice.class);
+                return xstream.toXML(relativeDevices);
+            }else{
+                return xstream.toXML(null);
+            }
+        }else{
+            return xstream.toXML(null);
+        }
     }
 }

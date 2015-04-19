@@ -8,6 +8,10 @@
         <servlet-name>ViewShopAdmin</servlet-name>
         <servlet-class>com.polymtl.wsshoppingsolver.admin_ui.view.ViewShopAdmin</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewBranchProductAdmin</servlet-name>
+        <servlet-class>com.polymtl.wsshoppingsolver.admin_ui.view.ViewBranchProductAdmin</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ControllerServlet</servlet-name>
         <url-pattern>/ControllerServlet</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>ViewShopAdmin</servlet-name>
         <url-pattern>/ViewShopAdmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewBranchProductAdmin</servlet-name>
+        <url-pattern>/ViewBranchProductAdmin</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

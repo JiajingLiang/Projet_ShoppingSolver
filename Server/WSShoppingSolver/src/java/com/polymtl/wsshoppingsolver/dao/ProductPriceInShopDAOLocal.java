@@ -21,6 +21,6 @@ public interface ProductPriceInShopDAOLocal {
     public List<ProductPriceInShop> findByProduct(Product product);
     public List<ProductPriceInShop> findByShop(ShopBranch shop);
     public ProductPriceInShop findByKey(String productBarCode,long shopId);
-    void update(ProductPriceInShop aProductPriceInShop);
+    ProductPriceInShop update(ProductPriceInShop aProductPriceInShop);
     void delete(String productBarCode,long shopId);    
 }

@@ -5,6 +5,8 @@
  */
 package com.polymtl.wsshoppingsolver.model;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,15 +25,19 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "registeddevice")
 @NamedQueries({@NamedQuery(name="RegistedDevice.findByDeviceId",query="SELECT d FROM RegistedDevice d WHERE d.deviceId = :deviceId")})
+@XStreamAlias("RegistedDevice")
 public class RegistedDevice implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
+    @XStreamOmitField
     private Long id;
     @Column(nullable = false,length=200)
+    @XStreamAlias("DeviceId")
     private String deviceId;
     @ManyToOne
+    @XStreamOmitField
     private Client client;
 
     public RegistedDevice() {

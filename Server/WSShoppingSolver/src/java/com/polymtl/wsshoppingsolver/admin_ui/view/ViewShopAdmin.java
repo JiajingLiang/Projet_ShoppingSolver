@@ -59,7 +59,7 @@ public class ViewShopAdmin extends HttpServlet {
             }
             out.println("<tr>");
             out.println("<td colspan=\"2\">");
-            out.println("<form name=\"pageEmploye\" action=\"ControllerServlet?action=AddBrand\" method=\"POST\">");
+            out.println("<form name=\"formAddBrand\" action=\"ControllerServlet?action=AddBrand\" method=\"POST\">");
             out.println("<input type=\"text\" name=\"textBrandName\" value=\"\" />");
             out.println("<input type=\"submit\" value=\"Add A Brand\" name=\"btnAddBrand\" />");
             out.println("</form>");
@@ -69,7 +69,7 @@ public class ViewShopAdmin extends HttpServlet {
             
             out.println("<table border=\"1\" style=\"width:80%\">");
             out.println("<tr>");
-            out.println(" <th colspan=\"6\">Shop Branches</th>");
+            out.println(" <th colspan=\"7\">Shop Branches</th>");
             out.println("</tr>");
             for(int i=0; i<allBranches.size(); i++)
             {
@@ -81,11 +81,15 @@ public class ViewShopAdmin extends HttpServlet {
                 out.println("<td>"+aBranch.getPostCode()+"</td>");
                 out.println("<td>"+aBranch.getCountry()+"</td>");
                 out.println("<td>"+aBranch.getBrand().getBrandName()+"</td>");
+                out.println("<td><form action=\"ControllerServlet?action=ShopBranchProductAdmin\" method=\"POST\">");
+                out.println("<input type=\"hidden\" value=\""+aBranch.getId().toString()+"\" name=\"hiddenBranchId\" />");
+                out.println("<input type=\"submit\" value=\"Shop Products Admin\" name=\"btnShopBranchProductAdmin\" />");
+                out.println("</form></td>");
                 out.println("</tr>");
             }
             out.println("<tr>");
-            out.println("<td colspan=\"6\">");
-            out.println("<form name=\"pageEmploye\" action=\"ControllerServlet?action=AddBranch\" method=\"POST\">");
+            out.println("<td colspan=\"7\">");
+            out.println("<form name=\"formAddBranch\" action=\"ControllerServlet?action=AddBranch\" method=\"POST\">");
             out.println("<input type=\"text\" name=\"textBranchStreet\" value=\"\" />");
             out.println("<input type=\"text\" name=\"textBranchCity\" value=\"\" />");
             out.println("<input type=\"text\" name=\"textBranchPostCode\" value=\"\" />");
