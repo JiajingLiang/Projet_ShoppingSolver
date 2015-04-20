@@ -9,7 +9,7 @@ import com.polymtl.wsshoppingsolver.model.Product;
 import com.polymtl.wsshoppingsolver.model.ProductPriceInShop;
 import com.polymtl.wsshoppingsolver.model.ProductShopAssoId;
 import com.polymtl.wsshoppingsolver.model.ShopBranch;
-import com.polymtl.wsshoppingsolver.util.Constants;
+import com.polymtl.wsshoppingsolver.util.Constant;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -22,7 +22,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class ProductPriceInShopDAO implements ProductPriceInShopDAOLocal {
-    @PersistenceContext(unitName = Constants.persistUnitName)
+    @PersistenceContext(unitName = Constant.persistUnitName)
     private EntityManager em;
 
     @Override

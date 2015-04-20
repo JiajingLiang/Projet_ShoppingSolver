@@ -6,7 +6,7 @@
 package com.polymtl.wsshoppingsolver.dao;
 
 import com.polymtl.wsshoppingsolver.model.Product;
-import com.polymtl.wsshoppingsolver.util.Constants;
+import com.polymtl.wsshoppingsolver.util.Constant;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -19,7 +19,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class ProductDAO implements ProductDAOLocal {
-    @PersistenceContext(unitName = Constants.persistUnitName)
+    @PersistenceContext(unitName = Constant.persistUnitName)
     private EntityManager em;
 
     @Override

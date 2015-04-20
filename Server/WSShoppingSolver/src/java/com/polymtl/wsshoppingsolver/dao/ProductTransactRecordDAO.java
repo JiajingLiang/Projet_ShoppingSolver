@@ -9,7 +9,7 @@ import com.polymtl.wsshoppingsolver.model.Product;
 import com.polymtl.wsshoppingsolver.model.ProductTransactRecord;
 import com.polymtl.wsshoppingsolver.model.ProductTransactRecordId;
 import com.polymtl.wsshoppingsolver.model.Transact;
-import com.polymtl.wsshoppingsolver.util.Constants;
+import com.polymtl.wsshoppingsolver.util.Constant;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -22,7 +22,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class ProductTransactRecordDAO implements ProductTransactRecordDAOLocal {
-    @PersistenceContext(unitName = Constants.persistUnitName)
+    @PersistenceContext(unitName = Constant.persistUnitName)
     private EntityManager em;
     
     @Override

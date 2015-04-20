@@ -8,7 +8,7 @@ package com.polymtl.wsshoppingsolver.dao;
 import com.polymtl.wsshoppingsolver.model.Client;
 import com.polymtl.wsshoppingsolver.model.ShopBranch;
 import com.polymtl.wsshoppingsolver.model.Transact;
-import com.polymtl.wsshoppingsolver.util.Constants;
+import com.polymtl.wsshoppingsolver.util.Constant;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -22,7 +22,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class TransactDAO implements TransactDAOLocal {
-    @PersistenceContext(unitName = Constants.persistUnitName)
+    @PersistenceContext(unitName = Constant.persistUnitName)
     private EntityManager em;
     
     @Override

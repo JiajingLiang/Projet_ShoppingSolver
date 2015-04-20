@@ -88,6 +88,7 @@ public class ControllerServlet extends HttpServlet {
         }
         if("ChangeProductPriceInShop".equals(actionName)){
             action = new ChangeProductPriceInShop();
+            action.setNotificationSender();
         }
         if("AddProductToShop".equals(actionName)){
             action = new AddProductToShop();
