@@ -12,8 +12,8 @@ import com.polymtl.wsshoppingsolver.admin_ui.action.AddProductToShop;
 import com.polymtl.wsshoppingsolver.admin_ui.action.ChangeProductPriceInShop;
 import com.polymtl.wsshoppingsolver.admin_ui.action.ShopAdmin;
 import com.polymtl.wsshoppingsolver.admin_ui.action.ShopBranchProductAdmin;
-import com.polymtl.wsshoppingsolver.webservice_client.ShopProductAdminWS;
-//import shopproduct_admin_webservice.ShopProductAdminWS;
+//import com.polymtl.wsshoppingsolver.webservice_client.ShopProductAdminWS;
+import shopproduct_admin_webservice.ShopProductAdminWS;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -99,9 +99,9 @@ public class ControllerServlet extends HttpServlet {
     private ShopProductAdminWS getPort() {
         try {
             // Call Web Service Operation
-            com.polymtl.wsshoppingsolver.webservice_client.ShopProductAdminWS_Service service = new com.polymtl.wsshoppingsolver.webservice_client.ShopProductAdminWS_Service();
-//            com.polymtl.wsshoppingsolver.webservice_client1.ShopProductAdminWS p = service.getShopProductAdminWSPort();
-//            return p;
+//            com.polymtl.wsshoppingsolver.webservice_client.ShopProductAdminWS_Service service = new com.polymtl.wsshoppingsolver.webservice_client.ShopProductAdminWS_Service();
+            shopproduct_admin_webservice.ShopProductAdminWS_Service service = new shopproduct_admin_webservice.ShopProductAdminWS_Service();
+            
             servicePort = service.getShopProductAdminWSPort();
             return servicePort;
         } catch (Exception ex) {

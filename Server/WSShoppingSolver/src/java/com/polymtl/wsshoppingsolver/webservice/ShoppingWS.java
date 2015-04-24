@@ -111,6 +111,7 @@ public class ShoppingWS {
     @WebMethod(operationName="addDeviceToClient")
     public boolean addDeviceToClient(@WebParam(name = "deviceKey")String deviceKey, @WebParam(name = "clientId")long clientId){
         Client client = clientDao.findByKey(clientId);
+        System.out.print(client.toString());
         if(client != null){
             List<RegistedDevice> devices = registedDeviceDao.findByDeviceId(deviceKey);
             if(devices.isEmpty()){
@@ -228,6 +229,9 @@ public class ShoppingWS {
                 productTransactRecordDao.create(aRecord);
                 productTransactRecords.add(aRecord);
             }
+            //update count balance
+            client.setBalance(client.getBalance()-total);
+            clientDao.update(client);
             xstream.processAnnotations(Transact.class);
             xstream.processAnnotations(ShopBranch.class);
             xstream.processAnnotations(ProductTransactRecord.class);

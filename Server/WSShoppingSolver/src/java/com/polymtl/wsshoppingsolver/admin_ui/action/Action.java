@@ -7,8 +7,8 @@ package com.polymtl.wsshoppingsolver.admin_ui.action;
 
 import com.google.android.gcm.server.Sender;
 import com.polymtl.wsshoppingsolver.util.Constant;
-import com.polymtl.wsshoppingsolver.webservice_client.ShopProductAdminWS;
-//import shopproduct_admin_webservice.ShopProductAdminWS;
+//import com.polymtl.wsshoppingsolver.webservice_client.ShopProductAdminWS;
+import shopproduct_admin_webservice.ShopProductAdminWS;
 import java.io.IOException;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;

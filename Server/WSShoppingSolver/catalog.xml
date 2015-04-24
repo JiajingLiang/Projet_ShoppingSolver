@@ -8,4 +8,8 @@
     <system systemId="http://jjliang-1005.jelastic.servint.net:80/ShopProductAdminWS/ShopProductAdminWS?xsd=1" uri="src/conf/xml-resources/web-service-references/ShopProductAdminWS/wsdl/jjliang-1005.jelastic.servint.net_80/ShopProductAdminWS/ShopProductAdminWS.xsd_1.xsd"/>
     <system systemId="http://localhost:80/ShopProductAdminWS/ShopProductAdminWS?wsdl" uri="src/conf/xml-resources/web-service-references/ShopProductAdminWS/wsdl/localhost_80/ShopProductAdminWS/ShopProductAdminWS.wsdl"/>
     <system systemId="http://localhost:80/ShopProductAdminWS/ShopProductAdminWS?xsd=1" uri="src/conf/xml-resources/web-service-references/ShopProductAdminWS/wsdl/localhost_80/ShopProductAdminWS/ShopProductAdminWS.xsd_1.xsd"/>
+    <system systemId="http://jjliang1005.whelastic.net/ShoppingWS/ShoppingWS?WSDL" uri="src/conf/xml-resources/web-service-references/ShoppingWS/wsdl/jjliang1005.whelastic.net/ShoppingWS/ShoppingWS.wsdl"/>
+    <system systemId="http://jjliang1005.whelastic.net:80/ShoppingWS/ShoppingWS?xsd=1" uri="src/conf/xml-resources/web-service-references/ShoppingWS/wsdl/jjliang1005.whelastic.net_80/ShoppingWS/ShoppingWS.xsd_1.xsd"/>
+    <system systemId="http://jjliang1005.whelastic.net/ShopProductAdminWS/ShopProductAdminWS?WSDL" uri="src/conf/xml-resources/web-service-references/ShopProductAdminWS_1/wsdl/jjliang1005.whelastic.net/ShopProductAdminWS/ShopProductAdminWS.wsdl"/>
+    <system systemId="http://jjliang1005.whelastic.net:80/ShopProductAdminWS/ShopProductAdminWS?xsd=1" uri="src/conf/xml-resources/web-service-references/ShopProductAdminWS_1/wsdl/jjliang1005.whelastic.net_80/ShopProductAdminWS/ShopProductAdminWS.xsd_1.xsd"/>
 </catalog>

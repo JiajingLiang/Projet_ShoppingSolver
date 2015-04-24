@@ -8,4 +8,6 @@
     <system systemId="http://localhost:80/ShopProductAdminWS/ShopProductAdminWS?xsd=2" uri="wsdl/localhost_80/ShopProductAdminWS/ShopProductAdminWS.xsd_2.xsd"/>
     <system systemId="http://jjliang-1005.jelastic.servint.net/ShopProductAdminWS/ShopProductAdminWS?wsdl" uri="wsdl/jjliang-1005.jelastic.servint.net/ShopProductAdminWS/ShopProductAdminWS.wsdl"/>
     <system systemId="http://jjliang-1005.jelastic.servint.net:80/ShopProductAdminWS/ShopProductAdminWS?xsd=1" uri="wsdl/jjliang-1005.jelastic.servint.net_80/ShopProductAdminWS/ShopProductAdminWS.xsd_1.xsd"/>
+    <system systemId="http://jjliang1005.whelastic.net/ShoppingWS/ShoppingWS?WSDL" uri="wsdl/jjliang1005.whelastic.net/ShoppingWS/ShoppingWS.wsdl"/>
+    <system systemId="http://jjliang1005.whelastic.net:80/ShoppingWS/ShoppingWS?xsd=1" uri="wsdl/jjliang1005.whelastic.net_80/ShoppingWS/ShoppingWS.xsd_1.xsd"/>
 </catalog>
