@@ -47,11 +47,11 @@ public class ViewBranchProductAdmin extends HttpServlet {
             out.println("<title>Servlet ViewBranchProductAdmin</title>");            
             out.println("</head>");
             out.println("<body>");
-            if(devicesToNotificate!=null){
-                for (RegistedDevice deviceToNotificate : devicesToNotificate) {
-                    out.println("<h1>"+deviceToNotificate.getDeviceId()+"</h1>");
-                }
-            }
+//            if(devicesToNotificate!=null){
+//                for (RegistedDevice deviceToNotificate : devicesToNotificate) {
+//                    out.println("<h1>"+deviceToNotificate.getDeviceId()+"</h1>");
+//                }
+//            }
             out.println("<table border=\"1\" style=\"width:50%\">");
             out.println("<tr>");
             if(allProductsInShop.size()>0){

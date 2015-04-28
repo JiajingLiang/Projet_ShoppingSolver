@@ -5,11 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
-import com.polymtl.shoppingsolver.model.ShoppingRecord;
+import com.polymtl.shoppingsolver.model.HabitRecord;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 /**
  * Created by Zoe on 15-04-06.
@@ -32,20 +33,27 @@ public class HabitDataSource {
         dbHelper.close();
     }
 
-    public List<ShoppingRecord> getNecessaryRecords() {
+    public ArrayList<HabitRecord> getNecessaryRecords(long clientId) {
 
-        List<ShoppingRecord> result = new ArrayList<>();
+        ArrayList<HabitRecord> result = new ArrayList<>();
 
-        Cursor cursor = database.rawQuery("SELECT * FROM " + DBHelper.TABLE_CONSUMPTION_HABIT +
+        Cursor cursor = database.rawQuery("SELECT * FROM " + DBHelper.TABLE_CONSUMPTION_HABIT
+                + " WHERE " + DBHelper.KEY_CLIENTID + " = " + clientId +
                 " ORDER BY quantity DESC LIMIT 10", null);
+        Log.i("SQLQuerry","SELECT * FROM " + DBHelper.TABLE_CONSUMPTION_HABIT
+                + " WHERE " + DBHelper.KEY_CLIENTID + " = " + clientId +
+                " ORDER BY quantity DESC LIMIT 10");
 
-        cursor.moveToFirst();
+
         while (cursor.moveToNext()) {
-            ShoppingRecord shoppingRecord = new ShoppingRecord();
-            shoppingRecord.setProductBarCode(cursor.getString(cursor.getColumnIndex(DBHelper.KEY_PRIMARY_CODE)));
-            shoppingRecord.setQuantity(cursor.getFloat(cursor.getColumnIndex(DBHelper.KEY_QUANTITY)));
+            HabitRecord record = new HabitRecord();
+            record.setProductBarCode(cursor.getString(cursor.getColumnIndex(DBHelper.KEY_PRIMARY_CODE)));
+            Log.i("get record", cursor.getString(cursor.getColumnIndex(DBHelper.KEY_PRIMARY_CODE)));
+            record.setQuantity(cursor.getFloat(cursor.getColumnIndex(DBHelper.KEY_QUANTITY)));
+            record.setDescription(cursor.getString(cursor.getColumnIndex(DBHelper.KEY_DESCRIPTION)));
+            result.add(record);
 
-            result.add(shoppingRecord);
+            Log.i("getRecords", record.getDescription());
         }
 
         // make sure to close the cursor
@@ -54,18 +62,20 @@ public class HabitDataSource {
         return result;
     }
 
-    public ArrayList<String> getNecessaryProductsCode() {
+    public ArrayList<String> getNecessaryProductsCode(long clientId) {
 
         ArrayList<String> result = new ArrayList<>();
 
-        Cursor cursor = database.rawQuery("SELECT * FROM " + DBHelper.TABLE_CONSUMPTION_HABIT +
+        Cursor cursor = database.rawQuery("SELECT * FROM " + DBHelper.TABLE_CONSUMPTION_HABIT
+                + " WHERE " + DBHelper.KEY_CLIENTID + " = " + clientId +
                 " ORDER BY quantity DESC LIMIT 10", null);
 
-        cursor.moveToFirst();
+        Log.i("count", "" + cursor.getCount());
+
         while (cursor.moveToNext()) {
             String barCode = cursor.getString(cursor.getColumnIndex(DBHelper.KEY_PRIMARY_CODE));
 
-
+            Log.i("getNecessary", barCode);
             result.add(barCode);
         }
 
@@ -75,36 +85,75 @@ public class HabitDataSource {
         return result;
     }
 
-    public boolean isExist(ShoppingRecord record) {
+    public boolean isExist(HabitRecord record) {
 
-        boolean isExist = false;
 
         Cursor cursor = database.rawQuery("SELECT * FROM " + DBHelper.TABLE_CONSUMPTION_HABIT +
-                " WHERE " + DBHelper.KEY_PRIMARY_CODE + " = " + record.getQuantity(), null);
+                " WHERE " + DBHelper.KEY_PRIMARY_CODE + " = " + record.getProductBarCode() + " AND "
+                + DBHelper.KEY_CLIENTID + " = " + record.getClientId(), null);
 
-        isExist = cursor.moveToFirst();
+        boolean isExist = cursor.moveToFirst();
         cursor.close();
         return isExist;
     }
-    public void updateRecord(ShoppingRecord record) {
+    public void updateRecord(HabitRecord record) {
 
+        Log.i("updat1", record.getProductBarCode());
+        // A Cursor object, which is positioned before the first entry
         Cursor cursor = database.rawQuery("SELECT * FROM " + DBHelper.TABLE_CONSUMPTION_HABIT +
-                " WHERE " + DBHelper.KEY_PRIMARY_CODE + " = " + record.getQuantity(), null);
+                " WHERE " + DBHelper.KEY_PRIMARY_CODE + " = " + record.getProductBarCode() + " AND "
+                + DBHelper.KEY_CLIENTID + " = " + record.getClientId(), null);
+
+        cursor.moveToFirst();
+
         float QUANTITY = cursor.getFloat(cursor.getColumnIndex(DBHelper.KEY_QUANTITY)) + record.getQuantity();
-        String sql = "UPDATE " + DBHelper.TABLE_CONSUMPTION_HABIT + " SET " + DBHelper.KEY_QUANTITY
-                + " = " + QUANTITY + " WHERE " + DBHelper.KEY_PRIMARY_CODE + " = " + record.getQuantity();
-        database.execSQL(sql);
+
+        ContentValues values = new ContentValues();
+
+        Log.i("update", record.getProductBarCode());
+
+        values.put(DBHelper.KEY_PRIMARY_CODE, record.getProductBarCode());
+        values.put(DBHelper.KEY_QUANTITY, QUANTITY);
+        values.put(DBHelper.KEY_DESCRIPTION, record.getDescription());
+
+        database.update(DBHelper.TABLE_CONSUMPTION_HABIT, values, DBHelper.KEY_PRIMARY_CODE + " = ?",
+                new String[] {record.getProductBarCode()});
+
         cursor.close();
     }
 
-    public long insertRecord(ShoppingRecord record) {
+    public void insertRecord(HabitRecord record) {
 
         ContentValues values = new ContentValues();
         values.put(DBHelper.KEY_PRIMARY_CODE, record.getProductBarCode());
         values.put(DBHelper.KEY_QUANTITY, record.getQuantity());
+        values.put(DBHelper.KEY_DESCRIPTION, record.getDescription());
+        values.put(DBHelper.KEY_CLIENTID, record.getClientId());
 
-        long id = database.insert(DBHelper.TABLE_CONSUMPTION_HABIT, null, values);
+        Log.i("insert barCode", record.getProductBarCode());
+        database.insert(DBHelper.TABLE_CONSUMPTION_HABIT, null, values);
 
-        return id;
+    }
+
+    public void addRecord(HabitRecord record) {
+
+        getAllRecords(); //test
+       Log.i("addRecord", record.getProductBarCode());
+       if (isExist(record)) {
+           updateRecord(record);
+       } else {
+           insertRecord(record);
+       }
+
+    }
+
+    public void getAllRecords() {
+
+        Cursor cursor = database.rawQuery("SELECT * FROM " + DBHelper.TABLE_CONSUMPTION_HABIT , null);
+
+        while (cursor.moveToNext()) {
+            Log.i("DB product code:", cursor.getString(cursor.getColumnIndex(DBHelper.KEY_PRIMARY_CODE)));
+            Log.i("DB clientId:", cursor.getString(cursor.getColumnIndex(DBHelper.KEY_CLIENTID)));
+        }
     }
 }

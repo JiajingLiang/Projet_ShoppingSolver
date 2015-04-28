@@ -33,6 +33,7 @@
             android:background="@drawable/buybutton"
             android:gravity="left"
             android:layout_alignParentLeft="true"/>
+
         <ImageButton
             android:id="@+id/buttonScan"
             android:layout_width="wrap_content"
@@ -45,59 +46,4 @@
 
     </RelativeLayout>
 
-    <!--<TextView
-        android:id="@+id/tvTotal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="90dp"
-        android:text="@string/textview_total"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/tvTotalVal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/tvTotal"
-        android:layout_alignBottom="@+id/tvTotal"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/tvTotal"
-        android:text=""
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-     <TextView
-         android:id="@+id/tvProducts"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignParentLeft="true"
-         android:layout_alignParentTop="true"
-         android:layout_marginLeft="30dp"
-         android:layout_marginTop="130dp"
-         android:text="@string/textview_products"
-         android:textAppearance="?android:attr/textAppearanceMedium" />
-
-     <TextView
-         android:id="@+id/tvProductsVal"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignBaseline="@+id/tvProducts"
-         android:layout_alignBottom="@+id/tvProducts"
-         android:layout_marginLeft="10dp"
-         android:layout_toRightOf="@+id/tvProducts"
-         android:text=""
-         android:textAppearance="?android:attr/textAppearanceMedium" />-->
-
-    <!-- <TextView
-        android:id="@+id/tvProductsVal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonScan"
-        android:lines="2"
-        android:gravity="center_horizontal"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:text=""/>-->
-	
 </LinearLayout>

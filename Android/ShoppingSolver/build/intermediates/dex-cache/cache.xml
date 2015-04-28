@@ -2,193 +2,193 @@
 <items version="2" >
 
     <item
-        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.0.0/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
-        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/classes-729ccb86365d161f687ac22f83ac5c72ecf2b171.jar" />
-    </item>
-    <item
-        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.0.0/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="4c93d99d454c975536bbe3b42283eee847f03ea3">
-        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/classes-233fbff9ca3c4e51102254d99260ecc4972a2e09.jar" />
-    </item>
-    <item
-        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/7.0.0/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="c976518693e89ad44fbfccfc654941eaec198d08">
-        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/classes-a70f6abecf8f8b81f720b5bf9b1105190ef01143.jar" />
-    </item>
-    <item
-        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/7.0.0/classes.jar"
+        jar="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-identity\7.0.0\classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="fb04b12526b0073c7fb1ebb70c5842d82ee95596">
-        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/classes-be70291ab23967b263ec9a10851a795b7350a84c.jar" />
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\classes-8a8092d556eb191b63216e58b24315c2a531c5e7.jar" />
     </item>
     <item
-        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/libs/ksoap2-android-assembly-3.4.0-jar-with-dependencies.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="45fbaab416fb5cff992e662d1f7a83786f084fc3">
-        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/ksoap2-android-assembly-3.4.0-jar-with-dependencies-f8a772b104a09b7ed059517c720264606dda0bc7.jar" />
-    </item>
-    <item
-        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/7.0.0/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="3033cc3a2c68dff3e5b646d6d084bdbdf7d00b25">
-        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/classes-bfedba8037c6e7d7fd3a78f1662ddda8301208e6.jar" />
-    </item>
-    <item
-        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/7.0.0/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="41b3870cbe5fa546d8095b5b89d42cb69f3dd175">
-        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/classes-18f84f3714932c5513e095779a4365e52e071294.jar" />
-    </item>
-    <item
-        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/libs/json-simple-1.1.1.jar"
+        jar="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\libs\json-simple-1.1.1.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="5d6f9b6a9ddca2a28c0216cc44efb2e20d9c23b5">
-        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/json-simple-1.1.1-f742b8b8a39eda573d85dfa3fdc5715179528a69.jar" />
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\json-simple-1.1.1-0c06cca9973e6622e78912cde4e06111a5a65f7b.jar" />
     </item>
     <item
-        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/7.0.0/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="29fd6d3794b71491c2789708cd8d03c71feb8954">
-        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/classes-70728a24d858c0de03b04212f42c15bc48cb542b.jar" />
-    </item>
-    <item
-        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.0.0/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="a96b762bde4139de855735f175ec4d17dca55a6d">
-        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/classes-c919d4a5596bccf2b7e137043e04beeefe95e92c.jar" />
-    </item>
-    <item
-        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appstate/7.0.0/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="7ff613bf78ab057293892fdbd4169eda899c89b9">
-        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/classes-36a4530aeab274eed2f7c77a3ad5e2e05359b3cf.jar" />
-    </item>
-    <item
-        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.0.0/libs/internal_impl-22.0.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
-        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/internal_impl-22.0.0-9fbe05f5919b8bac931a8fff4d0530781c3238fa.jar" />
-    </item>
-    <item
-        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/7.0.0/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="73ccb92b70112f2e463e415ef8d7275de7da6516">
-        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/classes-b0f1d12e198f72b5252e0a49c7e4e4fbdc4fe235.jar" />
-    </item>
-    <item
-        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/libs/xstream-1.4.7.jar"
+        jar="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\libs\xstream-1.4.7.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="bce3282142b63068260f021fcbe48b72e8d71a1a">
-        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/xstream-1.4.7-cfe9effd03fa159294d25950871d3b956ca94059.jar" />
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\xstream-1.4.7-1db8bfcfefabd0b84f7273ff02de70aee2fa2dee.jar" />
     </item>
     <item
-        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.0.0/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="e3d791b42eaa90416cd0b2d2e608092794a3baa4">
-        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/classes-8cfd14b00660fa26179210be2b2b60308a3216b9.jar" />
-    </item>
-    <item
-        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/7.0.0/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="4cd0b093824b3228fffc21ea369b98d0b1db6566">
-        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/classes-70471a4c20e0c768b7c0c8f15b0543f7659e5a47.jar" />
-    </item>
-    <item
-        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/7.0.0/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="0e8228b4bc69c6a2c8d7c18498a77e53417d2574">
-        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/classes-4ebbbc1cf0429ceda61d0d05fef47655b0a7053a.jar" />
-    </item>
-    <item
-        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/7.0.0/classes.jar"
+        jar="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-panorama\7.0.0\classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="1c5a76debf0c2857ccad422c4a80ed785982f8df">
-        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/classes-44db7db378a97a5492cee48dc83c92c6dfe954bb.jar" />
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\classes-6d0ebae300ccf93f0381c3342414d5a0c2c0b318.jar" />
     </item>
     <item
-        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/7.0.0/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="a08d65794b844d8e7540bf9a33859bf3b2482d7f">
-        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/classes-2fae68dbdcbacb7b346130f34bbe87bb0074ec49.jar" />
-    </item>
-    <item
-        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
-        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/classes-7b6849cfe180a884413af5cdd969f25241b1e008.jar" />
-    </item>
-    <item
-        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/libs/zxing.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="e88c14e6e7daa0fa65172a62b54ee6a16ff4162d">
-        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/zxing-588893b2a420afd6a61841d83f882fd7a0779bc4.jar" />
-    </item>
-    <item
-        jar="/Users/Zoe/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.0.0/support-annotations-22.0.0.jar"
+        jar="E:\android-sdk-windows\extras\android\m2repository\com\android\support\support-annotations\22.0.0\support-annotations-22.0.0.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
-        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/support-annotations-22.0.0-6005cf7fc7721a7c174f8df0f3b4634cb9831479.jar" />
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\support-annotations-22.0.0-e1faa0797cfc8cc4d9ed3de0f7d93228d5b48a2c.jar" />
     </item>
     <item
-        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/7.0.0/classes.jar"
+        jar="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="3c0b099f9de16b265ecd6122fcb603e7d0d29f90">
-        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/classes-5354df0c6bd010c2f16d6b4933fbdef0f1cd1894.jar" />
+        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\classes-49618e67e26c50c3439ff4c51e0a5f0c62b97996.jar" />
     </item>
     <item
-        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/7.0.0/classes.jar"
+        jar="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-plus\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="0e8228b4bc69c6a2c8d7c18498a77e53417d2574">
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\classes-eaea30d7852d535cfde227d9e0b8670bbdcc3d54.jar" />
+    </item>
+    <item
+        jar="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-nearby\7.0.0\classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="ef5f051e7308febe289dc93c67c5f32785b4260a">
-        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/classes-a5c4827f9a286393f717ecf7efd36f7b454300b9.jar" />
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\classes-e80e266800ab2a814f7d48e18d14394c128d07da.jar" />
     </item>
     <item
-        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/7.0.0/classes.jar"
+        jar="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wearable\7.0.0\classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="9224bc4c54ba95147c7eabd874573763c07cb6be">
-        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/classes-ce0dc08708a3acbc6523ea4d3e35365440471bb3.jar" />
+        sha1="3033cc3a2c68dff3e5b646d6d084bdbdf7d00b25">
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\classes-cd2602046c77dbd3a917bfb86e1886208bc935d4.jar" />
     </item>
     <item
-        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.0.0/classes.jar"
+        jar="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\libs\internal_impl-22.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\internal_impl-22.0.0-b559764434870a616e8558d2e59211ef86a66f36.jar" />
+    </item>
+    <item
+        jar="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-analytics\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="29fd6d3794b71491c2789708cd8d03c71feb8954">
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\classes-73b782cfde5c7ef8055ace0ea83a044b464dec3f.jar" />
+    </item>
+    <item
+        jar="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-cast\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4cd0b093824b3228fffc21ea369b98d0b1db6566">
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\classes-c3050a6b6b905a9fad909480449266c78a4a5070.jar" />
+    </item>
+    <item
+        jar="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\libs\zxing.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="e88c14e6e7daa0fa65172a62b54ee6a16ff4162d">
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\zxing-d13dd4207e06489b9c200d24c61520c414041464.jar" />
+    </item>
+    <item
+        jar="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-ads\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="e3d791b42eaa90416cd0b2d2e608092794a3baa4">
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\classes-6cca43ac6af8e11bdebd04921ab89495ec125407.jar" />
+    </item>
+    <item
+        jar="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-fitness\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="3c0b099f9de16b265ecd6122fcb603e7d0d29f90">
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\classes-b7731c504135f1c7b202cba17aa965714f9deb3e.jar" />
+    </item>
+    <item
+        jar="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-location\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="73ccb92b70112f2e463e415ef8d7275de7da6516">
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\classes-8d25f09edaa98ff788acf42208e79713d3499021.jar" />
+    </item>
+    <item
+        jar="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appindexing\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="a08d65794b844d8e7540bf9a33859bf3b2482d7f">
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\classes-f05e58a0b47f007e5c8de824e8923e44d5c9bf6f.jar" />
+    </item>
+    <item
+        jar="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\classes-6e57ca353d2f25b91549121f75e3feba0c70ff7e.jar" />
+    </item>
+    <item
+        jar="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-maps\7.0.0\classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="17f8750d5c0749e44dd7c54aa390d9c937803825">
-        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/classes-1592b36e04ff782b6391aeb862de5b414cb04681.jar" />
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\classes-0a7a83b63fa872da28633b9f565a6b858c41f4cd.jar" />
     </item>
     <item
-        jar="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/7.0.0/classes.jar"
+        jar="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wallet\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="a96b762bde4139de855735f175ec4d17dca55a6d">
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\classes-30ccf5c2785afbbefcd4f2ef98b6a3319ffde835.jar" />
+    </item>
+    <item
+        jar="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-drive\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="41b3870cbe5fa546d8095b5b89d42cb69f3dd175">
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\classes-b75ee6cdeff4eca12209e74f5fda6d25ba883700.jar" />
+    </item>
+    <item
+        jar="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-gcm\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="9224bc4c54ba95147c7eabd874573763c07cb6be">
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\classes-700ef0379527f820be5f4787497428f3b5574c53.jar" />
+    </item>
+    <item
+        jar="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-games\7.0.0\classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="055783146ba9654a725442563be78cad303aad1f">
-        <dex dex="/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/pre-dexed/debug/classes-7d00455ae0568e201df30379973123bc344c9969.jar" />
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\classes-24d553a08c901b17b2b03e1cbf442e27996ba112.jar" />
+    </item>
+    <item
+        jar="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\libs\ksoap2-android-assembly-3.4.0-jar-with-dependencies.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="45fbaab416fb5cff992e662d1f7a83786f084fc3">
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\ksoap2-android-assembly-3.4.0-jar-with-dependencies-3ac9aee6a1d05ec34701469acb2bc0883d883f35.jar" />
+    </item>
+    <item
+        jar="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appstate\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="7ff613bf78ab057293892fdbd4169eda899c89b9">
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\classes-5614a2c9a173708d60c411fd5cd740a28527e632.jar" />
+    </item>
+    <item
+        jar="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4c93d99d454c975536bbe3b42283eee847f03ea3">
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\classes-0c3305b65bcc81953732a5ed81869b41a07a3ef7.jar" />
+    </item>
+    <item
+        jar="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-safetynet\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="c976518693e89ad44fbfccfc654941eaec198d08">
+        <dex dex="E:\EPM\2015Hiver\INF8405 - Informatique Mobile\Projet_ShoppingSolver\Android\ShoppingSolver\app\build\intermediates\pre-dexed\debug\classes-823292fe06f5bbc464250efbaa8153dc46b0439f.jar" />
     </item>
 
 </items>

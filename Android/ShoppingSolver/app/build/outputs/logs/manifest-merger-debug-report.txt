@@ -425,7 +425,7 @@ MERGED from com.android.support:support-v4:22.0.0:22:5
 		ADDED from AndroidManifest.xml:55:9
 	android:name
 		ADDED from AndroidManifest.xml:51:9
-activity#com.polymtl.shoppingsolver.LoginActivity
+activity#com.polymtl.shoppingsolver.ui.LoginActivity
 ADDED from AndroidManifest.xml:56:9
 	android:label
 		ADDED from AndroidManifest.xml:58:13
@@ -441,13 +441,13 @@ category#android.intent.category.LAUNCHER
 ADDED from AndroidManifest.xml:63:17
 	android:name
 		ADDED from AndroidManifest.xml:63:27
-activity#com.polymtl.shoppingsolver.MainActivity
+activity#com.polymtl.shoppingsolver.ui.MainActivity
 ADDED from AndroidManifest.xml:66:9
 	android:label
 		ADDED from AndroidManifest.xml:68:13
 	android:name
 		ADDED from AndroidManifest.xml:67:13
-activity#com.polymtl.shoppingsolver.NewCountActivity
+activity#com.polymtl.shoppingsolver.ui.NewCountActivity
 ADDED from AndroidManifest.xml:71:9
 	android:label
 		ADDED from AndroidManifest.xml:73:13
@@ -535,7 +535,7 @@ ADDED from AndroidManifest.xml:91:9
 		ADDED from AndroidManifest.xml:93:13
 	android:name
 		ADDED from AndroidManifest.xml:92:13
-activity#com.polymtl.shoppingsolver.MapsShopsActivity
+activity#com.polymtl.shoppingsolver.ui.MapsShopsActivity
 ADDED from AndroidManifest.xml:95:9
 	android:label
 		ADDED from AndroidManifest.xml:97:13
@@ -547,13 +547,27 @@ ADDED from AndroidManifest.xml:99:9
 		ADDED from AndroidManifest.xml:101:13
 	android:name
 		ADDED from AndroidManifest.xml:100:13
-intent-filter#com.example.gcm+com.google.android.c2dm.intent.RECEIVE
+intent-filter#com.example.gcm+com.google.android.c2dm.intent.RECEIVE+com.google.android.c2dm.intent.REGISTRATION
 ADDED from AndroidManifest.xml:102:13
 action#com.google.android.c2dm.intent.RECEIVE
 ADDED from AndroidManifest.xml:103:17
 	android:name
 		ADDED from AndroidManifest.xml:103:25
-category#com.example.gcm
+action#com.google.android.c2dm.intent.REGISTRATION
 ADDED from AndroidManifest.xml:104:17
 	android:name
-		ADDED from AndroidManifest.xml:104:27
+		ADDED from AndroidManifest.xml:104:25
+category#com.example.gcm
+ADDED from AndroidManifest.xml:105:17
+	android:name
+		ADDED from AndroidManifest.xml:105:27
+receiver#com.polymtl.shoppingsolver.util.ConnectionChangeReceiver
+ADDED from AndroidManifest.xml:108:9
+	android:name
+		ADDED from AndroidManifest.xml:109:13
+intent-filter#android.net.conn.CONNECTIVITY_CHANGE
+ADDED from AndroidManifest.xml:110:13
+action#android.net.conn.CONNECTIVITY_CHANGE
+ADDED from AndroidManifest.xml:111:17
+	android:name
+		ADDED from AndroidManifest.xml:111:25

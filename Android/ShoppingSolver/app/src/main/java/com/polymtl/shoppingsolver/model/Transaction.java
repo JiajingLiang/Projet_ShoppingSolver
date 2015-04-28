@@ -7,20 +7,28 @@ import java.util.ArrayList;
  */
 public class Transaction {
 
-    private String store; // name of store
+    private long id;
+    private String storeName; // name of store
     private String address; // address of store
     private short cashDesk; //cash dest number
     private String time; //transaction time including date and hour
-    private long transactionCode; // transaction code
-    private float totalPrice;
+    private double totalPrice;
     private float taxTPS;
     private float taxTVQ;
-    private float totalPriceWithTax;
+    private double totalPriceWithTax;
     private ArrayList<ShoppingRecord> shoppingList;
     private short amountProducts;
 
+    public Transaction() {}
     public Transaction(ArrayList<ShoppingRecord> shoppingList) {
         this.shoppingList = shoppingList;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+    public long getId(){
+        return this.id;
     }
 
     public void setShoppingList(ArrayList<ShoppingRecord> list) {
@@ -31,12 +39,21 @@ public class Transaction {
 
     }
 
+    public String getStrShoppingLis() {
+        String result = "";
+        for (ShoppingRecord record: this.shoppingList) {
+            result += record.toString() + "\n";
+        }
+        return result;
+    }
+
     public void setAmountProducts(short amount) {
         this.amountProducts = amount;
     }
     public short getAmountProducts() {
         return this.amountProducts;
     }
+
     public short calculateAmountProducts() {
 
         for (ShoppingRecord item : this.shoppingList ) {
@@ -65,6 +82,7 @@ public class Transaction {
     public float getTaxTVQ() {
         return this.taxTVQ;
     }
+
     public float calculateTVQ() {
 
         for (ShoppingRecord item : this.shoppingList ) {
@@ -73,12 +91,12 @@ public class Transaction {
         return this.taxTVQ;
     }
 
-    public void setStore(String store) {
-        this.store = store;
+    public void setStoreName(String store) {
+        this.storeName = store;
     }
 
-    public String getStore() {
-        return this.store;
+    public String getStoreName() {
+        return this.storeName;
     }
 
     public void setAddress(String address) {
@@ -105,31 +123,29 @@ public class Transaction {
         return this.time;
     }
 
-    public void setTransactionCode(long num) {
-        this.transactionCode = num;
-    }
-
-    public long getTransactionCode() {
-        return this.transactionCode;
-    }
-
-    public void setTotalPrice(float totalPrice) {
+    public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
 
-    public float getTotalPrice() {
+    public double getTotalPrice() {
         return this.totalPrice;
     }
 
-    public void setTotalPriceWithTax(float priceWithTax) {
+    public void setTotalPriceWithTax(double priceWithTax) {
         this.totalPriceWithTax  = priceWithTax;
     }
-    public float getTotalPriceWithTax() {
+    public double getTotalPriceWithTax() {
         return this.totalPriceWithTax;
     }
 
-    public float calculateTotalPriceWithTax() {
+    public double calculateTotalPriceWithTax() {
         this.totalPriceWithTax = this.totalPrice + getTaxTPS() + getTaxTVQ();
         return this.totalPriceWithTax;
+    }
+
+    @Override
+    public String toString() {
+        return "TransactionID: " + id + "\nTime:" + time + "\nShopping list: \n"
+                + getStrShoppingLis() + "Total:" + totalPriceWithTax + "\n";
     }
 }

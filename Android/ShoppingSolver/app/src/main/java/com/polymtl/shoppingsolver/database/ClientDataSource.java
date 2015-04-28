@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.polymtl.shoppingsolver.model.Client;
 
-import java.util.concurrent.ConcurrentLinkedDeque;
 
 /**
  * Created by Zoe on 15-04-08.

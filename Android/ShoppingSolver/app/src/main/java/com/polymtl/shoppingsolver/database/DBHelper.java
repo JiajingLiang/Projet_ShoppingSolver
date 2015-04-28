@@ -19,46 +19,17 @@ public class DBHelper extends SQLiteOpenHelper {
     // consumption habit table
     public static final String TABLE_CONSUMPTION_HABIT = "consumptionHabit";
 
-    public static final String KEY_ID = "_id"; // comment column
-    // TABLE_CONSUMPTION_HABIT column names
-    public static final String KEY_PRIMARY_CODE = "_primary_code";
-    public static final String KEY_QUANTITY = "quantity";
 
+    // TABLE_CONSUMPTION_HABIT column names
+    public static final String KEY_PRIMARY_CODE = "primary_code";
+    public static final String KEY_QUANTITY = "quantity";
+    public static final String KEY_DESCRIPTION = "description";
+    public static final String KEY_CLIENTID = "clientId";
 
     private static final String CREATE_TABLE_CONSUMPTION_HABIT = "CREATE TABLE " + TABLE_CONSUMPTION_HABIT
-            + " (" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_PRIMARY_CODE
-            + " STRING," + KEY_QUANTITY + " FLOAT" + ")";
+            + " (" + KEY_PRIMARY_CODE + " VARCHAR(20) PRIMARY KEY,"
+            + KEY_QUANTITY + " FLOAT," + KEY_DESCRIPTION + " STRING," + KEY_CLIENTID + " LONG" + ")";
 
-
-    // transactions table
-   /* public static final String TABLE_TRANSACTION = "transactions";
-    public static final String KEY_TRANSACTION_CODE = "transactionCode";
-    public static final String KEY_SHOPE_ID = "idShop";
-    public static final String KEY_STORE_NAME = "storeName";
-    public static final String KEY_STORE_ADDRESS = "storeAddress";
-    public static final String KEY_CASHDEST_ID = "cashDestID";
-    public static final String KEY_TIME = "time";
-    public static final String KEY_TOTALPRICE = "totalPrice";
-    public static final String KEY_TAX_FEDERAL = "taxFederal";
-    public static final String KEY_TAX_PROVINCIAL = "taxProvincial";
-    public static final String KEY_TOTALPRICE_WITHTAX = "totalPriceWithTax";
-    public static final String KEY_AMOUNT_PRODUCTS = "amountProducts";
-
-    private static final String CREATE_TABLE_TRANSACTION = "CREATE TABLE " + TABLE_TRANSACTION
-            + " (" + KEY_TRANSACTION_CODE + " LONG PRIMARY KEY," + KEY_STORE_NAME + " STRING,"
-            + KEY_STORE_ADDRESS + " STRING," + KEY_CASHDEST_ID + " INTEGER,"
-            + KEY_TIME + " STRING," + KEY_SHOPE_ID + " INTEGER," + KEY_TOTALPRICE + " DOUBLE"
-            + KEY_TAX_FEDERAL + " DOUBLE," + KEY_TAX_PROVINCIAL + " DOUBLE"
-            + KEY_TOTALPRICE_WITHTAX + " DOUBLE," + KEY_AMOUNT_PRODUCTS + "SHORT";
-
-    //TODO shopping list table
-    public static final String TABEL_SHOPPINGLIST = "shoppinglist";
-    public static final String KEY_TRANSACTION_ID = "transactionCode";
-
-
-    // shopping list table
-    public static final String TABLE_SHOPPINGLIST = "shoppingList";
-*/
 
     // Client information table
     public static final String TABLE_CLIENTINFO = "clientIfo";
@@ -96,8 +67,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_TABLE_CONSUMPTION_HABIT);
 
-        //db.execSQL(CREATE_TABLE_TRANSACTION);
-
         db.execSQL(CREATE_TABLE_CLIENTINFO);
     }
 
@@ -111,11 +80,4 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-
-
-
-
-
-
-    //DELETE FROM table where _id NOT IN (SELECT _id from table ORDER BY insertion_date DESC LIMIT 50)
 }

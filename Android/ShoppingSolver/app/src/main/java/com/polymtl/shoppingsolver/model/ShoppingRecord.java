@@ -1,5 +1,7 @@
 package com.polymtl.shoppingsolver.model;
 
+import android.util.Log;
+
 /**
  * Created by Zoe on 15-04-01.
  */
@@ -21,8 +23,10 @@ public class ShoppingRecord {
 
     public void setProductBarCode(String code) {
         this.productBarCode = code;
+        Log.i("set BarCode", code);
     }
     public String getProductBarCode() {
+        Log.i("get BarCode", this.productBarCode);
         return this.productBarCode;
     }
 
@@ -77,4 +81,8 @@ public class ShoppingRecord {
         return quantity * unit_price;
     }
 
+    @Override
+    public String toString() {
+        return description + " Unit_price: " + unit_price + "$" + " Quantity" + quantity + "\n";
+    }
 }

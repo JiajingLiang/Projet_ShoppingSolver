@@ -1,0 +1,215 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.1-b419 (branches/2.3.1.x-7937; 2014-08-04T08:11:03+0000) JAXWS-RI/2.2.10-b140803.1500 JAXWS-API/2.2.11 JAXB-RI/2.2.10-b140802.1033 JAXB-API/2.2.12-b140109.1041 svn-revision#unknown. --><xs:schema xmlns:tns="http://shopproduct_admin_webservice/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://shopproduct_admin_webservice/">
+
+<xs:element name="addProductToShop" type="tns:addProductToShop"/>
+
+<xs:element name="addProductToShopResponse" type="tns:addProductToShopResponse"/>
+
+<xs:element name="createProduct" type="tns:createProduct"/>
+
+<xs:element name="createProductCategory" type="tns:createProductCategory"/>
+
+<xs:element name="createProductCategoryResponse" type="tns:createProductCategoryResponse"/>
+
+<xs:element name="createProductResponse" type="tns:createProductResponse"/>
+
+<xs:element name="createShopBranch" type="tns:createShopBranch"/>
+
+<xs:element name="createShopBranchResponse" type="tns:createShopBranchResponse"/>
+
+<xs:element name="createShopBrand" type="tns:createShopBrand"/>
+
+<xs:element name="createShopBrandResponse" type="tns:createShopBrandResponse"/>
+
+<xs:element name="findAllProduct" type="tns:findAllProduct"/>
+
+<xs:element name="findAllProductCategory" type="tns:findAllProductCategory"/>
+
+<xs:element name="findAllProductCategoryResponse" type="tns:findAllProductCategoryResponse"/>
+
+<xs:element name="findAllProductResponse" type="tns:findAllProductResponse"/>
+
+<xs:element name="findAllShopBranch" type="tns:findAllShopBranch"/>
+
+<xs:element name="findAllShopBranchResponse" type="tns:findAllShopBranchResponse"/>
+
+<xs:element name="findAllShopBrand" type="tns:findAllShopBrand"/>
+
+<xs:element name="findAllShopBrandResponse" type="tns:findAllShopBrandResponse"/>
+
+<xs:element name="getAllProductsInShop" type="tns:getAllProductsInShop"/>
+
+<xs:element name="getAllProductsInShopResponse" type="tns:getAllProductsInShopResponse"/>
+
+<xs:element name="getClientDevicesByFavoriteProducts" type="tns:getClientDevicesByFavoriteProducts"/>
+
+<xs:element name="getClientDevicesByFavoriteProductsResponse" type="tns:getClientDevicesByFavoriteProductsResponse"/>
+
+<xs:element name="getProductPriceFromShop" type="tns:getProductPriceFromShop"/>
+
+<xs:element name="getProductPriceFromShopResponse" type="tns:getProductPriceFromShopResponse"/>
+
+<xs:element name="setProductPriceInShop" type="tns:setProductPriceInShop"/>
+
+<xs:element name="setProductPriceInShopResponse" type="tns:setProductPriceInShopResponse"/>
+
+<xs:complexType name="createProductCategory">
+<xs:sequence>
+<xs:element name="categoryName" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="createProductCategoryResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getClientDevicesByFavoriteProducts">
+<xs:sequence>
+<xs:element name="productBarCode" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getClientDevicesByFavoriteProductsResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="createProduct">
+<xs:sequence>
+<xs:element name="idCategory" type="xs:long"/>
+<xs:element name="barCode" type="xs:string" minOccurs="0"/>
+<xs:element name="description" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="createProductResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="findAllShopBranch">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="findAllShopBranchResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="addProductToShop">
+<xs:sequence>
+<xs:element name="idProduct" type="xs:string" minOccurs="0"/>
+<xs:element name="idShop" type="xs:long"/>
+<xs:element name="price" type="xs:double" minOccurs="0"/>
+<xs:element name="ratioTaxFederal" type="xs:float" minOccurs="0"/>
+<xs:element name="ratioTaxProvincial" type="xs:float" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="addProductToShopResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="findAllProductCategory">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="findAllProductCategoryResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getProductPriceFromShop">
+<xs:sequence>
+<xs:element name="productBarCode" type="xs:string" minOccurs="0"/>
+<xs:element name="idShop" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getProductPriceFromShopResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="findAllShopBrand">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="findAllShopBrandResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="findAllProduct">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="findAllProductResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="createShopBrand">
+<xs:sequence>
+<xs:element name="BrandName" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="createShopBrandResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="setProductPriceInShop">
+<xs:sequence>
+<xs:element name="productBarCode" type="xs:string" minOccurs="0"/>
+<xs:element name="idShop" type="xs:long"/>
+<xs:element name="newPrice" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="setProductPriceInShopResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="createShopBranch">
+<xs:sequence>
+<xs:element name="idBrand" type="xs:long"/>
+<xs:element name="street" type="xs:string" minOccurs="0"/>
+<xs:element name="city" type="xs:string" minOccurs="0"/>
+<xs:element name="postcode" type="xs:string" minOccurs="0"/>
+<xs:element name="country" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="createShopBranchResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getAllProductsInShop">
+<xs:sequence>
+<xs:element name="idShop" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getAllProductsInShopResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

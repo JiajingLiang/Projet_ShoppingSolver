@@ -1,13 +1,18 @@
 package com.polymtl.shoppingsolver.util;
 
+import android.app.Activity;
 import android.app.Application;
 
+import com.polymtl.shoppingsolver.model.BriefTransaction;
 import com.polymtl.shoppingsolver.model.Client;
+import com.polymtl.shoppingsolver.model.SaleInfo;
 import com.polymtl.shoppingsolver.model.Shop;
 import com.polymtl.shoppingsolver.model.ShoppingRecord;
+import com.polymtl.shoppingsolver.model.Transaction;
 import com.polymtl.shoppingsolver.ui.CustomerBaseAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Zoe on 15-04-13.
@@ -15,15 +20,19 @@ import java.util.ArrayList;
  */
 public class ShoppingSolverApplication extends Application {
 
+    private static ShoppingSolverApplication instance;
+
     private ArrayList<ShoppingRecord> shoppingRecords;
     private ShoppingRecord currentRecord;
     private Shop shop;
-    private Client newCount;
+    private Client newCount, currentClient;
     private String regId; // the same with deviceKey in Client
     private CustomerBaseAdapter adapter;
-    private String dateBegin;
-    private String dateEnd;
-    private static ShoppingSolverApplication instance;
+    private Transaction theLastTransaction;
+    private ArrayList<BriefTransaction> briefTransactions;
+    private SaleInfo saleInfo;
+    private float startPower;
+    private List<Activity> activityList = new ArrayList<>();
 
     //Make sure there is only on instance of this class
     public static ShoppingSolverApplication getInstance() {
@@ -31,7 +40,23 @@ public class ShoppingSolverApplication extends Application {
             instance = new ShoppingSolverApplication();
         }
 
+
         return instance;
+    }
+
+    public void addActivity(Activity activity) {
+        activityList.add(activity);
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        //Turn all the activities let exit application perfectly
+        for(Activity activity : activityList) {
+            activity.finish();
+        }
+
+        System.exit(0);
     }
 
     public ShoppingSolverApplication() {
@@ -40,6 +65,7 @@ public class ShoppingSolverApplication extends Application {
         shop = new Shop();
         adapter = new CustomerBaseAdapter();
         newCount = new Client();
+        briefTransactions = new ArrayList<>();
     }
 
     public void setAdapter(CustomerBaseAdapter adapter) {
@@ -51,6 +77,10 @@ public class ShoppingSolverApplication extends Application {
 
     public void setShoppingRecords(ArrayList<ShoppingRecord> records) {
         shoppingRecords = records;
+    }
+
+    public void clearShoppingRecords() {
+        this.shoppingRecords.clear();
     }
 
     public ArrayList<ShoppingRecord> getShoppingRecords() {
@@ -96,17 +126,48 @@ public class ShoppingSolverApplication extends Application {
         return this.regId;
     }
 
-    public void setDateBegin(String date) {
-        this.dateBegin = date;
+
+    public void setTheLastTransaction(Transaction transaction) {
+        this.theLastTransaction = transaction;
     }
-    public String getDateBegin() {
-        return this.dateBegin;
+    public Transaction getTheLastTransaction() {
+        return this.theLastTransaction;
     }
 
-    public void setDateEnd(String date) {
-        this.dateEnd = date;
+    public void setBriefTransactions(ArrayList<BriefTransaction> list) {
+        this.briefTransactions = list;
     }
-    public String getDateEnd() {
-        return this.dateEnd;
+    public ArrayList<BriefTransaction> getBriefTransactions() {
+        return this.briefTransactions;
+    }
+    public void addBriefTransaction(BriefTransaction briefTransaction) {
+        this.briefTransactions.add(briefTransaction);
+    }
+    public void clearBriefTransaction() {
+        this.briefTransactions.clear();
+    }
+
+    public void setSaleInfo(SaleInfo saleInfo) {
+        this.saleInfo = saleInfo;
+    }
+
+    public SaleInfo getSaleInfo() {
+        return saleInfo;
+    }
+
+    public void setStartPower(float startPower) {
+        this.startPower = startPower;
+    }
+
+    public float getStartPower() {
+        return startPower;
+    }
+
+    public void setCurrentClient(Client currentClient) {
+        this.currentClient = currentClient;
+    }
+
+    public Client getCurrentClient() {
+        return currentClient;
     }
 }

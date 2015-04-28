@@ -5,21 +5,26 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.ResultReceiver;
-import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.polymtl.shoppingsolver.LoginActivity;
+import com.google.android.gms.maps.model.LatLng;
+import com.polymtl.shoppingsolver.ui.MapsShopsActivity;
 import com.polymtl.shoppingsolver.R;
 import com.polymtl.shoppingsolver.database.ClientDataSource;
 import com.polymtl.shoppingsolver.database.HabitDataSource;
 import com.polymtl.shoppingsolver.model.Client;
+import com.polymtl.shoppingsolver.model.HabitRecord;
+import com.polymtl.shoppingsolver.model.SaleInfo;
+import com.polymtl.shoppingsolver.model.Shop;
 import com.polymtl.shoppingsolver.model.ShoppingRecord;
 import com.polymtl.shoppingsolver.util.DetectConnectivity;
 import com.polymtl.shoppingsolver.util.GcmBroadcastReceiver;
@@ -46,9 +51,10 @@ import java.util.List;
  */
 public class ShoppingSolverIntentService  extends IntentService{
 
-
     private static final String NAMESPACE = "http://shopping_webservice/";
-    private static String URL="http://jjliang-1005.jelastic.servint.net/ShoppingWS/ShoppingWS?WSDL";
+
+    private static String URL="http://jjliang1005.whelastic.net/ShoppingWS/ShoppingWS?WSDL";
+//    private static String URL="http://132.207.220.50:80/ShoppingWS/ShoppingWS?WSDL";
 
     private static final String LOGIN_METHOD_NAME = "findClientByEmail";
     private static final String SOAP_LOGIN_ACTION = "http://shopping_webservice/ShoppingWS/findClientByEmailRequest";
@@ -62,14 +68,19 @@ public class ShoppingSolverIntentService  extends IntentService{
     private static final String CREATECLIENTWITHDEVICE_METHOD_NAME = "createClientWithDevice";
     private static final String SOAP_CREATECLIENTWITHDEVICE_ACTION = "http://shopping_webservice/ShoppingWS/createClientWithDeviceRequest";
 
-    private static final String FINDTRANSACTION_METHOD_NAME = "findTransactionByClient";
-    private static final String SOAP_FINDTRANSACTION_ACTION = "http://shopping_webservice/ShoppingWS/findTransactionByClientRequest";
+    private static final String FINDTRECENTRANSACTION_METHOD_NAME = "findRecentTransactionByClient";
+    private static final String SOAP_FINDRCENTTRANSACTION_ACTION = "http://shopping_webservice/ShoppingWS/findRecentTransactionByClientRequest";
+
 
     private static final String SETFAVORETEPRODUCT_METHOD_NAME = "setClientFavoriteProduct";
     private static final String SOAP_SETFAVORETEPRODUCT_ACTION = "http://shopping_webservice/ShoppingWS/setClientFavoriteProductRequest";
 
     private static final String FINDSHOPBYID_METHOD_NAME = "findShopById";
     private static final String SOAP_FINDSHOPBYID_ACTION = "http://shopping_webservice/ShoppingWS/findShopByIdRequest";
+
+
+    private static final String ADDDEVICETOCLIENT_METHOD_NAME = "addDeviceToClient";
+    private static final String SOAP_ADDDEVICETOCLIENT_ACTION = "http://shopping_webservice/ShoppingWS/addDeviceToClientRequest";
 
     //for Gcm
     public static final int NOTIFICATION_ID = 1;
@@ -96,40 +107,21 @@ public class ShoppingSolverIntentService  extends IntentService{
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        // for Gcm
-        Bundle extras = intent.getExtras();
-        GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
-        // The getMessageType() intent parameter must be the intent you received
-        // in your BroadcastReceiver.
-        String messageType = gcm.getMessageType(intent);
-        if (!extras.isEmpty()) {
-            if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
-                sendNotification("Send error: " + extras.toString());
-            } else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED.equals(messageType)) {
-                sendNotification("Deleted messages on server: " + extras.toString());
-                // If it's a regular GCM message, do some work.
-            } else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
-                // This loop represents the service doing some work.
-                for (int i = 0; i < 5; i++) {
-                    Log.i(TAG, "Working... " + (i + 1)
-                            + "/5 @ " + SystemClock.elapsedRealtime());
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
-                    }
-                }
-                Log.i(TAG, "Completed work @ " + SystemClock.elapsedRealtime());
-                // Post notification of received message.
-                sendNotification("Received: " + extras.toString());
-                Log.i(TAG, "Received: " + extras.toString());
-            }
-        }
+        receiveGCM(intent);
         ///////////////////
 
-        final ResultReceiver receiver = intent.getParcelableExtra("receiver");
-        String command = intent.getStringExtra("command");
+        receiveRequest(intent);
 
-        if (!command.isEmpty()) {
+        this.stopSelf();
+    }
+
+    private void receiveRequest(Intent intent) {
+        if (intent.hasExtra("command")) {
+            final ResultReceiver receiver = intent.getParcelableExtra("receiver");
+            String command = intent.getStringExtra("command");
+
+
+            // verify if connected
             if (!DetectConnectivity.isConnected(getApplicationContext())) {
 
                 Log.e("connect err", "WIFI is not open");
@@ -145,45 +137,107 @@ public class ShoppingSolverIntentService  extends IntentService{
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
-                return;
-            }
 
-            switch (command) {
-                case "login":
-                    loginByEmail(intent, receiver);
-                    break;
+            } else {
 
-                case "productInfo":
-                    getProductInfo(intent, receiver);
-                    break;
+                switch (command) {
+                    case "login":
+                        loginByEmail(intent, receiver);
+                        break;
 
-                case "shopInfo":
-                    getShopInfo(intent, receiver);
-                    break;
+                    case "productInfo":
+                        getProductInfo(receiver);
+                        break;
 
-                case "payment":
-                    createTransaction(intent, receiver);
-                    break;
+                    case "shopInfo":
+                        getShopInfo(receiver);
+                        break;
 
-                case "createCount":
-                    createCount(intent, receiver);
-                    break;
+                    case "payment":
+                        createTransaction(receiver);
+                        break;
 
-                case "getTransaction":
-                    getTransaction(intent, receiver);
-                    break;
+                    case "createCount":
+                        createCount(receiver);
+                        break;
 
-                default:
-                    break;
+                    case "getRecentTransactions":
+                        getRecentTransactions(receiver);
+
+                    case "sendConsumptionHabit":
+                        // send consumption habit to server
+                        sendConsumptionHabit();
+                        break;
+
+                    case "addDeviceKey":
+                        addDeviceToClient();
+                        break;
+
+                    default:
+                        break;
+                }
             }
         }
-
-        // Release the wake lock provided by the WakefulBroadcastReceiver.
-        GcmBroadcastReceiver.completeWakefulIntent(intent);
-
-        this.stopSelf();
     }
 
+    private void receiveGCM(Intent intent) {
+        // for Gcm
+        Bundle extras = intent.getExtras();
+        GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
+        // The getMessageType() intent parameter must be the intent you received
+        // in your BroadcastReceiver.
+        String messageType = gcm.getMessageType(intent);
+        if (!extras.isEmpty()) {
+            if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
+                sendNotification("Send error: " + extras.toString());
+            } else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED.equals(messageType)) {
+                sendNotification("Deleted messages on server: " + extras.toString());
+                // If it's a regular GCM message, do some work.
+            } else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
+
+                Log.i(TAG, "Received: " + extras.toString());
+                SaleInfo saleInfo = new SaleInfo();
+
+                // verify if connected
+                if (!DetectConnectivity.isConnected(getApplicationContext())) {
+
+                    Log.e("connect err", "WIFI is not open");
+
+                    Handler handler = new Handler(Looper.getMainLooper());
+
+                    handler.post(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),
+                                    "Offline. Please check your network connection.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                } else {
+                    LatLng latLng = getLocationFromAddress(extras.getString("shopAddress"));
+                    saleInfo.setLatLng(latLng);
+                }
+
+                Log.i("shopAddress", extras.getString("shopAddress"));
+                saleInfo.setAddress(extras.getString("shopAddress"));
+                Log.i("productDescription", extras.getString("productDescription"));
+                saleInfo.setDescription(extras.getString("productDescription"));
+                Log.i("newPrice", extras.getString("newPrice"));
+                saleInfo.setPrice(extras.getString("newPrice"));
+
+                ShoppingSolverApplication.getInstance().setSaleInfo(saleInfo);
+
+                // Post notification of received message.
+                String msg = saleInfo.getDescription() + "is special! " + saleInfo.getPrice() + "$";
+                sendNotification("Received: " + msg);
+
+            }
+        }
+        // Release the wake lock provided by the WakefulBroadcastReceiver.
+        GcmBroadcastReceiver.completeWakefulIntent(intent);
+    }
     // Put the message into a notification and post it.
     // This is just one simple example of what you might choose to do with
     // a GCM message.
@@ -191,19 +245,44 @@ public class ShoppingSolverIntentService  extends IntentService{
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
+        Intent intent = new Intent(this, MapsShopsActivity.class);
+        intent.putExtra("msg", msg);
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, LoginActivity.class), 0);
+                new Intent(this, MapsShopsActivity.class), 0);
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.ic_reception)
-                        .setContentTitle("GCM Notification")
+                        .setSmallIcon(R.drawable.visualcommerce_icon)
+                        .setContentTitle("Sales")
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(msg))
-                        .setContentText(msg);
+                        .setContentText(msg)
+                        .setAutoCancel(true);
 
+        Log.i("msg", msg);
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+    }
+
+    public LatLng getLocationFromAddress(String strAddress) {
+        if (strAddress == null || strAddress.isEmpty()) {
+            return null;
+        }
+        Geocoder geocoder = new Geocoder(this);
+        List<Address> addresses;
+        LatLng point = null;
+
+        try {
+            addresses = geocoder.getFromLocationName(strAddress, 5);
+            if (addresses == null || addresses.size() <= 0) { //didn't find location by this address
+                return null;
+            }
+            Address location = addresses.get(0);
+            point = new LatLng(location.getLatitude(), location.getLongitude());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return point;
     }
 
     private void loginByEmail(Intent intent, ResultReceiver receiver) {
@@ -219,29 +298,30 @@ public class ShoppingSolverIntentService  extends IntentService{
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         envelope.setOutputSoapObject(request);
         HttpTransportSE androidHttpTransport = new HttpTransportSE(URL);
+
+        Bundle bundle = new Bundle();
+
         try {
-            Bundle bundle = new Bundle();
+
             androidHttpTransport.call(SOAP_LOGIN_ACTION, envelope);
 
             if (envelope.bodyIn instanceof SoapFault) {
                 String str = ((SoapFault) envelope.bodyIn).faultstring;
-                Log.i("err", str);
+                Log.i("loginByEmail err", str);
             } else {
                 SoapObject response = (SoapObject) envelope.bodyIn;
 
-                Log.i("Login", response.getProperty(0).toString());
+                Log.i("loginByEmail", response.getProperty(0).toString());
 
                 String result = response.getProperty(0).toString();
-                if (result == null) {
-                    Log.i("err", "email_err");
+                if ("null".equals(result)) {
+                    Log.i("loginByEmail err", "email_err");
                     bundle.putString("err", "email_err");
                     receiver.send(0, bundle);
                     return;
                 }
                 HandleXML xml = new HandleXML(result);
-                xml.updataClientInfo();
-
-                Log.i("enter", password);
+                xml.updateClientInfo();
 
                 if (!ShoppingSolverApplication.getInstance().getNewCount().getPassword().equals(password)) {
                     bundle.putString("err", "password_err");
@@ -253,6 +333,7 @@ public class ShoppingSolverIntentService  extends IntentService{
                 ClientDataSource clientDataSource = new ClientDataSource(getApplicationContext());
                 clientDataSource.open();
                 clientDataSource.saveClientInfo(ShoppingSolverApplication.getInstance().getNewCount());
+                ShoppingSolverApplication.getInstance().setCurrentClient(clientDataSource.getClient());
                 clientDataSource.close();
 
                 receiver.send(1, bundle);
@@ -260,12 +341,12 @@ public class ShoppingSolverIntentService  extends IntentService{
 
 
         } catch (IOException e) {
-            Log.i("Login", "exception");
+            Log.i("loginByEmail", "exception");
+            receiver.send(3, bundle); // 3: IOException
             e.printStackTrace();
         } catch (XmlPullParserException e) {
-            //Bundle bundle = new Bundle();
-            //bundle.putString("err", "exception");
-            //receiver.send(0, bundle);
+
+            receiver.send(4, bundle); // 4: XmlPullParserException
             e.printStackTrace();
         }
 
@@ -273,26 +354,27 @@ public class ShoppingSolverIntentService  extends IntentService{
 
 
 
-    private void getProductInfo(Intent intent, ResultReceiver receiver) {
+    private void getProductInfo(ResultReceiver receiver) {
 
-        //String barCode = intent.getStringExtra("productBarCode");
-        String barCode = ShoppingSolverApplication.getInstance().getCurrentRecord().getProductBarCode();
-        long idShop = ShoppingSolverApplication.getInstance().getShop().getShopId();
+        ShoppingSolverApplication application = ShoppingSolverApplication.getInstance();
+        String barCode = application.getCurrentRecord().getProductBarCode();
+        long idShop = application.getShop().getShopId();
 
         // Create SoapObject to build a SOAP request
         // and method name to be invoked in the SoapObject constructor
         SoapObject request = new SoapObject(NAMESPACE, GETPRODUCTINFO_METHOD_NAME);
 
-        request.addProperty("productBarCode", "068100047219"); // for test
-        request.addProperty("idShop", 3); // for test
-        //request.addProperty("productBarCode", barCode);
-        //request.addProperty("idShop", ShoppingSolverApplication.getInstance().getShop().getShopId());
+        request.addProperty("productBarCode", barCode);
+        request.addProperty("idShop", idShop);
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         envelope.setOutputSoapObject(request);
         Log.i("request", request.toString());
         HttpTransportSE androidHttpTransport = new HttpTransportSE(URL);
+
+        Bundle bundle = new Bundle();
+
         try {
-            Bundle bundle = new Bundle();
+
             bundle.putString("requestType", "getProductInfo");
             androidHttpTransport.call(SOAP_GETPRODUCTINFO_ACTION, envelope);
 
@@ -300,17 +382,19 @@ public class ShoppingSolverIntentService  extends IntentService{
                 SoapFault fault = (SoapFault) envelope.bodyIn;
                 Log.e("getProductInfo", fault.toString());
             } else {
+
                 SoapObject response = (SoapObject) envelope.bodyIn;
                 String result = response.getProperty(0).toString();
                 Log.i("product result", result);
 
-                if (request == null) {
+                HandleXML xml = new HandleXML(result);
+                if (xml.isNull()) {
                     Log.i("err", "not_exist");
 
                     receiver.send(0, bundle);
                     return;
                 }
-                HandleXML xml = new HandleXML(result);
+
                 xml.setCurrentProductInfo();
                 receiver.send(1, bundle);
             }
@@ -318,10 +402,10 @@ public class ShoppingSolverIntentService  extends IntentService{
 
         } catch (IOException e) {
             Log.i("getProductInfo", "exception");
+            receiver.send(3, bundle); // 3: IOException
             e.printStackTrace();
         } catch (XmlPullParserException e) {
-            //Bundle bundle = new Bundle();
-            //receiver.send(0, bundle);
+            receiver.send(4, bundle); // 4: XmlPullParserException
             e.printStackTrace();
         }
 
@@ -329,43 +413,44 @@ public class ShoppingSolverIntentService  extends IntentService{
 
 
 
-    private void getShopInfo(Intent intent, ResultReceiver receiver) {
+    private void getShopInfo(ResultReceiver receiver) {
 
-        ShoppingSolverApplication app = (ShoppingSolverApplication) getApplicationContext();
+        ShoppingSolverApplication application = ShoppingSolverApplication.getInstance();
 
         // Create SoapObject to build a SOAP request
         // and method name to be invoked in the SoapObject constructor
         SoapObject request = new SoapObject(NAMESPACE, FINDSHOPBYID_METHOD_NAME);
 
-        // TEST
-        long id = 3l;
-        request.addProperty("shopBranchId", id); //
-
-        //request.addProperty("idShop", app.getShop().getShopId());
+        Log.i("shopId", "id" + application.getShop().getShopId());
+        request.addProperty("shopBranchId", application.getShop().getShopId());
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         envelope.setOutputSoapObject(request);
         Log.i("request", request.toString());
         HttpTransportSE androidHttpTransport = new HttpTransportSE(URL);
+
+        Bundle bundle = new Bundle();
+
         try {
-            Bundle bundle = new Bundle();
+
             bundle.putString("requestType", "getShopInfo");
             androidHttpTransport.call(SOAP_FINDSHOPBYID_ACTION, envelope);
 
             if (envelope.bodyIn instanceof SoapFault) {
                 SoapFault fault = (SoapFault) envelope.bodyIn;
                 Log.e("getShopInfo", fault.toString());
+                receiver.send(0, bundle);
             } else {
                 SoapObject response = (SoapObject) envelope.bodyIn;
                 String result = response.getProperty(0).toString();
                 Log.i("getShopInfo", result);
 
-
-                if (request == null) {
+                HandleXML xml = new HandleXML(result);
+                if (xml.isNull()) {
                     Log.i("getShopInfo", "is null");
                     receiver.send(0, bundle);
                     return;
                 }
-                HandleXML xml = new HandleXML(result);
+
                 xml.getShopInfo();
 
                 receiver.send(1, bundle);
@@ -373,19 +458,20 @@ public class ShoppingSolverIntentService  extends IntentService{
 
         } catch (IOException e) {
             Log.i("getShopInfo", "exception");
+            receiver.send(3, bundle); // 3: IOException
             e.printStackTrace();
         } catch (XmlPullParserException e) {
-            //Bundle bundle = new Bundle();
-            //receiver.send(0, bundle);
+            receiver.send(4, bundle); // 4: XmlPullParserException
             e.printStackTrace();
         }
 
     }
 
 
-    private void createTransaction(Intent intent, ResultReceiver receiver) {
+    // create a transaction, return back transaction info
+    private void createTransaction(ResultReceiver receiver) {
 
-        ShoppingSolverApplication app = ShoppingSolverApplication.getInstance();
+        ShoppingSolverApplication application = ShoppingSolverApplication.getInstance();
         ClientDataSource clientDataSource = new ClientDataSource(getApplicationContext());
         clientDataSource.open();
         Client client = clientDataSource.getClient();
@@ -393,8 +479,8 @@ public class ShoppingSolverIntentService  extends IntentService{
 
         String password = client.getPassword();
         long clientId = client.getClientId();
-        long shopId = app.getShop().getShopId();
-        ArrayList<ShoppingRecord> records = app.getShoppingRecords();
+        long shopId = application.getShop().getShopId();
+        ArrayList<ShoppingRecord> records = application.getShoppingRecords();
         List<String> listProducts = new ArrayList<>();
         List<Float> listQuantities = new ArrayList<>();
 
@@ -415,58 +501,60 @@ public class ShoppingSolverIntentService  extends IntentService{
 
         request.addProperty("clientId", clientId);
         request.addProperty("password", password);
-        request.addProperty("shopId", 3); // for test
-        //request.addProperty("shopId", shopId);
+        request.addProperty("shopId", shopId);
         request.addProperty("listProducts", strListProducts);
         request.addProperty("listQuantities", strListQuantity);
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         envelope.setOutputSoapObject(request);
         Log.i("request", request.toString());
         HttpTransportSE androidHttpTransport = new HttpTransportSE(URL);
+
+        Bundle bundle = new Bundle();
+
         try {
-            Bundle bundle = new Bundle();
+
             androidHttpTransport.call(SOAP_CREATETRANSACTION_ACTION, envelope);
 
             if (envelope.bodyIn instanceof SoapFault) {
                 SoapFault fault = (SoapFault) envelope.bodyIn;
                 Log.i("createTransaction err", fault.toString());
+                receiver.send(0, bundle);
             } else {
                 SoapObject response = (SoapObject) envelope.bodyIn;
                 String result = response.getProperty(0).toString();
 
-                Log.i("transaction result", result);
+                HandleXML xml = new HandleXML(result);
+                if (xml.isNull()) {
+                    Log.i("create Tran", "is null");
+                    receiver.send(0, bundle);
+                    return;
+                }
 
-                if (Boolean.parseBoolean(result)) {
+                    // save transaction Id
+
+                    xml.saveTransaction();
 
                     receiver.send(1, bundle);
 
-                    // send consumption habit to server
-                    sendConsumptionHabit();
-
-                } else {
-                    receiver.send(0, bundle);
-                }
             }
 
         } catch (IOException e) {
             Log.i("createTransaction", "exception");
-            //Bundle bundle = new Bundle();
-            //receiver.send(0, bundle);
+            receiver.send(3, bundle); // 3: IOException
             e.printStackTrace();
         } catch (XmlPullParserException e) {
-            //Bundle bundle = new Bundle();
-           // receiver.send(0, bundle);
+            receiver.send(4, bundle); // 4: XmlPullParserException
             e.printStackTrace();
         }
 
     }
 
 
-    private void createCount(Intent intent, ResultReceiver receiver) {
+    private void createCount(ResultReceiver receiver) {
 
-        ShoppingSolverApplication app = ShoppingSolverApplication.getInstance();
+        ShoppingSolverApplication application = ShoppingSolverApplication.getInstance();
 
-        Client client = app.getNewCount();
+        Client client = application.getNewCount();
 
 
         // Create SoapObject to build a SOAP request
@@ -481,13 +569,16 @@ public class ShoppingSolverIntentService  extends IntentService{
         request.addProperty("city", client.getCity());
         request.addProperty("postcode", client.getPostcode());
         request.addProperty("country", client.getCountry());
-        request.addProperty("deviceKey", ShoppingSolverApplication.getInstance().getRegId());
+        request.addProperty("deviceKey", application.getRegId());
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         envelope.setOutputSoapObject(request);
         Log.i("request", request.toString());
         HttpTransportSE androidHttpTransport = new HttpTransportSE(URL);
+
+        Bundle bundle = new Bundle();
+
         try {
-            Bundle bundle = new Bundle();
+
             androidHttpTransport.call(SOAP_CREATECLIENTWITHDEVICE_ACTION, envelope);
 
             Log.i("CC result", envelope.bodyIn.getClass().getName());
@@ -500,10 +591,14 @@ public class ShoppingSolverIntentService  extends IntentService{
                 SoapObject response = (SoapObject) envelope.bodyIn;
                 String result = response.getProperty(0).toString();
 
-                if (!Boolean.parseBoolean(result)) {
-                    Log.e("CC err", "Create client error");
-                } else {
 
+                if ("null".equals(result)) {
+                    Log.e("CC ", "Create client error");
+                    receiver.send(0, bundle);
+                    return;
+                }
+
+                    Log.i("CC ", "Create client success");
                     HandleXML xml = new HandleXML(result);
                     xml.getClientId();
                     // save client info to database
@@ -514,26 +609,23 @@ public class ShoppingSolverIntentService  extends IntentService{
 
                     receiver.send(1, bundle);
                 }
-            }
+
 
 
         } catch (IOException e) {
             Log.i("create client", "exception");
-            //Bundle bundle = new Bundle();
-            //receiver.send(0, bundle);
+            receiver.send(3, bundle); // 3: IOException
             e.printStackTrace();
         } catch (XmlPullParserException e) {
-            //Bundle bundle = new Bundle();
-            //receiver.send(0, bundle);
+            receiver.send(4, bundle); // 4: XmlPullParserException
             e.printStackTrace();
         }
 
     }
 
 
-    private void getTransaction(Intent intent, ResultReceiver receiver) {
+    private void getRecentTransactions(ResultReceiver receiver) {
 
-        ShoppingSolverApplication app = ShoppingSolverApplication.getInstance();
         ClientDataSource clientDataSource = new ClientDataSource(getApplicationContext());
         clientDataSource.open();
         Client client = clientDataSource.getClient();
@@ -541,70 +633,91 @@ public class ShoppingSolverIntentService  extends IntentService{
 
         String password = client.getPassword();
         long clientId = client.getClientId();
-        String dateBegin = ShoppingSolverApplication.getInstance().getDateBegin();
-        String dateEnd = ShoppingSolverApplication.getInstance().getDateEnd();
 
 
         // Create SoapObject to build a SOAP request
         // and method name to be invoked in the SoapObject constructor
-        SoapObject request = new SoapObject(NAMESPACE, FINDTRANSACTION_METHOD_NAME);
+        SoapObject request = new SoapObject(NAMESPACE, FINDTRECENTRANSACTION_METHOD_NAME);
 
         request.addProperty("clientId", clientId);
         request.addProperty("password", password);
-        request.addProperty("dateBegin", dateBegin);
-        request.addProperty("dateEnd", dateEnd);
 
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         envelope.setOutputSoapObject(request);
         Log.i("request", request.toString());
         HttpTransportSE androidHttpTransport = new HttpTransportSE(URL);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("requestType", "getRecentTransactions");
         try {
-            Bundle bundle = new Bundle();
-            androidHttpTransport.call(SOAP_FINDTRANSACTION_ACTION, envelope);
+
+            androidHttpTransport.call(SOAP_FINDRCENTTRANSACTION_ACTION, envelope);
 
             if (envelope.bodyIn instanceof SoapFault) {
                 String str = ((SoapFault) envelope.bodyIn).faultstring;
-                Log.i("reception err", str);
+                Log.i("recentTransaction err", str);
+                receiver.send(0, bundle);
             } else {
                 SoapObject response = (SoapObject) envelope.bodyIn;
                 String result = response.getProperty(0).toString();
 
+                HandleXML xml = new HandleXML(result);
+                if (xml.isNull()) {
+                    receiver.send(0, bundle);
+                    return;
+                }
+
+                ShoppingSolverApplication.getInstance().clearBriefTransaction();
+
+                xml.getRecentTransaction();
+
+                receiver.send(1, bundle);
+                Log.i("recentTransaction", result);
 
             }
-            //SoapObject response = (SoapObject) envelope.bodyIn;
-            //String result = response.getProperty(0).toString();
-
-            //Log.i("reception result", result);
-
-            //TODO return fault, need to verify
 
 
         } catch (IOException e) {
             Log.i("getTransaction", "exception");
-            //Bundle bundle = new Bundle();
-            //receiver.send(0, bundle);
+
+            receiver.send(3, bundle);
             e.printStackTrace();
         } catch (XmlPullParserException e) {
-            //Bundle bundle = new Bundle();
-            //receiver.send(0, bundle);
+            receiver.send(4, bundle);
             e.printStackTrace();
         }
 
     }
 
-
     public void sendConsumptionHabit() {
 
-        ShoppingSolverApplication app = ShoppingSolverApplication.getInstance();
+        ShoppingSolverApplication application = ShoppingSolverApplication.getInstance();
 
-        Client client = app.getNewCount();
-
-        // get productsCode
-
+        // Save consumption habit to database
         HabitDataSource habitDataSource = new HabitDataSource(getApplicationContext());
         habitDataSource.open();
-        ArrayList<String> productsCodeList = habitDataSource.getNecessaryProductsCode();
+        for (ShoppingRecord record: application.getShoppingRecords()) {
+            HabitRecord habitRecord = new HabitRecord();
+            habitRecord.setProductBarCode(record.getProductBarCode());
+            habitRecord.setQuantity(record.getQuantity());
+            habitRecord.setDescription(record.getDescription());
+            habitRecord.setClientId(application.getCurrentClient().getClientId());
+            habitDataSource.addRecord(habitRecord);
+        }
+
+        Client client = application.getNewCount();
+
+        // get productsCode
+        ArrayList<String> productsCodeList = habitDataSource.getNecessaryProductsCode(client.getClientId());
+        Log.i("productsCodeList", productsCodeList.toString());
         habitDataSource.close();
+
+        // clear the records
+        application.clearShoppingRecords();
+        application.setShop(new Shop());
+
+        application.setTheLastTransaction(null);
+
         XStream xStream = new XStream();
         String strProductsCode = xStream.toXML(productsCodeList);
 
@@ -613,7 +726,7 @@ public class ShoppingSolverIntentService  extends IntentService{
         SoapObject request = new SoapObject(NAMESPACE, SETFAVORETEPRODUCT_METHOD_NAME);
 
         request.addProperty("clientId", client.getClientId());
-
+        request.addProperty("password", client.getPassword());
         request.addProperty("productsCode", strProductsCode);
 
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
@@ -648,5 +761,53 @@ public class ShoppingSolverIntentService  extends IntentService{
         }
     }
 
+    public void addDeviceToClient() {
+
+        ShoppingSolverApplication application = ShoppingSolverApplication.getInstance();
+        // Create SoapObject to build a SOAP request
+        // and method name to be invoked in the SoapObject constructor
+        SoapObject request = new SoapObject(NAMESPACE, ADDDEVICETOCLIENT_METHOD_NAME);
+
+        request.addProperty("clientId", application.getCurrentClient().getClientId());
+        request.addProperty("deviceKey", application.getRegId());
+        Log.i("clientId", "" + application.getCurrentClient().getClientId());
+        Log.i("deviceKey", application.getRegId());
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        envelope.setOutputSoapObject(request);
+        HttpTransportSE androidHttpTransport = new HttpTransportSE(URL);
+
+        //Bundle bundle = new Bundle();
+
+        try {
+
+            androidHttpTransport.call(SOAP_ADDDEVICETOCLIENT_ACTION, envelope);
+
+            if (envelope.bodyIn instanceof SoapFault) {
+                String str = ((SoapFault) envelope.bodyIn).faultstring;
+                Log.i("addDeviceKey err", str);
+            } else {
+                SoapObject response = (SoapObject) envelope.bodyIn;
+
+                Log.i("addDeviceKey", response.getProperty(0).toString());
+
+                String result = response.getProperty(0).toString();
+
+                Log.i("addDeviceKey", "" + Boolean.parseBoolean(result));
+
+            }
+
+
+        } catch (IOException e) {
+            Log.i("addDeviceKey", "exception");
+            //receiver.send(3, bundle); // 3: IOException
+            e.printStackTrace();
+        } catch (XmlPullParserException e) {
+
+            //receiver.send(4, bundle); // 4: XmlPullParserException
+            e.printStackTrace();
+        }
+
+
+    }
 
 }

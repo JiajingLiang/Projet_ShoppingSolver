@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
-import com.polymtl.shoppingsolver.PaymentFragment;
+
 import com.polymtl.shoppingsolver.R;
 import com.polymtl.shoppingsolver.model.ShoppingRecord;
 import com.polymtl.shoppingsolver.util.ShoppingSolverApplication;

@@ -7,4 +7,4 @@
     <item android:state_selected="true" android:color="@color/wallet_bright_foreground_holo_light"/>
     <item android:color="@color/wallet_bright_foreground_holo_light"/> <!-- not selected -->
 </selector>
-<!-- From: file:/Users/Zoe/Documents/Polytechnique/INF8405/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.0.0/res/color/wallet_primary_text_holo_light.xml -->
+<!-- From: file:/E:/EPM/2015Hiver/INF8405%20-%20Informatique%20Mobile/Projet_ShoppingSolver/Android/ShoppingSolver/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.0.0/res/color/wallet_primary_text_holo_light.xml -->

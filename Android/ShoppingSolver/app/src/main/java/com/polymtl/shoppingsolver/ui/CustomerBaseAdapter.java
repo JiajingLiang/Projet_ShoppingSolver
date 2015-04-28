@@ -22,13 +22,9 @@ public class CustomerBaseAdapter extends BaseAdapter {
 
     private ShoppingSolverApplication application;
 
-    private Context context;
-
     public CustomerBaseAdapter() {}
 
     public CustomerBaseAdapter(Context context) {
-
-        this.context = context;
 
         /****Layout inflator to call external xml layout*/
         inflater = LayoutInflater.from(context);

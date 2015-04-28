@@ -1,5 +1,6 @@
 package com.polymtl.shoppingsolver.util;
 import android.content.Context;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
@@ -24,6 +25,20 @@ public class DetectConnectivity {
     }
 
 
+    //check if location sources accessed
+    public static final boolean isGpsProviderAccessed(final Context context) {
+        LocationManager locationManager
+                = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+    }
+    public static final boolean isNetworkProviderAccessed(final Context context) {
+        LocationManager locationManager
+                = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+
+        return locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
 
 }
 
